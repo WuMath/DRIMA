@@ -1,0 +1,16 @@
+********************** start ********************
+[2026-05-30 19:13:11] Start the job
+**********************device********************
+Now use device is cuda:0
+********************** Successfully load data ********************
+The dataset has 10327296 interactions, involving 11883 different nodes
+Edge_feature is successfully converted to tensor without NaN values.
+node_feature is successfully converted to dict without NaN values.
+********************** Successfully process data ********************
+********************* successfully get neighbor **************
+********************* successfully get negative neighbor **************
+********************** Successfully process neighbor data---- positive and negative ********************
+[2026-05-30 19:13:49] Start the job
+混合精度训练已启用
+[2026-05-30 23:52:30] Finished the job
+The total time is: 16758.24550 second

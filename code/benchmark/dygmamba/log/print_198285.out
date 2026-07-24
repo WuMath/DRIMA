@@ -1,0 +1,7 @@
+run DygMamba2 job
+********************** start ********************
+[2026-02-12 21:19:57] Start the job
+**********************device********************
+Now use device is cuda:0
+********************** Successfully load data ********************
+slurmstepd: error: *** JOB 198285 ON gnode08 CANCELLED AT 2026-02-12T21:28:24 ***

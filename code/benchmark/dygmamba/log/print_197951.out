@@ -1,0 +1,36 @@
+run job
+start preprocess
+******************* Consistency Gene ***************************
+Before filter: adata_rna have gene: 2000,         adata_rp_gene_peak have gene: 2000
+After filter: adata_rna have gene: 2000,         adata_rp_gene_peak have gene: 2000
+******************* Consistency Peak ***************************
+Before filter: adata_atac have peak: 31555
+adata_rp_gene_peak have peak: 2000
+adata_rp_peak have peak: 31555
+After filter: adata_atac have gene: 31555
+adata_rp_gene_peak have gene: 2000
+adata_rp_peak have peak: 31555
+********************* Finished Preprocess and Save Data *******************************
+AnnData object with n_obs × n_vars = 446 × 31555
+    var: 'Geneid', 'Chr', 'Start', 'End', 'Strand', 'Length'
+AnnData object with n_obs × n_vars = 446 × 2000
+    obs: 'n_genes_by_counts', 'total_counts', 'total_counts_mt', 'pct_counts_mt'
+    var: 'mt', 'n_cells_by_counts', 'mean_counts', 'pct_dropout_by_counts', 'total_counts', 'n_cells', 'n_counts', 'highly_variable', 'highly_variable_rank', 'means', 'variances', 'variances_norm', 'mean', 'std'
+    uns: 'hvg', 'log1p', 'neighbors', 'pca', 'umap'
+    obsm: 'X_pca', 'X_umap'
+    varm: 'PCs'
+    layers: 'counts', 'norm'
+    obsp: 'connectivities', 'distances'
+Traceback (most recent call last):
+  File "/home/liyang/BioWuYan/dygmamba_project/model/dygmamba/src/dygmamba_preprocess.py", line 261, in <module>
+    adata_atac = ad.read_h5ad(data_path + "atac.h5ad")
+  File "/home/liyang/BioWuYan/conda_env/dygmamba39/lib/python3.9/site-packages/anndata/_io/h5ad.py", line 237, in read_h5ad
+    with h5py.File(filename, "r") as f:
+  File "/home/liyang/BioWuYan/conda_env/dygmamba39/lib/python3.9/site-packages/h5py/_hl/files.py", line 562, in __init__
+    fid = make_fid(name, mode, userblock_size, fapl, fcpl, swmr=swmr)
+  File "/home/liyang/BioWuYan/conda_env/dygmamba39/lib/python3.9/site-packages/h5py/_hl/files.py", line 235, in make_fid
+    fid = h5f.open(name, flags, fapl=fapl)
+  File "h5py/_objects.pyx", line 54, in h5py._objects.with_phil.wrapper
+  File "h5py/_objects.pyx", line 55, in h5py._objects.with_phil.wrapper
+  File "h5py/h5f.pyx", line 102, in h5py.h5f.open
+FileNotFoundError: [Errno 2] Unable to synchronously open file (unable to open file: name = '/home/liyang/BioWuYan/dygmamba_project/data/cell_line/HepG2/process/atac.h5ad', errno = 2, error message = 'No such file or directory', flags = 0, o_flags = 0)

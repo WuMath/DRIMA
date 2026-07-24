@@ -1,0 +1,6 @@
+run job
+start preprocess
+Traceback (most recent call last):
+  File "/home/liyang/BioWuYan/dygmamba_project/model/dygmamba/src/dygmamba_preprocess.py", line 163, in <module>
+    if sub_set == True:
+NameError: name 'sub_set' is not defined

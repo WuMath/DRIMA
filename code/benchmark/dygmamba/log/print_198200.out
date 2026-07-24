@@ -1,0 +1,10 @@
+run DygMamba2 job
+********************** start ********************
+[2026-02-12 00:31:32] Start the job
+**********************device********************
+Now use device is cuda:0
+********************** Successfully load data ********************
+The dataset has 6481612 interactions, involving 33516 different nodes
+********************** Successfully process data ********************
+********************* successfully get neighbor **************
+slurmstepd: error: *** JOB 198200 ON gnode08 CANCELLED AT 2026-02-12T01:32:26 ***

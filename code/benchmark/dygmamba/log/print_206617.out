@@ -1,0 +1,837 @@
+**************************************************
+run DYGMAMBA Panc1 job
+**************************************************
+**************************************************
+Trajectory inference
+During startup - Warning messages:
+1: Setting LC_CTYPE failed, using "C" 
+2: Setting LC_COLLATE failed, using "C" 
+3: Setting LC_TIME failed, using "C" 
+4: Setting LC_MESSAGES failed, using "C" 
+5: Setting LC_MONETARY failed, using "C" 
+6: Setting LC_PAPER failed, using "C" 
+7: Setting LC_MEASUREMENT failed, using "C" 
+Loading required package: SeuratObject
+Loading required package: sp
+
+Attaching package: 'SeuratObject'
+
+The following objects are masked from 'package:base':
+
+    intersect, t
+
+
+Attaching package: 'patchwork'
+
+The following object is masked from 'package:cowplot':
+
+    align_plots
+
+[1] "Info identical, Can create Seurat Object"
+Warning: Data is of class dgTMatrix. Coercing to dgCMatrix.
+[1] "Create Seurat Object"
+Warning: Data is of class dgTMatrix. Coercing to dgCMatrix.
+-- Attaching core tidyverse packages ------------------------ tidyverse 2.0.0 --
+v dplyr     1.1.4     v readr     2.1.5
+v forcats   1.0.1     v tibble    3.3.0
+v lubridate 1.9.4     v tidyr     1.3.1
+v purrr     1.1.0     
+-- Conflicts ------------------------------------------ tidyverse_conflicts() --
+x dplyr::between()     masks data.table::between()
+x tidyr::expand()      masks Matrix::expand()
+x dplyr::filter()      masks stats::filter()
+x dplyr::first()       masks data.table::first()
+x lubridate::hour()    masks data.table::hour()
+x lubridate::isoweek() masks data.table::isoweek()
+x dplyr::lag()         masks stats::lag()
+x dplyr::last()        masks data.table::last()
+x lubridate::mday()    masks data.table::mday()
+x lubridate::minute()  masks data.table::minute()
+x lubridate::month()   masks data.table::month()
+x tidyr::pack()        masks Matrix::pack()
+x lubridate::quarter() masks data.table::quarter()
+x lubridate::second()  masks data.table::second()
+x lubridate::stamp()   masks cowplot::stamp()
+x purrr::transpose()   masks data.table::transpose()
+x tidyr::unpack()      masks Matrix::unpack()
+x lubridate::wday()    masks data.table::wday()
+x lubridate::week()    masks data.table::week()
+x lubridate::yday()    masks data.table::yday()
+x lubridate::year()    masks data.table::year()
+i Use the conflicted package (<http://conflicted.r-lib.org/>) to force all conflicts to become errors
+Loading required package: princurve
+Loading required package: TrajectoryUtils
+Loading required package: SingleCellExperiment
+Loading required package: SummarizedExperiment
+Loading required package: MatrixGenerics
+Loading required package: matrixStats
+
+Attaching package: 'matrixStats'
+
+The following object is masked from 'package:dplyr':
+
+    count
+
+
+Attaching package: 'MatrixGenerics'
+
+The following objects are masked from 'package:matrixStats':
+
+    colAlls, colAnyNAs, colAnys, colAvgsPerRowSet, colCollapse,
+    colCounts, colCummaxs, colCummins, colCumprods, colCumsums,
+    colDiffs, colIQRDiffs, colIQRs, colLogSumExps, colMadDiffs,
+    colMads, colMaxs, colMeans2, colMedians, colMins, colOrderStats,
+    colProds, colQuantiles, colRanges, colRanks, colSdDiffs, colSds,
+    colSums2, colTabulates, colVarDiffs, colVars, colWeightedMads,
+    colWeightedMeans, colWeightedMedians, colWeightedSds,
+    colWeightedVars, rowAlls, rowAnyNAs, rowAnys, rowAvgsPerColSet,
+    rowCollapse, rowCounts, rowCummaxs, rowCummins, rowCumprods,
+    rowCumsums, rowDiffs, rowIQRDiffs, rowIQRs, rowLogSumExps,
+    rowMadDiffs, rowMads, rowMaxs, rowMeans2, rowMedians, rowMins,
+    rowOrderStats, rowProds, rowQuantiles, rowRanges, rowRanks,
+    rowSdDiffs, rowSds, rowSums2, rowTabulates, rowVarDiffs, rowVars,
+    rowWeightedMads, rowWeightedMeans, rowWeightedMedians,
+    rowWeightedSds, rowWeightedVars
+
+Loading required package: GenomicRanges
+Loading required package: stats4
+Loading required package: BiocGenerics
+
+Attaching package: 'BiocGenerics'
+
+The following objects are masked from 'package:lubridate':
+
+    intersect, setdiff, union
+
+The following objects are masked from 'package:dplyr':
+
+    combine, intersect, setdiff, union
+
+The following object is masked from 'package:SeuratObject':
+
+    intersect
+
+The following objects are masked from 'package:stats':
+
+    IQR, mad, sd, var, xtabs
+
+The following objects are masked from 'package:base':
+
+    Filter, Find, Map, Position, Reduce, anyDuplicated, aperm, append,
+    as.data.frame, basename, cbind, colnames, dirname, do.call,
+    duplicated, eval, evalq, get, grep, grepl, intersect, is.unsorted,
+    lapply, mapply, match, mget, order, paste, pmax, pmax.int, pmin,
+    pmin.int, rank, rbind, rownames, sapply, setdiff, sort, table,
+    tapply, union, unique, unsplit, which.max, which.min
+
+Loading required package: S4Vectors
+
+Attaching package: 'S4Vectors'
+
+The following objects are masked from 'package:lubridate':
+
+    second, second<-
+
+The following objects are masked from 'package:dplyr':
+
+    first, rename
+
+The following object is masked from 'package:tidyr':
+
+    expand
+
+The following objects are masked from 'package:Matrix':
+
+    expand, unname
+
+The following objects are masked from 'package:data.table':
+
+    first, second
+
+The following object is masked from 'package:utils':
+
+    findMatches
+
+The following objects are masked from 'package:base':
+
+    I, expand.grid, unname
+
+Loading required package: IRanges
+
+Attaching package: 'IRanges'
+
+The following object is masked from 'package:lubridate':
+
+    %within%
+
+The following objects are masked from 'package:dplyr':
+
+    collapse, desc, slice
+
+The following object is masked from 'package:purrr':
+
+    reduce
+
+The following object is masked from 'package:data.table':
+
+    shift
+
+The following object is masked from 'package:sp':
+
+    %over%
+
+Loading required package: GenomeInfoDb
+Loading required package: Biobase
+Welcome to Bioconductor
+
+    Vignettes contain introductory material; view with
+    'browseVignettes()'. To cite Bioconductor, see
+    'citation("Biobase")', and for packages 'citation("pkgname")'.
+
+
+Attaching package: 'Biobase'
+
+The following object is masked from 'package:MatrixGenerics':
+
+    rowMedians
+
+The following objects are masked from 'package:matrixStats':
+
+    anyMissing, rowMedians
+
+
+Attaching package: 'SummarizedExperiment'
+
+The following object is masked from 'package:Seurat':
+
+    Assays
+
+The following object is masked from 'package:SeuratObject':
+
+    Assays
+
+
+Attaching package: 'arrow'
+
+The following object is masked from 'package:BiocGenerics':
+
+    type
+
+The following object is masked from 'package:lubridate':
+
+    duration
+
+The following object is masked from 'package:utils':
+
+    timestamp
+
+Normalizing layer: counts
+Performing log-normalization
+0%   10   20   30   40   50   60   70   80   90   100%
+[----|----|----|----|----|----|----|----|----|----|
+**************************************************|
+Finding variable features for layer counts
+Calculating gene variances
+0%   10   20   30   40   50   60   70   80   90   100%
+[----|----|----|----|----|----|----|----|----|----|
+**************************************************|
+Calculating feature variances of standardized and clipped values
+0%   10   20   30   40   50   60   70   80   90   100%
+[----|----|----|----|----|----|----|----|----|----|
+**************************************************|
+Centering and scaling data matrix
+  |                                                                              |                                                                      |   0%  |                                                                              |===================================                                   |  50%  |                                                                              |======================================================================| 100%
+PC_ 1 
+Positive:  SEPTIN8, DESI1, COX4I1, MRPL43, VPS26C, DUSP22, CCDC6, AKAP13, STC2, GORASP2 
+	   ENTPD4, DDX60L, CLCN6, DNAJC16, PTPRS, TCF7L1, SUPT6H, WBP2, PTGR1, FASTKD5 
+	   FKTN, IMPA2, SNX14, RPL37A, ADA, ZNF143, CLCC1, GNPTAB, SMARCC1, ALKBH5 
+Negative:  KATNBL1, NUP133, PHF10, ACOT7, DUT, GPRC5C, GPR137, TMEM248, LRP8, MGA 
+	   RNF207, DHX9, SLC39A14, SSNA1, DYRK1B, ZNF737, CUL2, SUFU, GSPT1, TIMM17A 
+	   USP31, CIAPIN1, SP140L, SMYD2, PCMTD2, NAPA, FBXO42, TMED5, FLNA, AAGAB 
+PC_ 2 
+Positive:  NBEAL2, TXNRD1, KCTD3, DUSP3, B3GNT5, ATF2, MRE11, NVL, CDC25C, NAPG 
+	   USP48, GID4, CAND1, ZDHHC4, GTPBP10, TUBA1C, SPATS2, TMEM241, IPO11, COPS3 
+	   CD99L2, MYO15B, ATP6V0E1, FZR1, CDAN1, ATP13A2, ILRUN, IQGAP1, ZCCHC14, TJAP1 
+Negative:  PREB, MAPK1IP1L, ATP10D, TANC2, PGK1, HMG20B, DAP, MAT2B, ACAA1, SETDB1 
+	   PRR14L, XRCC6, TUBB, CHPF2, PSMD8, GFM1, NFATC1, FAU, BICRAL, GGCX 
+	   TMEM185B, ZNF678, WDR81, SLC25A12, PLA2R1, GADD45B, ADRB1, PCMTD1, WASHC2A, ZNF3 
+PC_ 3 
+Positive:  MFSD11, F11R, ZNF585B, FANCF, RNF10, RPL31, CUX1, YTHDF1, MCAM, SLC35F2 
+	   NOC4L, PARP4, PLK2, SSC5D, ERCC4, ANKRD13C, TNS3, SH3RF2, TMEM123, NAPG 
+	   EXOC2, ZNF219, RBM33, SEC24A, GLT8D1, CWC15, TARS2, TUBA1C, HMGXB3, TUBB 
+Negative:  NCR3LG1, CALCOCO2, CRKL, ZNF892, SLC20A2, RNF38, ARL8B, ATXN1, AFDN, GOLIM4 
+	   MYO19, TSC22D2, NEU3, USF2, POLR3K, CMTM6, ARPC4, C1QBP, FKBP8, STX16 
+	   NPEPPS, LPCAT1, ATP9B, CRCP, ERCC3, FBXO21, MCM9, SF3B6, DUSP1, THAP12 
+PC_ 4 
+Positive:  WASF3, DOP1B, TNFRSF12A, PRRC2B, KRT8, MCAM, PSMC6, FBXO5, GOT1, AK3 
+	   ERCC4, NOL6, AGGF1, ADPRS, PRDX3, COX4I1, SYDE1, HSF2, ZNF160, ZNF37BP 
+	   LRP10, ACTR1A, ARHGAP29, NUMA1, EIF3E, PTGR1, UBXN2B, ZNF574, MIEN1, DRG1 
+Negative:  HDGF, STX12, TCF7L1, CAMTA1, NT5C3A, ZNF451, ELK1, RUBCN, ATPSCKMT, SCFD1 
+	   PTPRS, RFWD3, ANP32A, NCOA5, NDUFB3, C22orf46P, APEX1, SCAF1, SAMHD1, C1GALT1C1 
+	   UBE2S, DNAJB2, JMJD1C, CLOCK, ZBED4, DDX31, DENND11, TOM1, ATP7B, DRG2 
+PC_ 5 
+Positive:  AACS, HIBCH, TAF4B, CUL3, RCOR3, VPS51, SHROOM1, ZNF8, CARD8, UBXN2B 
+	   HMGB3, PPP1R12C, SPPL2B, PSME3IP1, C22orf46P, ARFGAP3, HIGD1A, ACAA1, NRBP2, ZC3H7B 
+	   RPRD1A, MFSD12, RPS6KC1, SNX29, ATXN1, ZNF37BP, VPS13A, ADRA2C, FMNL1, SHKBP1 
+Negative:  SNRPD3, HSF2, CUL2, SLC37A3, HOXC9, STYXL1, AFG3L1P, MAPK1, PIK3C2A, RPSA 
+	   TECR, CNKSR3, DDX42, PDS5B, NOP58, TMEM33, SEPTIN8, TAF1C, RNF215, GNL1 
+	   ITPA, SLC25A12, TNKS1BP1, F2R, B4GALT3, SHTN1, NR3C1, AURKAIP1, IFIT1, LAMTOR1 
+找到 0 个重复的细胞 (在PCA空间中).
+Computing nearest neighbor graph
+Computing SNN
+Modularity Optimizer version 1.3.0 by Ludo Waltman and Nees Jan van Eck
+
+Number of nodes: 500
+Number of edges: 31500
+
+Running Louvain algorithm...
+0%   10   20   30   40   50   60   70   80   90   100%
+[----|----|----|----|----|----|----|----|----|----|
+**************************************************|
+Maximum modularity in 10 random starts: 0.5000
+Number of communities: 1
+Elapsed time: 0 seconds
+Warning: The default method for RunUMAP has changed from calling Python UMAP via reticulate to the R-native UWOT using the cosine metric
+To use Python UMAP via reticulate, set umap.method to 'umap-learn' and metric to 'correlation'
+This message will be shown once per session
+22:12:31 UMAP embedding parameters a = 0.9922 b = 1.112
+22:12:31 Read 500 rows and found 30 numeric columns
+22:12:31 Using Annoy for neighbor search, n_neighbors = 30
+22:12:31 Building Annoy index with metric = cosine, n_trees = 50
+0%   10   20   30   40   50   60   70   80   90   100%
+[----|----|----|----|----|----|----|----|----|----|
+**************************************************|
+22:12:31 Writing NN index file to temp file /tmp/RtmpwvFQw5/file161bf1c211dd4
+22:12:31 Searching Annoy index using 1 thread, search_k = 3000
+22:12:31 Annoy recall = 100%
+22:12:31 Commencing smooth kNN distance calibration using 1 thread with target n_neighbors = 30
+22:12:33 Initializing from normalized Laplacian + noise (using RSpectra)
+22:12:33 Commencing optimization for 500 epochs, with 15498 positive edges
+22:12:33 Using rng type: pcg
+Using method 'umap'
+0%   10   20   30   40   50   60   70   80   90   100%
+[----|----|----|----|----|----|----|----|----|----|
+**************************************************|
+22:12:35 Optimization finished
+Warning messages:
+1: `PackageCheck()` was deprecated in SeuratObject 5.0.0.
+i Please use `rlang::check_installed()` instead.
+i The deprecated feature was likely used in the Seurat package.
+  Please report the issue at <https://github.com/satijalab/seurat/issues>. 
+2: The `slot` argument of `GetAssayData()` is deprecated as of SeuratObject 5.0.0.
+i Please use the `layer` argument instead.
+i The deprecated feature was likely used in the Seurat package.
+  Please report the issue at <https://github.com/satijalab/seurat/issues>. 
+          Length            Class             Mode 
+               1 SlingshotDataSet               S4 
+[1] "Number of cells in each lineage:"
+Lineage1 
+     500 
+[1] "Lineage with most cells: Lineage1"
+[1] "Top cells in the lineage:"
+         cell_barcode  pseudotime  lineage
+cell_40       cell_40  0.00000000 Lineage1
+cell_464     cell_464  0.00000000 Lineage1
+cell_494     cell_494  0.00000000 Lineage1
+cell_144     cell_144  0.00000000 Lineage1
+cell_76       cell_76  0.00000000 Lineage1
+cell_194     cell_194  0.00000000 Lineage1
+cell_312     cell_312  0.00000000 Lineage1
+cell_339     cell_339  0.00000000 Lineage1
+cell_203     cell_203  0.00000000 Lineage1
+cell_20       cell_20  0.00000000 Lineage1
+cell_434     cell_434  0.00000000 Lineage1
+cell_165     cell_165  0.00000000 Lineage1
+cell_400     cell_400  0.00000000 Lineage1
+cell_216     cell_216  0.02645819 Lineage1
+cell_424     cell_424  0.06975763 Lineage1
+cell_252     cell_252  0.10518552 Lineage1
+cell_154     cell_154  0.15637873 Lineage1
+cell_28       cell_28  0.23067047 Lineage1
+cell_249     cell_249  0.24317764 Lineage1
+cell_29       cell_29  0.31764748 Lineage1
+cell_478     cell_478  0.39463837 Lineage1
+cell_39       cell_39  0.41667266 Lineage1
+cell_234     cell_234  0.51597468 Lineage1
+cell_379     cell_379  0.54168038 Lineage1
+cell_19       cell_19  0.54920393 Lineage1
+cell_406     cell_406  0.57161135 Lineage1
+cell_235     cell_235  0.62030751 Lineage1
+cell_371     cell_371  0.69297856 Lineage1
+cell_242     cell_242  0.77379220 Lineage1
+cell_272     cell_272  0.78677010 Lineage1
+cell_38       cell_38  0.81437814 Lineage1
+cell_443     cell_443  0.84032775 Lineage1
+cell_48       cell_48  0.87430497 Lineage1
+cell_462     cell_462  0.90019236 Lineage1
+cell_289     cell_289  0.93261168 Lineage1
+cell_229     cell_229  1.03776606 Lineage1
+cell_409     cell_409  1.06334718 Lineage1
+cell_324     cell_324  1.06761054 Lineage1
+cell_392     cell_392  1.12621582 Lineage1
+cell_233     cell_233  1.13550492 Lineage1
+cell_334     cell_334  1.14458592 Lineage1
+cell_302     cell_302  1.15945280 Lineage1
+cell_310     cell_310  1.16041491 Lineage1
+cell_157     cell_157  1.16387312 Lineage1
+cell_49       cell_49  1.23005564 Lineage1
+cell_343     cell_343  1.23077190 Lineage1
+cell_458     cell_458  1.23385008 Lineage1
+cell_166     cell_166  1.32563994 Lineage1
+cell_287     cell_287  1.34968201 Lineage1
+cell_41       cell_41  1.37156094 Lineage1
+cell_267     cell_267  1.40852273 Lineage1
+cell_403     cell_403  1.40889287 Lineage1
+cell_296     cell_296  1.44460904 Lineage1
+cell_308     cell_308  1.45454847 Lineage1
+cell_69       cell_69  1.58780897 Lineage1
+cell_114     cell_114  1.62058034 Lineage1
+cell_468     cell_468  1.63410929 Lineage1
+cell_171     cell_171  1.65290175 Lineage1
+cell_395     cell_395  1.67310011 Lineage1
+cell_363     cell_363  1.69180230 Lineage1
+cell_52       cell_52  1.69728908 Lineage1
+cell_269     cell_269  1.72573560 Lineage1
+cell_274     cell_274  1.73666374 Lineage1
+cell_236     cell_236  1.73938616 Lineage1
+cell_291     cell_291  1.77616521 Lineage1
+cell_279     cell_279  1.83846231 Lineage1
+cell_425     cell_425  1.85468071 Lineage1
+cell_358     cell_358  1.86795476 Lineage1
+cell_198     cell_198  1.92555320 Lineage1
+cell_192     cell_192  1.96991531 Lineage1
+cell_398     cell_398  1.96997250 Lineage1
+cell_217     cell_217  2.00732487 Lineage1
+cell_490     cell_490  2.01007648 Lineage1
+cell_286     cell_286  2.02363633 Lineage1
+cell_411     cell_411  2.05164768 Lineage1
+cell_199     cell_199  2.05542840 Lineage1
+cell_230     cell_230  2.07283890 Lineage1
+cell_156     cell_156  2.10804789 Lineage1
+cell_355     cell_355  2.11947146 Lineage1
+cell_466     cell_466  2.13179333 Lineage1
+cell_128     cell_128  2.14455207 Lineage1
+cell_59       cell_59  2.15727352 Lineage1
+cell_90       cell_90  2.17210031 Lineage1
+cell_383     cell_383  2.19343496 Lineage1
+cell_227     cell_227  2.19684298 Lineage1
+cell_164     cell_164  2.20982405 Lineage1
+cell_429     cell_429  2.24879019 Lineage1
+cell_87       cell_87  2.35902736 Lineage1
+cell_142     cell_142  2.36313578 Lineage1
+cell_284     cell_284  2.37295325 Lineage1
+cell_145     cell_145  2.37906042 Lineage1
+cell_44       cell_44  2.41626397 Lineage1
+cell_387     cell_387  2.46620323 Lineage1
+cell_474     cell_474  2.47218446 Lineage1
+cell_42       cell_42  2.49426492 Lineage1
+cell_51       cell_51  2.49625152 Lineage1
+cell_321     cell_321  2.52549855 Lineage1
+cell_492     cell_492  2.53550285 Lineage1
+cell_91       cell_91  2.54724725 Lineage1
+cell_89       cell_89  2.62881493 Lineage1
+cell_373     cell_373  2.63010831 Lineage1
+cell_435     cell_435  2.63743587 Lineage1
+cell_222     cell_222  2.64922207 Lineage1
+cell_369     cell_369  2.68264115 Lineage1
+cell_138     cell_138  2.71736774 Lineage1
+cell_34       cell_34  2.71876342 Lineage1
+cell_322     cell_322  2.71956855 Lineage1
+cell_316     cell_316  2.73645145 Lineage1
+cell_303     cell_303  2.76535888 Lineage1
+cell_453     cell_453  2.80049396 Lineage1
+cell_121     cell_121  2.87752818 Lineage1
+cell_270     cell_270  2.89885975 Lineage1
+cell_300     cell_300  2.90302004 Lineage1
+cell_437     cell_437  2.95206234 Lineage1
+cell_451     cell_451  2.95666213 Lineage1
+cell_104     cell_104  2.98679972 Lineage1
+cell_497     cell_497  3.00232185 Lineage1
+cell_278     cell_278  3.01693182 Lineage1
+cell_36       cell_36  3.03206055 Lineage1
+cell_4         cell_4  3.06046830 Lineage1
+cell_246     cell_246  3.06046830 Lineage1
+cell_95       cell_95  3.08224968 Lineage1
+cell_375     cell_375  3.08497638 Lineage1
+cell_482     cell_482  3.08529206 Lineage1
+cell_174     cell_174  3.08551630 Lineage1
+cell_135     cell_135  3.15278100 Lineage1
+cell_189     cell_189  3.22447904 Lineage1
+cell_64       cell_64  3.24586511 Lineage1
+cell_260     cell_260  3.30373867 Lineage1
+cell_385     cell_385  3.30875558 Lineage1
+cell_455     cell_455  3.33448111 Lineage1
+cell_170     cell_170  3.35959004 Lineage1
+cell_83       cell_83  3.36551664 Lineage1
+cell_26       cell_26  3.40517663 Lineage1
+cell_297     cell_297  3.42464957 Lineage1
+cell_346     cell_346  3.46322349 Lineage1
+cell_73       cell_73  3.49713050 Lineage1
+cell_85       cell_85  3.51491351 Lineage1
+cell_22       cell_22  3.54312755 Lineage1
+cell_113     cell_113  3.63055893 Lineage1
+cell_5         cell_5  3.68401845 Lineage1
+cell_306     cell_306  3.69340969 Lineage1
+cell_181     cell_181  3.69861055 Lineage1
+cell_254     cell_254  3.71311467 Lineage1
+cell_271     cell_271  3.71857514 Lineage1
+cell_37       cell_37  3.72189234 Lineage1
+cell_93       cell_93  3.72278353 Lineage1
+cell_126     cell_126  3.72923404 Lineage1
+cell_419     cell_419  3.72923404 Lineage1
+cell_11       cell_11  3.78806539 Lineage1
+cell_370     cell_370  3.84344755 Lineage1
+cell_155     cell_155  3.84516164 Lineage1
+cell_70       cell_70  3.86111534 Lineage1
+cell_359     cell_359  3.87163295 Lineage1
+cell_421     cell_421  3.93705426 Lineage1
+cell_150     cell_150  3.94405320 Lineage1
+cell_368     cell_368  4.00777750 Lineage1
+cell_452     cell_452  4.00777750 Lineage1
+cell_496     cell_496  4.00777750 Lineage1
+cell_131     cell_131  4.00995624 Lineage1
+cell_342     cell_342  4.02586062 Lineage1
+cell_187     cell_187  4.04219272 Lineage1
+cell_195     cell_195  4.05864397 Lineage1
+cell_442     cell_442  4.05864397 Lineage1
+cell_345     cell_345  4.08036368 Lineage1
+cell_397     cell_397  4.11152544 Lineage1
+cell_493     cell_493  4.15705984 Lineage1
+cell_162     cell_162  4.15705984 Lineage1
+cell_402     cell_402  4.20457659 Lineage1
+cell_56       cell_56  4.23789503 Lineage1
+cell_226     cell_226  4.24746210 Lineage1
+cell_139     cell_139  4.25122022 Lineage1
+cell_382     cell_382  4.27500373 Lineage1
+cell_454     cell_454  4.29355181 Lineage1
+cell_8         cell_8  4.29745950 Lineage1
+cell_328     cell_328  4.29745950 Lineage1
+cell_450     cell_450  4.29745950 Lineage1
+cell_495     cell_495  4.29938022 Lineage1
+cell_361     cell_361  4.30412729 Lineage1
+cell_116     cell_116  4.31085846 Lineage1
+cell_332     cell_332  4.34604155 Lineage1
+cell_193     cell_193  4.38952465 Lineage1
+cell_240     cell_240  4.38952465 Lineage1
+cell_295     cell_295  4.38952465 Lineage1
+cell_487     cell_487  4.39003037 Lineage1
+cell_485     cell_485  4.43605820 Lineage1
+cell_190     cell_190  4.43605820 Lineage1
+cell_111     cell_111  4.43605820 Lineage1
+cell_347     cell_347  4.48330209 Lineage1
+cell_2         cell_2  4.48330209 Lineage1
+cell_107     cell_107  4.49547602 Lineage1
+cell_422     cell_422  4.52155110 Lineage1
+cell_417     cell_417  4.52390404 Lineage1
+cell_97       cell_97  4.52408719 Lineage1
+cell_223     cell_223  4.52617888 Lineage1
+cell_239     cell_239  4.53162968 Lineage1
+cell_45       cell_45  4.53162968 Lineage1
+cell_293     cell_293  4.57067562 Lineage1
+cell_391     cell_391  4.58134624 Lineage1
+cell_445     cell_445  4.58134624 Lineage1
+cell_469     cell_469  4.58134624 Lineage1
+cell_168     cell_168  4.60487752 Lineage1
+cell_219     cell_219  4.62071976 Lineage1
+cell_47       cell_47  4.62340552 Lineage1
+cell_389     cell_389  4.63269884 Lineage1
+cell_109     cell_109  4.63269884 Lineage1
+cell_213     cell_213  4.67577020 Lineage1
+cell_35       cell_35  4.68474745 Lineage1
+cell_163     cell_163  4.74109530 Lineage1
+cell_309     cell_309  4.74109530 Lineage1
+cell_184     cell_184  4.74109530 Lineage1
+cell_413     cell_413  4.76834481 Lineage1
+cell_367     cell_367  4.76945798 Lineage1
+cell_92       cell_92  4.77385555 Lineage1
+cell_259     cell_259  4.79862273 Lineage1
+cell_149     cell_149  4.81528375 Lineage1
+cell_218     cell_218  4.85757167 Lineage1
+cell_183     cell_183  4.90767477 Lineage1
+cell_447     cell_447  4.91981798 Lineage1
+cell_17       cell_17  4.91981798 Lineage1
+cell_470     cell_470  4.93582429 Lineage1
+cell_330     cell_330  4.93901506 Lineage1
+cell_80       cell_80  4.95622950 Lineage1
+cell_329     cell_329  4.99563612 Lineage1
+cell_1         cell_1  5.00020648 Lineage1
+cell_50       cell_50  5.04883886 Lineage1
+cell_54       cell_54  5.05009929 Lineage1
+cell_499     cell_499  5.05009929 Lineage1
+cell_147     cell_147  5.06732824 Lineage1
+cell_7         cell_7  5.08525494 Lineage1
+cell_285     cell_285  5.09025416 Lineage1
+cell_120     cell_120  5.09853174 Lineage1
+cell_315     cell_315  5.13748937 Lineage1
+cell_404     cell_404  5.14023424 Lineage1
+cell_122     cell_122  5.14459354 Lineage1
+cell_14       cell_14  5.16637927 Lineage1
+cell_159     cell_159  5.25480690 Lineage1
+cell_394     cell_394  5.25950760 Lineage1
+cell_420     cell_420  5.28765447 Lineage1
+cell_265     cell_265  5.29557387 Lineage1
+cell_96       cell_96  5.29733994 Lineage1
+cell_118     cell_118  5.32042601 Lineage1
+cell_237     cell_237  5.33467628 Lineage1
+cell_465     cell_465  5.34516698 Lineage1
+cell_172     cell_172  5.36091595 Lineage1
+cell_106     cell_106  5.39532689 Lineage1
+cell_313     cell_313  5.40746115 Lineage1
+cell_61       cell_61  5.46358715 Lineage1
+cell_16       cell_16  5.46671445 Lineage1
+cell_158     cell_158  5.46789156 Lineage1
+cell_488     cell_488  5.48204695 Lineage1
+cell_277     cell_277  5.48886197 Lineage1
+cell_486     cell_486  5.56506300 Lineage1
+cell_74       cell_74  5.59887186 Lineage1
+cell_185     cell_185  5.62328779 Lineage1
+cell_62       cell_62  5.65199183 Lineage1
+cell_317     cell_317  5.65527847 Lineage1
+cell_428     cell_428  5.67849770 Lineage1
+cell_483     cell_483  5.71372340 Lineage1
+cell_351     cell_351  5.72093553 Lineage1
+cell_191     cell_191  5.73245161 Lineage1
+cell_292     cell_292  5.77062534 Lineage1
+cell_137     cell_137  5.78149128 Lineage1
+cell_356     cell_356  5.84747462 Lineage1
+cell_354     cell_354  5.84855094 Lineage1
+cell_201     cell_201  5.86316949 Lineage1
+cell_173     cell_173  5.86959235 Lineage1
+cell_46       cell_46  5.87321117 Lineage1
+cell_461     cell_461  5.87839090 Lineage1
+cell_326     cell_326  5.91556420 Lineage1
+cell_84       cell_84  5.92197456 Lineage1
+cell_68       cell_68  5.92629070 Lineage1
+cell_182     cell_182  5.94669743 Lineage1
+cell_360     cell_360  5.97628416 Lineage1
+cell_30       cell_30  5.98084188 Lineage1
+cell_378     cell_378  6.00255714 Lineage1
+cell_365     cell_365  6.01031369 Lineage1
+cell_381     cell_381  6.05296029 Lineage1
+cell_366     cell_366  6.07189773 Lineage1
+cell_205     cell_205  6.09338814 Lineage1
+cell_280     cell_280  6.17572849 Lineage1
+cell_132     cell_132  6.18085462 Lineage1
+cell_103     cell_103  6.18118433 Lineage1
+cell_23       cell_23  6.28274138 Lineage1
+cell_250     cell_250  6.30866741 Lineage1
+cell_255     cell_255  6.32052571 Lineage1
+cell_15       cell_15  6.32590121 Lineage1
+cell_18       cell_18  6.34895485 Lineage1
+cell_124     cell_124  6.35616693 Lineage1
+cell_262     cell_262  6.39072563 Lineage1
+cell_500     cell_500  6.40777537 Lineage1
+cell_380     cell_380  6.41481675 Lineage1
+cell_491     cell_491  6.44056488 Lineage1
+cell_372     cell_372  6.50734674 Lineage1
+cell_133     cell_133  6.55101817 Lineage1
+cell_248     cell_248  6.55146632 Lineage1
+cell_348     cell_348  6.58038212 Lineage1
+cell_224     cell_224  6.62789406 Lineage1
+cell_140     cell_140  6.64092959 Lineage1
+cell_100     cell_100  6.64803792 Lineage1
+cell_221     cell_221  6.66162452 Lineage1
+cell_196     cell_196  6.66689008 Lineage1
+cell_282     cell_282  6.73749509 Lineage1
+cell_67       cell_67  6.79332472 Lineage1
+cell_125     cell_125  6.80329387 Lineage1
+cell_388     cell_388  6.81404347 Lineage1
+cell_320     cell_320  6.82494006 Lineage1
+cell_58       cell_58  6.84626823 Lineage1
+cell_176     cell_176  6.86232532 Lineage1
+cell_426     cell_426  6.86827259 Lineage1
+cell_444     cell_444  6.91006567 Lineage1
+cell_112     cell_112  6.94684981 Lineage1
+cell_72       cell_72  6.94684981 Lineage1
+cell_123     cell_123  6.97581773 Lineage1
+cell_244     cell_244  7.00960019 Lineage1
+cell_77       cell_77  7.07268422 Lineage1
+cell_31       cell_31  7.12038438 Lineage1
+cell_238     cell_238  7.12751003 Lineage1
+cell_211     cell_211  7.12751003 Lineage1
+cell_446     cell_446  7.15450005 Lineage1
+cell_436     cell_436  7.18239633 Lineage1
+cell_489     cell_489  7.21859557 Lineage1
+cell_362     cell_362  7.23444574 Lineage1
+cell_99       cell_99  7.25036730 Lineage1
+cell_476     cell_476  7.27015694 Lineage1
+cell_177     cell_177  7.27827920 Lineage1
+cell_374     cell_374  7.28413373 Lineage1
+cell_21       cell_21  7.32449988 Lineage1
+cell_337     cell_337  7.33131818 Lineage1
+cell_175     cell_175  7.34625459 Lineage1
+cell_407     cell_407  7.35178540 Lineage1
+cell_352     cell_352  7.37373025 Lineage1
+cell_167     cell_167  7.37619237 Lineage1
+cell_43       cell_43  7.37619237 Lineage1
+cell_283     cell_283  7.37619237 Lineage1
+cell_102     cell_102  7.38760233 Lineage1
+cell_148     cell_148  7.39555668 Lineage1
+cell_94       cell_94  7.40627509 Lineage1
+cell_169     cell_169  7.40646891 Lineage1
+cell_473     cell_473  7.41909339 Lineage1
+cell_263     cell_263  7.44543599 Lineage1
+cell_117     cell_117  7.44758380 Lineage1
+cell_33       cell_33  7.47358089 Lineage1
+cell_440     cell_440  7.49784423 Lineage1
+cell_6         cell_6  7.50066708 Lineage1
+cell_108     cell_108  7.50066708 Lineage1
+cell_433     cell_433  7.50066708 Lineage1
+cell_206     cell_206  7.54034487 Lineage1
+cell_393     cell_393  7.54034487 Lineage1
+cell_396     cell_396  7.54034487 Lineage1
+cell_257     cell_257  7.54034487 Lineage1
+cell_79       cell_79  7.54034487 Lineage1
+cell_390     cell_390  7.56219824 Lineage1
+cell_256     cell_256  7.56413678 Lineage1
+cell_319     cell_319  7.57995728 Lineage1
+cell_12       cell_12  7.58817774 Lineage1
+cell_459     cell_459  7.61997242 Lineage1
+cell_432     cell_432  7.61997242 Lineage1
+cell_231     cell_231  7.64816410 Lineage1
+cell_408     cell_408  7.65554249 Lineage1
+cell_333     cell_333  7.66081965 Lineage1
+cell_228     cell_228  7.70295802 Lineage1
+cell_456     cell_456  7.70295802 Lineage1
+cell_281     cell_281  7.72748870 Lineage1
+cell_430     cell_430  7.73190372 Lineage1
+cell_441     cell_441  7.74671281 Lineage1
+cell_384     cell_384  7.75515973 Lineage1
+cell_349     cell_349  7.79243172 Lineage1
+cell_484     cell_484  7.82256273 Lineage1
+cell_268     cell_268  7.82759972 Lineage1
+cell_66       cell_66  7.83993586 Lineage1
+cell_24       cell_24  7.84551233 Lineage1
+cell_412     cell_412  7.84902549 Lineage1
+cell_55       cell_55  7.91931683 Lineage1
+cell_71       cell_71  7.94186956 Lineage1
+cell_141     cell_141  7.94186956 Lineage1
+cell_336     cell_336  7.96016679 Lineage1
+cell_431     cell_431  7.98707568 Lineage1
+cell_477     cell_477  7.98724104 Lineage1
+cell_376     cell_376  8.00395469 Lineage1
+cell_27       cell_27  8.01576868 Lineage1
+cell_32       cell_32  8.01795977 Lineage1
+cell_82       cell_82  8.05282999 Lineage1
+cell_134     cell_134  8.13020493 Lineage1
+cell_463     cell_463  8.14132367 Lineage1
+cell_405     cell_405  8.15149102 Lineage1
+cell_344     cell_344  8.17915165 Lineage1
+cell_418     cell_418  8.21748475 Lineage1
+cell_427     cell_427  8.25876804 Lineage1
+cell_136     cell_136  8.30934134 Lineage1
+cell_314     cell_314  8.34368806 Lineage1
+cell_180     cell_180  8.38313333 Lineage1
+cell_151     cell_151  8.39854011 Lineage1
+cell_245     cell_245  8.43132158 Lineage1
+cell_276     cell_276  8.43337884 Lineage1
+cell_323     cell_323  8.53413151 Lineage1
+cell_479     cell_479  8.55118878 Lineage1
+cell_266     cell_266  8.56826424 Lineage1
+cell_220     cell_220  8.60515759 Lineage1
+cell_481     cell_481  8.60965753 Lineage1
+cell_241     cell_241  8.66982393 Lineage1
+cell_63       cell_63  8.69319759 Lineage1
+cell_357     cell_357  8.71935313 Lineage1
+cell_110     cell_110  8.73937614 Lineage1
+cell_209     cell_209  8.76892324 Lineage1
+cell_377     cell_377  8.77800562 Lineage1
+cell_457     cell_457  8.77851279 Lineage1
+cell_105     cell_105  8.79364470 Lineage1
+cell_212     cell_212  8.79938162 Lineage1
+cell_340     cell_340  8.80017716 Lineage1
+cell_101     cell_101  8.80086601 Lineage1
+cell_253     cell_253  8.80825803 Lineage1
+cell_232     cell_232  8.82479032 Lineage1
+cell_188     cell_188  8.91232107 Lineage1
+cell_423     cell_423  8.91269620 Lineage1
+cell_298     cell_298  8.92255115 Lineage1
+cell_208     cell_208  8.92455486 Lineage1
+cell_338     cell_338  9.00679220 Lineage1
+cell_153     cell_153  9.00805334 Lineage1
+cell_88       cell_88  9.10194913 Lineage1
+cell_467     cell_467  9.16639371 Lineage1
+cell_449     cell_449  9.16698850 Lineage1
+cell_460     cell_460  9.16787867 Lineage1
+cell_438     cell_438  9.17059898 Lineage1
+cell_10       cell_10  9.19511446 Lineage1
+cell_160     cell_160  9.20260009 Lineage1
+cell_410     cell_410  9.30563263 Lineage1
+cell_202     cell_202  9.31548860 Lineage1
+cell_299     cell_299  9.35886710 Lineage1
+cell_327     cell_327  9.38261467 Lineage1
+cell_304     cell_304  9.40348075 Lineage1
+cell_415     cell_415  9.40844101 Lineage1
+cell_53       cell_53  9.42603217 Lineage1
+cell_350     cell_350  9.44227240 Lineage1
+cell_207     cell_207  9.46047463 Lineage1
+cell_273     cell_273  9.46417343 Lineage1
+cell_275     cell_275  9.46996325 Lineage1
+cell_414     cell_414  9.52190789 Lineage1
+cell_9         cell_9  9.53839438 Lineage1
+cell_179     cell_179  9.54666660 Lineage1
+cell_247     cell_247  9.54696317 Lineage1
+cell_81       cell_81  9.54709800 Lineage1
+cell_439     cell_439  9.57382068 Lineage1
+cell_471     cell_471  9.64104595 Lineage1
+cell_119     cell_119  9.68835311 Lineage1
+cell_225     cell_225  9.69808936 Lineage1
+cell_215     cell_215  9.72822452 Lineage1
+cell_25       cell_25  9.74537809 Lineage1
+cell_57       cell_57  9.81680338 Lineage1
+cell_401     cell_401  9.84237884 Lineage1
+cell_290     cell_290  9.85404316 Lineage1
+cell_65       cell_65  9.90215996 Lineage1
+cell_341     cell_341  9.91233196 Lineage1
+cell_98       cell_98  9.92155185 Lineage1
+cell_305     cell_305  9.93106315 Lineage1
+cell_243     cell_243  9.99672836 Lineage1
+cell_129     cell_129 10.02506053 Lineage1
+cell_311     cell_311 10.08506730 Lineage1
+cell_448     cell_448 10.08900938 Lineage1
+cell_197     cell_197 10.11366227 Lineage1
+cell_60       cell_60 10.14250607 Lineage1
+cell_78       cell_78 10.16811005 Lineage1
+cell_75       cell_75 10.18506268 Lineage1
+cell_146     cell_146 10.25724022 Lineage1
+cell_152     cell_152 10.25997657 Lineage1
+cell_386     cell_386 10.35779479 Lineage1
+cell_13       cell_13 10.35837398 Lineage1
+cell_143     cell_143 10.36526432 Lineage1
+cell_210     cell_210 10.36551466 Lineage1
+cell_399     cell_399 10.41148199 Lineage1
+cell_331     cell_331 10.41257444 Lineage1
+cell_480     cell_480 10.45199574 Lineage1
+cell_251     cell_251 10.46312933 Lineage1
+cell_161     cell_161 10.46587448 Lineage1
+cell_127     cell_127 10.72296666 Lineage1
+cell_472     cell_472 10.72376946 Lineage1
+cell_200     cell_200 10.72642908 Lineage1
+cell_261     cell_261 10.78267330 Lineage1
+cell_3         cell_3 10.86079063 Lineage1
+cell_264     cell_264 10.86850793 Lineage1
+cell_498     cell_498 10.86850793 Lineage1
+cell_294     cell_294 10.86850793 Lineage1
+cell_301     cell_301 10.86850793 Lineage1
+cell_364     cell_364 10.86850793 Lineage1
+cell_86       cell_86 10.86850793 Lineage1
+cell_130     cell_130 10.86850793 Lineage1
+cell_475     cell_475 10.86850793 Lineage1
+cell_335     cell_335 10.86850793 Lineage1
+cell_204     cell_204 10.86850793 Lineage1
+cell_115     cell_115 10.86850793 Lineage1
+cell_214     cell_214 10.86850793 Lineage1
+cell_325     cell_325 10.86850793 Lineage1
+cell_186     cell_186 10.86850793 Lineage1
+cell_318     cell_318 10.86850793 Lineage1
+cell_178     cell_178 10.86850793 Lineage1
+cell_288     cell_288 10.86850793 Lineage1
+cell_416     cell_416 10.86850793 Lineage1
+cell_353     cell_353 10.86850793 Lineage1
+cell_307     cell_307 10.86850793 Lineage1
+cell_258     cell_258 10.86850793 Lineage1
+[1] "Before filter"
+[1] 500   3
+[1] "After filter"
+[1] 434   3
+[1] "Data saved to: /home/liyang/BioWuYan/dygmamba_project/data/cell_line/Panc1/process/max_cells_lineage_Lineage1_pseudotime.csv"

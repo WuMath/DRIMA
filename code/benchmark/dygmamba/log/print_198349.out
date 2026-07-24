@@ -1,0 +1,220 @@
+run job
+******************** DYGMAMBA ********************
+Top 40 AUC (Raw): 456.50
+Top 40 AUC (Normalized): 0.5710
+******************** GLUE ********************
+******************** CellOracle ********************
+>>> 开始评估预测能力 (Predictability)...
+>>> 开始评估预测能力 (Predictability)...
+>>> 开始评估预测能力 (Predictability)...
+>>> 开始评估预测能力 (Predictability)...
+>>> 开始评估预测能力 (Predictability)...
+>>> 开始评估预测能力 (Predictability)...
+>>> 开始评估预测能力 (Predictability)...
+>>> 开始评估预测能力 (Predictability)...
+/home/liyang/BioWuYan/dygmamba_project/model/dygmamba/src/benchmark/benchmark_process.py:295: FutureWarning: 
+
+Passing `palette` without assigning `hue` is deprecated and will be removed in v0.14.0. Assign the `x` variable to `hue` and set `legend=False` for the same effect.
+
+  ax = sns.boxplot(data=df_combined,
+/home/liyang/BioWuYan/dygmamba_project/model/dygmamba/src/benchmark/benchmark_process.py:316: UserWarning: set_ticklabels() should only be used with a fixed number of ticks, i.e. after set_ticks() or using a FixedLocator.
+  ax.set_xticklabels(new_labels)
+--- 1. 准备 ATAC Peak 数据 ---
+未提供过滤列表，将使用 atac_adata 中所有的 Peaks。
+ATAC Peaks 数量: 31555
+--- 2. 准备 TF ChIP 数据 ---
+TF ChIP Peaks 数量: 2662899
+--- 3. 计算重叠 (构建 Network) ---
+构建了包含 270321 条边的 TF-Peak 网络。
+--- 4. 转换为矩阵 (Matrix Construction) ---
+--- 5. 封装为 AnnData ---
+✅ 完成！生成的 AnnData 维度: (31555, 48) (Peaks x TFs)
+
+步骤 1: 过滤 Peaks (行)
+  > 找到 68947 / 68947 个 peaks 至少有 1 个 TF 结合。
+
+步骤 2: 过滤 TFs (列)
+  > 找到 850 / 850 个 TFs 至少结合 1 个 peak。
+  > 最终形状: (68947, 850)
+正在解析 Consensus Peaks 坐标...
+共发现 41 个共有 TF，开始评估...
+******************** DYGMAMBA ********************
+         TF  Precision    Recall  ...     FN  GroundTruth_Count  Predicted_Count
+0    SREBF1   0.038508  0.570160  ...    242                563             8336
+1     NR2C2   0.169193  0.743605  ...    862               3362            14776
+2     ESRRA   0.045892  0.841558  ...     61                385             7060
+3      RFX5   0.287255  0.181464  ...   3365               4111             2597
+4     CEBPB   0.905085  0.138217  ...   6659               7727             1180
+5      RFX1   0.352425  0.625410  ...    457               1220             2165
+6     FOXA1   0.838464  0.230887  ...   9527              12387             3411
+7     NR2F6   0.546313  0.200346  ...  11088              13866             5085
+8      USF2   0.787992  0.416998  ...   2936               5036             2665
+9       SRF   0.350923  0.200906  ...   2116               2648             1516
+10    HNF4G   0.541371  0.477259  ...   4264               8157             7191
+11     MAFF   0.315699  0.388906  ...   2016               3299             4064
+12    NR2F2   0.340586  0.359382  ...   2902               4530             4780
+13    NR3C1   0.043074  0.474419  ...    113                215             2368
+14    CREB1   0.524340  0.207826  ...   8786              11091             4396
+15    SOX13   0.553840  0.125755  ...   8975              10266             2331
+16     MAFK   0.174441  0.545911  ...   1266               2788             8725
+17      MYC   0.489672  0.371360  ...   3692               5873             4454
+18     REST   0.225561  0.628452  ...   1682               4527            12613
+19     ETV4   0.739606  0.419980  ...   4668               8048             4570
+20  BHLHE40   0.701117  0.383401  ...   3633               5892             3222
+21     ETV5   0.844012  0.249503  ...  10579              14096             4167
+22     CTCF   0.442707  0.982874  ...    185              10802            23982
+23    FOXA2   0.852301  0.276751  ...   9003              12448             4042
+24     JUND   0.665392  0.471319  ...   5659              10704             7582
+25      JUN   0.262547  0.476133  ...   1295               2472             4483
+26    FOXK2   0.240340  0.407849  ...   1192               2013             3416
+27     ELF1   0.526963  0.569444  ...   4278               9936            10737
+28    FOXP1   0.632904  0.248964  ...   6522               8684             3416
+29     USF1   0.489565  0.565261  ...   1732               3984             4600
+30    TEAD4   0.291234  0.674081  ...    718               2203             5099
+31   TCF7L2   0.094619  0.852156  ...     72                487             4386
+32    HNF4A   0.681486  0.621440  ...   5117              13517            12326
+33     ATF2   0.268111  0.604038  ...    706               1783             4017
+34    GABPA   0.376837  0.594184  ...   2749               6774            10681
+35    MYBL2   0.154578  0.042904  ...   2900               3030              841
+36     ATF7   0.425829  0.634315  ...    422               1154             1719
+37     HSF1   0.089498  0.470588  ...    279                527             2771
+38    FOSL2   0.405850  0.768985  ...    867               3753             7111
+39     IRF3   0.012215  0.225166  ...    234                302             5567
+40     ATF3   0.108455  0.162872  ...    956               1142             1715
+
+[41 rows x 9 columns]
+正在解析 Consensus Peaks 坐标...
+共发现 7 个共有 TF，开始评估...
+******************** GLUE ********************
+      TF  Precision    Recall  ...    FN  GroundTruth_Count  Predicted_Count
+0  CREB1   0.869565  0.079713  ...  2309               2509              230
+1   ATF7   0.871795  0.266667  ...   187                255               78
+2   USF1   0.853659  0.194878  ...   723                898              205
+3   IRF3   0.013761  0.034483  ...    84                 87              218
+4    YY1   0.790984  0.097376  ...  1789               1982              244
+5  HNF4A   0.878694  0.203824  ...  2207               2772              643
+6  FOXA1   0.926829  0.045655  ...  2383               2497              123
+
+[7 rows x 9 columns]
+检测到冒号格式，正在统一为连字符格式...
+正在解析 Consensus Peaks 坐标...
+共发现 7 个共有 TF，开始评估...
+检测到冒号格式，正在统一为连字符格式...
+正在解析 Consensus Peaks 坐标...
+共发现 5 个共有 TF，开始评估...
+格式已是连字符（chr1-100-200），无需转换。
+正在解析 Consensus Peaks 坐标...
+共发现 5 个共有 TF，开始评估...
+/home/liyang/BioWuYan/dygmamba_project/model/dygmamba/src/benchmark/benchmark_process.py:493: FutureWarning: 
+
+Passing `palette` without assigning `hue` is deprecated and will be removed in v0.14.0. Assign the `x` variable to `hue` and set `legend=False` for the same effect.
+
+  ax = sns.boxplot(data=df_combined,
+**************************************************
+merged: 54169, benchmark peak gene: 10381,        dyg peak gene 50006
+Peak-Gene: 30942,         1999, edge:54169
+Merged Peak-Gene: 30942, 1999,         54169
+DYGMAMBA Peak-Gene: 30814, 1999,         edge: 50006
+Benchmark Peak-Gene: 4125,         1836, edge: 10381
+**************************************************
+筛选 100 个 Marker Genes...
+合并后共有 499 条边用于计算。
+/home/liyang/BioWuYan/dygmamba_project/model/dygmamba/src/analysis/assess_region_gene.py:254: ConstantInputWarning: An input array is constant; the correlation coefficient is not defined.
+  corr, pval = stats.spearmanr(group['score_pred'], group['score_hic'])
+评估完成：共 66 个基因有效。
+平均 Spearman 相关性: 0.0834
+中位 Spearman 相关性: 0.0101
+正在筛选 100 个 Marker Genes...
+正在合并预测数据与 Hi-C 数据...
+共找到 499 个重叠的 Region-Gene 连接用于评估。
+评估结果 (spearman): Correlation = 0.0020 (P-value = 9.64e-01)
+**************************************************
+******************** DYGMAMBA ********************
+0.0020060994734726746
+**************************************************
+       gene  correlation   p_value  n_links
+0    AMBRA1     0.500000  0.666667        3
+1   ARHGEF1    -0.632456  0.367544        4
+2     ATG2A     0.522544  0.228878        7
+3      BAG3    -0.312045  0.495666        7
+4       BSN     0.395285  0.292352        9
+..      ...          ...       ...      ...
+61    TTC7A    -0.605734  0.149433        7
+62     TWNK    -0.453390  0.220313        9
+63   TXNL4A    -0.012049  0.977410        8
+64    UBXN1    -0.222661  0.295663       24
+65     XRN2    -0.632456  0.367544        4
+
+[66 rows x 4 columns]
+**************************************************
+  model_name    TN     FP   FN  ...    recall       FPR       AUC   f_score
+0   DYGMAMBA  6229  37559  668  ...  0.935652  0.857746  0.538953  0.336947
+
+[1 rows x 10 columns]
+**************************************************
+merged: 10717, benchmark peak gene: 10381,        dyg peak gene 846
+Peak-Gene: 4459,         1902, edge:10717
+Merged Peak-Gene: 4459, 1902,         10717
+GLUE Peak-Gene: 843, 815,         edge: 846
+Benchmark Peak-Gene: 4125,         1836, edge: 10381
+**************************************************
+正在筛选 100 个 Marker Genes...
+正在合并预测数据与 Hi-C 数据...
+共找到 32 个重叠的 Region-Gene 连接用于评估。
+评估结果 (spearman): Correlation = -0.1264 (P-value = 4.91e-01)
+**************************************************
+merged: 10480, benchmark peak gene: 10381,        dyg peak gene 104
+Peak-Gene: 4224,         1843, edge:10480
+Merged Peak-Gene: 4224, 1843,         10480
+Pando Peak-Gene: 103, 92,         edge: 104
+Benchmark Peak-Gene: 4125,         1836, edge: 10381
+**************************************************
+正在筛选 100 个 Marker Genes...
+正在合并预测数据与 Hi-C 数据...
+共找到 0 个重叠的 Region-Gene 连接用于评估。
+警告：重叠连接数过少，相关性计算可能不可靠。
+评估结果 (spearman): Correlation = nan (P-value = nan)
+检测到冒号格式，正在统一为连字符格式...
+**************************************************
+merged: 10881, benchmark peak gene: 10381,        dyg peak gene 655
+Peak-Gene: 4625,         1867, edge:10881
+Merged Peak-Gene: 4625, 1867,         10881
+FigR Peak-Gene: 655, 544,         edge: 655
+Benchmark Peak-Gene: 4125,         1836, edge: 10381
+**************************************************
+正在筛选 100 个 Marker Genes...
+正在合并预测数据与 Hi-C 数据...
+共找到 20 个重叠的 Region-Gene 连接用于评估。
+评估结果 (spearman): Correlation = 0.4053 (P-value = 7.62e-02)
+检测到冒号格式，正在统一为连字符格式...
+/home/liyang/BioWuYan/conda_env/dygmamba39/lib/python3.9/site-packages/pandas/core/arraylike.py:399: RuntimeWarning: divide by zero encountered in log10
+  result = getattr(ufunc, method)(*inputs, **kwargs)
+**************************************************
+merged: 96814, benchmark peak gene: 10381,        dyg peak gene 92370
+Peak-Gene: 26888,         1977, edge:96814
+Merged Peak-Gene: 26888, 1977,         96814
+LINGER Peak-Gene: 26775, 1818,         edge: 92370
+Benchmark Peak-Gene: 4125,         1836, edge: 10381
+**************************************************
+正在筛选 100 个 Marker Genes...
+正在合并预测数据与 Hi-C 数据...
+共找到 460 个重叠的 Region-Gene 连接用于评估。
+评估结果 (spearman): Correlation = -0.1674 (P-value = 3.12e-04)
+检测到冒号格式，正在统一为连字符格式...
+**************************************************
+merged: 10554, benchmark peak gene: 10381,        dyg peak gene 250
+Peak-Gene: 4222,         1846, edge:10554
+Merged Peak-Gene: 4222, 1846,         10554
+GRaNIE Peak-Gene: 145, 243,         edge: 250
+Benchmark Peak-Gene: 4125,         1836, edge: 10381
+**************************************************
+正在筛选 100 个 Marker Genes...
+正在合并预测数据与 Hi-C 数据...
+共找到 7 个重叠的 Region-Gene 连接用于评估。
+警告：重叠连接数过少，相关性计算可能不可靠。
+评估结果 (spearman): Correlation = 0.6124 (P-value = 1.44e-01)
+/home/liyang/BioWuYan/dygmamba_project/model/dygmamba/src/benchmark/benchmark_process.py:763: FutureWarning: 
+
+Passing `palette` without assigning `hue` is deprecated and will be removed in v0.14.0. Assign the `x` variable to `hue` and set `legend=False` for the same effect.
+
+  ax = sns.barplot(x='Method', y='Correlation', data=plot_data, palette='coolwarm')

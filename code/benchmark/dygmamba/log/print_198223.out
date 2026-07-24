@@ -1,0 +1,83 @@
+run DygMamba2 job
+********************** start ********************
+[2026-02-12 14:22:25] Start the job
+**********************device********************
+Now use device is cuda:0
+********************** Successfully load data ********************
+The dataset has 6481612 interactions, involving 33516 different nodes
+********************** Successfully process data ********************
+********************* successfully get neighbor **************
+********************* successfully get negative neighbor **************
+********************** Successfully process neighbor data---- positive and negative ********************
+[2026-02-12 14:36:43] Start the job
+INFO:root:********** Run 1 starts. **********
+INFO:root:configuration is Namespace(dataset_name='mooc', batch_size=200, model_name='DyGMamba', gpu=0, num_neighbors=20, sample_neighbor_strategy='uniform', time_scaling_factor=1e-06, num_walk_heads=8, num_heads=2, num_layers=2, walk_length=1, time_gap=2000, time_feat_dim=100, position_feat_dim=172, time_window_mode='fixed_proportion', patch_size=1, channel_embedding_dim=50, max_input_sequence_length=32, learning_rate=0.0001, dropout=0.1, gamma=0.5, num_epochs=1, optimizer='Adam', weight_decay=0.0, patience=20, val_ratio=0.15, test_ratio=0.15, num_runs=1, test_interval_epochs=1, negative_sample_strategy='random', max_interaction_times=10, load_best_configs=False, device='cuda:0', seed=0, save_model_name='DyGMamba_seed0')
+INFO:root:model -> Sequential(
+  (0): DyGMamba(
+    (time_encoder): TimeEncoder(
+      (w): Linear(in_features=1, out_features=100, bias=True)
+    )
+    (neighbor_co_occurrence_encoder): NIFEncoder(
+      (nif_encode_layer): Sequential(
+        (0): Linear(in_features=1, out_features=50, bias=True)
+        (1): ReLU()
+        (2): Linear(in_features=50, out_features=50, bias=True)
+      )
+    )
+    (projection_layer): ModuleDict(
+      (node): Linear(in_features=172, out_features=50, bias=True)
+      (edge): Linear(in_features=172, out_features=50, bias=True)
+      (time): Linear(in_features=100, out_features=50, bias=True)
+      (neighbor_co_occurrence): Linear(in_features=50, out_features=50, bias=True)
+    )
+    (output_layer): Linear(in_features=100, out_features=172, bias=True)
+    (output_layer_t_diff): Linear(in_features=25, out_features=172, bias=True)
+    (mamba): ModuleList(
+      (0-1): 2 x Mamba(
+        (in_proj): Linear(in_features=100, out_features=200, bias=False)
+        (conv1d): Conv1d(100, 100, kernel_size=(4,), stride=(1,), padding=(3,), groups=100)
+        (act): SiLU()
+        (x_proj): Linear(in_features=100, out_features=39, bias=False)
+        (dt_proj): Linear(in_features=7, out_features=100, bias=True)
+        (out_proj): Linear(in_features=100, out_features=100, bias=False)
+      )
+    )
+    (mamba_t_diff): ModuleList(
+      (0-1): 2 x Mamba(
+        (in_proj): Linear(in_features=25, out_features=50, bias=False)
+        (conv1d): Conv1d(25, 25, kernel_size=(4,), stride=(1,), padding=(3,), groups=25)
+        (act): SiLU()
+        (x_proj): Linear(in_features=25, out_features=34, bias=False)
+        (dt_proj): Linear(in_features=2, out_features=25, bias=True)
+        (out_proj): Linear(in_features=25, out_features=25, bias=False)
+      )
+    )
+    (projection_layer_t_diff): Linear(in_features=100, out_features=25, bias=True)
+    (projection_layer_t_diff_up): Linear(in_features=25, out_features=100, bias=True)
+    (weightagg): Linear(in_features=100, out_features=1, bias=True)
+    (reduce_layer): Linear(in_features=200, out_features=100, bias=True)
+    (channel_norm): LayerNorm((100,), eps=1e-05, elementwise_affine=True)
+    (channel_feedforward): FeedForwardNet(
+      (ffn): Sequential(
+        (0): Linear(in_features=100, out_features=400, bias=True)
+        (1): GELU(approximate='none')
+        (2): Dropout(p=0.1, inplace=False)
+        (3): Linear(in_features=400, out_features=100, bias=True)
+        (4): Dropout(p=0.1, inplace=False)
+      )
+    )
+    (neighbor_selection_layer): Linear(in_features=100, out_features=100, bias=True)
+  )
+  (1): MergeLayerTD(
+    (fc1): Linear(in_features=516, out_features=172, bias=True)
+    (fc2): Linear(in_features=172, out_features=1, bias=True)
+    (act): ReLU()
+  )
+)
+INFO:root:model name: DyGMamba, #parameters: 1341268 B, 1309.83203125 KB, 1.2791328430175781 MB.
+混合精度训练已启用
+  0%|                                                                                          | 0/8103 [00:00<?, ?it/s]  0%|                                                                                          | 0/8103 [00:05<?, ?it/s]
+Traceback (most recent call last):
+  File "/home/liyang/BioWuYan/dygmamba_project/model/dygmamba/src/models/main_train_hpc.py", line 350, in <module>
+    model[0].compute_src_dst_node_temporal_embeddings(...)
+TypeError: compute_src_dst_node_temporal_embeddings() missing 4 required positional arguments: 'dst_node_ids', 'node_interact_times', 'node_features', and 'edge_features'

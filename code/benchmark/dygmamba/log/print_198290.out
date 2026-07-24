@@ -1,0 +1,591 @@
+run DygMamba2 job
+********************** start ********************
+[2026-02-12 21:28:51] Start the job
+**********************device********************
+Now use device is cuda:0
+********************** Successfully load data ********************
+The dataset has 6481612 interactions, involving 33516 different nodes
+Edge_feature is successfully converted to tensor without NaN values.
+node_feature is successfully converted to dict without NaN values.
+********************** Successfully process data ********************
+********************* successfully get neighbor **************
+********************* successfully get negative neighbor **************
+********************** Successfully process neighbor data---- positive and negative ********************
+[2026-02-12 21:48:07] Start the job
+INFO:root:********** Run 1 starts. **********
+INFO:root:configuration is Namespace(dataset_name='mooc', batch_size=200, model_name='DyGMamba', gpu=0, num_neighbors=20, sample_neighbor_strategy='uniform', time_scaling_factor=1e-06, num_walk_heads=8, num_heads=2, num_layers=2, walk_length=1, time_gap=2000, time_feat_dim=100, position_feat_dim=172, time_window_mode='fixed_proportion', patch_size=1, channel_embedding_dim=50, max_input_sequence_length=32, learning_rate=0.0001, dropout=0.1, gamma=0.5, num_epochs=1, optimizer='Adam', weight_decay=0.0, patience=20, val_ratio=0.15, test_ratio=0.15, num_runs=1, test_interval_epochs=1, negative_sample_strategy='random', max_interaction_times=10, load_best_configs=False, device='cuda:0', seed=0, save_model_name='DyGMamba_seed0')
+INFO:root:model -> Sequential(
+  (0): DyGMamba(
+    (time_encoder): TimeEncoder(
+      (w): Linear(in_features=1, out_features=100, bias=True)
+    )
+    (neighbor_co_occurrence_encoder): NIFEncoder(
+      (nif_encode_layer): Sequential(
+        (0): Linear(in_features=1, out_features=50, bias=True)
+        (1): ReLU()
+        (2): Linear(in_features=50, out_features=50, bias=True)
+      )
+    )
+    (projection_layer): ModuleDict(
+      (node): Linear(in_features=172, out_features=50, bias=True)
+      (edge): Linear(in_features=172, out_features=50, bias=True)
+      (time): Linear(in_features=100, out_features=50, bias=True)
+      (neighbor_co_occurrence): Linear(in_features=50, out_features=50, bias=True)
+    )
+    (output_layer): Linear(in_features=100, out_features=172, bias=True)
+    (output_layer_t_diff): Linear(in_features=25, out_features=172, bias=True)
+    (mamba): ModuleList(
+      (0-1): 2 x Mamba(
+        (in_proj): Linear(in_features=100, out_features=200, bias=False)
+        (conv1d): Conv1d(100, 100, kernel_size=(4,), stride=(1,), padding=(3,), groups=100)
+        (act): SiLU()
+        (x_proj): Linear(in_features=100, out_features=39, bias=False)
+        (dt_proj): Linear(in_features=7, out_features=100, bias=True)
+        (out_proj): Linear(in_features=100, out_features=100, bias=False)
+      )
+    )
+    (mamba_t_diff): ModuleList(
+      (0-1): 2 x Mamba(
+        (in_proj): Linear(in_features=25, out_features=50, bias=False)
+        (conv1d): Conv1d(25, 25, kernel_size=(4,), stride=(1,), padding=(3,), groups=25)
+        (act): SiLU()
+        (x_proj): Linear(in_features=25, out_features=34, bias=False)
+        (dt_proj): Linear(in_features=2, out_features=25, bias=True)
+        (out_proj): Linear(in_features=25, out_features=25, bias=False)
+      )
+    )
+    (projection_layer_t_diff): Linear(in_features=100, out_features=25, bias=True)
+    (projection_layer_t_diff_up): Linear(in_features=25, out_features=100, bias=True)
+    (weightagg): Linear(in_features=100, out_features=1, bias=True)
+    (reduce_layer): Linear(in_features=200, out_features=100, bias=True)
+    (channel_norm): LayerNorm((100,), eps=1e-05, elementwise_affine=True)
+    (channel_feedforward): FeedForwardNet(
+      (ffn): Sequential(
+        (0): Linear(in_features=100, out_features=400, bias=True)
+        (1): GELU(approximate='none')
+        (2): Dropout(p=0.1, inplace=False)
+        (3): Linear(in_features=400, out_features=100, bias=True)
+        (4): Dropout(p=0.1, inplace=False)
+      )
+    )
+    (neighbor_selection_layer): Linear(in_features=100, out_features=100, bias=True)
+  )
+  (1): MergeLayerTD(
+    (fc1): Linear(in_features=516, out_features=172, bias=True)
+    (fc2): Linear(in_features=172, out_features=1, bias=True)
+    (act): ReLU()
+  )
+)
+INFO:root:model name: DyGMamba, #parameters: 1341268 B, 1309.83203125 KB, 1.2791328430175781 MB.
+混合精度训练已启用
+  0%|                                                                                          | 0/8103 [00:00<?, ?it/s]⚠️ NaN in src_embeddings at batch 0
+⚠️ NaN in dst_embeddings at batch 0
+⚠️ NaN in time_diff_emb at batch 0
+Epoch: 1,                                         train for the 1-th batch, train loss: nan
+:   0%| | 0/8103 [00:14<?, ?Epoch: 1,                                         train for the 1-th batch, train loss: nan
+:   0%| | 1/8103 [00:14<33:1⚠️ NaN in src_embeddings at batch 1
+⚠️ NaN in dst_embeddings at batch 1
+⚠️ NaN in time_diff_emb at batch 1
+Epoch: 1,                                         train for the 2-th batch, train loss: nan
+:   0%| | 1/8103 [00:17<33:1Epoch: 1,                                         train for the 2-th batch, train loss: nan
+:   0%| | 2/8103 [00:17<16:4⚠️ NaN in src_embeddings at batch 2
+⚠️ NaN in dst_embeddings at batch 2
+⚠️ NaN in time_diff_emb at batch 2
+Epoch: 1,                                         train for the 3-th batch, train loss: nan
+:   0%| | 2/8103 [00:18<16:4Epoch: 1,                                         train for the 3-th batch, train loss: nan
+:   0%| | 3/8103 [00:18<10:5⚠️ NaN in src_embeddings at batch 3
+⚠️ NaN in dst_embeddings at batch 3
+⚠️ NaN in time_diff_emb at batch 3
+Epoch: 1,                                         train for the 4-th batch, train loss: nan
+:   0%| | 3/8103 [00:20<10:5Epoch: 1,                                         train for the 4-th batch, train loss: nan
+:   0%| | 4/8103 [00:20<8:16⚠️ NaN in src_embeddings at batch 4
+⚠️ NaN in dst_embeddings at batch 4
+⚠️ NaN in time_diff_emb at batch 4
+Epoch: 1,                                         train for the 5-th batch, train loss: nan
+:   0%| | 4/8103 [00:22<8:16Epoch: 1,                                         train for the 5-th batch, train loss: nan
+:   0%| | 5/8103 [00:22<7:00⚠️ NaN in src_embeddings at batch 5
+⚠️ NaN in dst_embeddings at batch 5
+⚠️ NaN in time_diff_emb at batch 5
+Epoch: 1,                                         train for the 6-th batch, train loss: nan
+:   0%| | 5/8103 [00:35<7:00Epoch: 1,                                         train for the 6-th batch, train loss: nan
+:   0%| | 6/8103 [00:35<14:2⚠️ NaN in src_embeddings at batch 6
+⚠️ NaN in dst_embeddings at batch 6
+⚠️ NaN in time_diff_emb at batch 6
+Epoch: 1,                                         train for the 7-th batch, train loss: nan
+:   0%| | 6/8103 [01:45<14:2Epoch: 1,                                         train for the 7-th batch, train loss: nan
+:   0%| | 7/8103 [01:45<61:2⚠️ NaN in src_embeddings at batch 7
+⚠️ NaN in dst_embeddings at batch 7
+⚠️ NaN in time_diff_emb at batch 7
+Epoch: 1,                                         train for the 8-th batch, train loss: nan
+:   0%| | 7/8103 [01:58<61:2Epoch: 1,                                         train for the 8-th batch, train loss: nan
+:   0%| | 8/8103 [01:58<50:4⚠️ NaN in src_embeddings at batch 8
+⚠️ NaN in dst_embeddings at batch 8
+⚠️ NaN in time_diff_emb at batch 8
+Epoch: 1,                                         train for the 9-th batch, train loss: nan
+:   0%| | 8/8103 [02:14<50:4Epoch: 1,                                         train for the 9-th batch, train loss: nan
+:   0%| | 9/8103 [02:14<46:0⚠️ NaN in src_embeddings at batch 9
+⚠️ NaN in dst_embeddings at batch 9
+⚠️ NaN in time_diff_emb at batch 9
+Epoch: 1,                                         train for the 10-th batch, train loss: nan
+:   0%| | 9/8103 [02:31<46:Epoch: 1,                                         train for the 10-th batch, train loss: nan
+:   0%| | 10/8103 [02:31<43⚠️ NaN in src_embeddings at batch 10
+⚠️ NaN in dst_embeddings at batch 10
+⚠️ NaN in time_diff_emb at batch 10
+Epoch: 1,                                         train for the 11-th batch, train loss: nan
+:   0%| | 10/8103 [02:43<43Epoch: 1,                                         train for the 11-th batch, train loss: nan
+:   0%| | 11/8103 [02:43<38⚠️ NaN in src_embeddings at batch 11
+⚠️ NaN in dst_embeddings at batch 11
+⚠️ NaN in time_diff_emb at batch 11
+Epoch: 1,                                         train for the 12-th batch, train loss: nan
+:   0%| | 11/8103 [03:06<38Epoch: 1,                                         train for the 12-th batch, train loss: nan
+:   0%| | 12/8103 [03:06<42⚠️ NaN in src_embeddings at batch 12
+⚠️ NaN in dst_embeddings at batch 12
+⚠️ NaN in time_diff_emb at batch 12
+Epoch: 1,                                         train for the 13-th batch, train loss: nan
+:   0%| | 12/8103 [04:03<42Epoch: 1,                                         train for the 13-th batch, train loss: nan
+:   0%| | 13/8103 [04:03<68⚠️ NaN in src_embeddings at batch 13
+⚠️ NaN in dst_embeddings at batch 13
+⚠️ NaN in time_diff_emb at batch 13
+Epoch: 1,                                         train for the 14-th batch, train loss: nan
+:   0%| | 13/8103 [06:43<68Epoch: 1,                                         train for the 14-th batch, train loss: nan
+:   0%| | 14/8103 [06:43<15⚠️ NaN in src_embeddings at batch 14
+⚠️ NaN in dst_embeddings at batch 14
+⚠️ NaN in time_diff_emb at batch 14
+Epoch: 1,                                         train for the 15-th batch, train loss: nan
+:   0%| | 14/8103 [08:15<15Epoch: 1,                                         train for the 15-th batch, train loss: nan
+:   0%| | 15/8103 [08:15<17⚠️ NaN in src_embeddings at batch 15
+⚠️ NaN in dst_embeddings at batch 15
+⚠️ NaN in time_diff_emb at batch 15
+Epoch: 1,                                         train for the 16-th batch, train loss: nan
+:   0%| | 15/8103 [10:07<17Epoch: 1,                                         train for the 16-th batch, train loss: nan
+:   0%| | 16/8103 [10:07<19⚠️ NaN in src_embeddings at batch 16
+⚠️ NaN in dst_embeddings at batch 16
+⚠️ NaN in time_diff_emb at batch 16
+Epoch: 1,                                         train for the 17-th batch, train loss: nan
+:   0%| | 16/8103 [12:10<19Epoch: 1,                                         train for the 17-th batch, train loss: nan
+:   0%| | 17/8103 [12:10<22⚠️ NaN in src_embeddings at batch 17
+⚠️ NaN in dst_embeddings at batch 17
+⚠️ NaN in time_diff_emb at batch 17
+Epoch: 1,                                         train for the 18-th batch, train loss: nan
+:   0%| | 17/8103 [12:34<22Epoch: 1,                                         train for the 18-th batch, train loss: nan
+:   0%| | 18/8103 [12:34<16⚠️ NaN in src_embeddings at batch 18
+⚠️ NaN in dst_embeddings at batch 18
+⚠️ NaN in time_diff_emb at batch 18
+Epoch: 1,                                         train for the 19-th batch, train loss: nan
+:   0%| | 18/8103 [12:36<16Epoch: 1,                                         train for the 19-th batch, train loss: nan
+:   0%| | 19/8103 [12:36<12⚠️ NaN in src_embeddings at batch 19
+⚠️ NaN in dst_embeddings at batch 19
+⚠️ NaN in time_diff_emb at batch 19
+Epoch: 1,                                         train for the 20-th batch, train loss: nan
+:   0%| | 19/8103 [12:52<12Epoch: 1,                                         train for the 20-th batch, train loss: nan
+:   0%| | 20/8103 [12:52<95⚠️ NaN in src_embeddings at batch 20
+⚠️ NaN in dst_embeddings at batch 20
+⚠️ NaN in time_diff_emb at batch 20
+Epoch: 1,                                         train for the 21-th batch, train loss: nan
+:   0%| | 20/8103 [13:01<95Epoch: 1,                                         train for the 21-th batch, train loss: nan
+:   0%| | 21/8103 [13:01<72⚠️ NaN in src_embeddings at batch 21
+⚠️ NaN in dst_embeddings at batch 21
+⚠️ NaN in time_diff_emb at batch 21
+Epoch: 1,                                         train for the 22-th batch, train loss: nan
+:   0%| | 21/8103 [13:05<72Epoch: 1,                                         train for the 22-th batch, train loss: nan
+:   0%| | 22/8103 [13:05<53⚠️ NaN in src_embeddings at batch 22
+⚠️ NaN in dst_embeddings at batch 22
+⚠️ NaN in time_diff_emb at batch 22
+Epoch: 1,                                         train for the 23-th batch, train loss: nan
+:   0%| | 22/8103 [13:07<53Epoch: 1,                                         train for the 23-th batch, train loss: nan
+:   0%| | 23/8103 [13:07<39⚠️ NaN in src_embeddings at batch 23
+⚠️ NaN in dst_embeddings at batch 23
+⚠️ NaN in time_diff_emb at batch 23
+Epoch: 1,                                         train for the 24-th batch, train loss: nan
+:   0%| | 23/8103 [13:09<39Epoch: 1,                                         train for the 24-th batch, train loss: nan
+:   0%| | 24/8103 [13:09<28⚠️ NaN in src_embeddings at batch 24
+⚠️ NaN in dst_embeddings at batch 24
+⚠️ NaN in time_diff_emb at batch 24
+Epoch: 1,                                         train for the 25-th batch, train loss: nan
+:   0%| | 24/8103 [13:11<28Epoch: 1,                                         train for the 25-th batch, train loss: nan
+:   0%| | 25/8103 [13:11<21⚠️ NaN in src_embeddings at batch 25
+⚠️ NaN in dst_embeddings at batch 25
+⚠️ NaN in time_diff_emb at batch 25
+Epoch: 1,                                         train for the 26-th batch, train loss: nan
+:   0%| | 25/8103 [13:13<21Epoch: 1,                                         train for the 26-th batch, train loss: nan
+:   0%| | 26/8103 [13:13<15⚠️ NaN in src_embeddings at batch 26
+⚠️ NaN in dst_embeddings at batch 26
+⚠️ NaN in time_diff_emb at batch 26
+Epoch: 1,                                         train for the 27-th batch, train loss: nan
+:   0%| | 26/8103 [13:15<15Epoch: 1,                                         train for the 27-th batch, train loss: nan
+:   0%| | 27/8103 [13:15<12⚠️ NaN in src_embeddings at batch 27
+⚠️ NaN in dst_embeddings at batch 27
+⚠️ NaN in time_diff_emb at batch 27
+Epoch: 1,                                         train for the 28-th batch, train loss: nan
+:   0%| | 27/8103 [13:16<12Epoch: 1,                                         train for the 28-th batch, train loss: nan
+:   0%| | 28/8103 [13:16<9:⚠️ NaN in src_embeddings at batch 28
+⚠️ NaN in dst_embeddings at batch 28
+⚠️ NaN in time_diff_emb at batch 28
+Epoch: 1,                                         train for the 29-th batch, train loss: nan
+:   0%| | 28/8103 [13:18<9:Epoch: 1,                                         train for the 29-th batch, train loss: nan
+:   0%| | 29/8103 [13:18<7:⚠️ NaN in src_embeddings at batch 29
+⚠️ NaN in dst_embeddings at batch 29
+⚠️ NaN in time_diff_emb at batch 29
+Epoch: 1,                                         train for the 30-th batch, train loss: nan
+:   0%| | 29/8103 [14:01<7:Epoch: 1,                                         train for the 30-th batch, train loss: nan
+:   0%| | 30/8103 [14:01<34⚠️ NaN in src_embeddings at batch 30
+⚠️ NaN in dst_embeddings at batch 30
+⚠️ NaN in time_diff_emb at batch 30
+Epoch: 1,                                         train for the 31-th batch, train loss: nan
+:   0%| | 30/8103 [14:06<34Epoch: 1,                                         train for the 31-th batch, train loss: nan
+:   0%| | 31/8103 [14:06<27⚠️ NaN in src_embeddings at batch 31
+⚠️ NaN in dst_embeddings at batch 31
+⚠️ NaN in time_diff_emb at batch 31
+Epoch: 1,                                         train for the 32-th batch, train loss: nan
+:   0%| | 31/8103 [14:07<27Epoch: 1,                                         train for the 32-th batch, train loss: nan
+:   0%| | 32/8103 [14:07<20⚠️ NaN in src_embeddings at batch 32
+⚠️ NaN in dst_embeddings at batch 32
+⚠️ NaN in time_diff_emb at batch 32
+Epoch: 1,                                         train for the 33-th batch, train loss: nan
+:   0%| | 32/8103 [14:09<20Epoch: 1,                                         train for the 33-th batch, train loss: nan
+:   0%| | 33/8103 [14:09<15⚠️ NaN in src_embeddings at batch 33
+⚠️ NaN in dst_embeddings at batch 33
+⚠️ NaN in time_diff_emb at batch 33
+Epoch: 1,                                         train for the 34-th batch, train loss: nan
+:   0%| | 33/8103 [14:12<15Epoch: 1,                                         train for the 34-th batch, train loss: nan
+:   0%| | 34/8103 [14:12<12⚠️ NaN in src_embeddings at batch 34
+⚠️ NaN in dst_embeddings at batch 34
+⚠️ NaN in time_diff_emb at batch 34
+Epoch: 1,                                         train for the 35-th batch, train loss: nan
+:   0%| | 34/8103 [14:13<12Epoch: 1,                                         train for the 35-th batch, train loss: nan
+:   0%| | 35/8103 [14:13<9:⚠️ NaN in src_embeddings at batch 35
+⚠️ NaN in dst_embeddings at batch 35
+⚠️ NaN in time_diff_emb at batch 35
+Epoch: 1,                                         train for the 36-th batch, train loss: nan
+:   0%| | 35/8103 [14:15<9:Epoch: 1,                                         train for the 36-th batch, train loss: nan
+:   0%| | 36/8103 [14:15<7:⚠️ NaN in src_embeddings at batch 36
+⚠️ NaN in dst_embeddings at batch 36
+⚠️ NaN in time_diff_emb at batch 36
+Epoch: 1,                                         train for the 37-th batch, train loss: nan
+:   0%| | 36/8103 [14:17<7:Epoch: 1,                                         train for the 37-th batch, train loss: nan
+:   0%| | 37/8103 [14:17<6:⚠️ NaN in src_embeddings at batch 37
+⚠️ NaN in dst_embeddings at batch 37
+⚠️ NaN in time_diff_emb at batch 37
+Epoch: 1,                                         train for the 38-th batch, train loss: nan
+:   0%| | 37/8103 [14:18<6:Epoch: 1,                                         train for the 38-th batch, train loss: nan
+:   0%| | 38/8103 [14:18<5:⚠️ NaN in src_embeddings at batch 38
+⚠️ NaN in dst_embeddings at batch 38
+⚠️ NaN in time_diff_emb at batch 38
+Epoch: 1,                                         train for the 39-th batch, train loss: nan
+:   0%| | 38/8103 [14:20<5:Epoch: 1,                                         train for the 39-th batch, train loss: nan
+:   0%| | 39/8103 [14:20<5:⚠️ NaN in src_embeddings at batch 39
+⚠️ NaN in dst_embeddings at batch 39
+⚠️ NaN in time_diff_emb at batch 39
+Epoch: 1,                                         train for the 40-th batch, train loss: nan
+:   0%| | 39/8103 [14:21<5:Epoch: 1,                                         train for the 40-th batch, train loss: nan
+:   0%| | 40/8103 [14:21<4:⚠️ NaN in src_embeddings at batch 40
+⚠️ NaN in dst_embeddings at batch 40
+⚠️ NaN in time_diff_emb at batch 40
+Epoch: 1,                                         train for the 41-th batch, train loss: nan
+:   0%| | 40/8103 [14:23<4:Epoch: 1,                                         train for the 41-th batch, train loss: nan
+:   1%| | 41/8103 [14:23<4:⚠️ NaN in src_embeddings at batch 41
+⚠️ NaN in dst_embeddings at batch 41
+⚠️ NaN in time_diff_emb at batch 41
+Epoch: 1,                                         train for the 42-th batch, train loss: nan
+:   1%| | 41/8103 [14:25<4:Epoch: 1,                                         train for the 42-th batch, train loss: nan
+:   1%| | 42/8103 [14:25<4:⚠️ NaN in src_embeddings at batch 42
+⚠️ NaN in dst_embeddings at batch 42
+⚠️ NaN in time_diff_emb at batch 42
+Epoch: 1,                                         train for the 43-th batch, train loss: nan
+:   1%| | 42/8103 [14:26<4:Epoch: 1,                                         train for the 43-th batch, train loss: nan
+:   1%| | 43/8103 [14:26<3:⚠️ NaN in src_embeddings at batch 43
+⚠️ NaN in dst_embeddings at batch 43
+⚠️ NaN in time_diff_emb at batch 43
+Epoch: 1,                                         train for the 44-th batch, train loss: nan
+:   1%| | 43/8103 [14:28<3:Epoch: 1,                                         train for the 44-th batch, train loss: nan
+:   1%| | 44/8103 [14:28<3:⚠️ NaN in src_embeddings at batch 44
+⚠️ NaN in dst_embeddings at batch 44
+⚠️ NaN in time_diff_emb at batch 44
+Epoch: 1,                                         train for the 45-th batch, train loss: nan
+:   1%| | 44/8103 [14:30<3:Epoch: 1,                                         train for the 45-th batch, train loss: nan
+:   1%| | 45/8103 [14:30<3:⚠️ NaN in src_embeddings at batch 45
+⚠️ NaN in dst_embeddings at batch 45
+⚠️ NaN in time_diff_emb at batch 45
+Epoch: 1,                                         train for the 46-th batch, train loss: nan
+:   1%| | 45/8103 [14:31<3:Epoch: 1,                                         train for the 46-th batch, train loss: nan
+:   1%| | 46/8103 [14:31<3:⚠️ NaN in src_embeddings at batch 46
+⚠️ NaN in dst_embeddings at batch 46
+⚠️ NaN in time_diff_emb at batch 46
+Epoch: 1,                                         train for the 47-th batch, train loss: nan
+:   1%| | 46/8103 [14:33<3:Epoch: 1,                                         train for the 47-th batch, train loss: nan
+:   1%| | 47/8103 [14:33<3:⚠️ NaN in src_embeddings at batch 47
+⚠️ NaN in dst_embeddings at batch 47
+⚠️ NaN in time_diff_emb at batch 47
+Epoch: 1,                                         train for the 48-th batch, train loss: nan
+:   1%| | 47/8103 [14:35<3:Epoch: 1,                                         train for the 48-th batch, train loss: nan
+:   1%| | 48/8103 [14:35<4:⚠️ NaN in src_embeddings at batch 48
+⚠️ NaN in dst_embeddings at batch 48
+⚠️ NaN in time_diff_emb at batch 48
+Epoch: 1,                                         train for the 49-th batch, train loss: nan
+:   1%| | 48/8103 [14:37<4:Epoch: 1,                                         train for the 49-th batch, train loss: nan
+:   1%| | 49/8103 [14:37<4:⚠️ NaN in src_embeddings at batch 49
+⚠️ NaN in dst_embeddings at batch 49
+⚠️ NaN in time_diff_emb at batch 49
+Epoch: 1,                                         train for the 50-th batch, train loss: nan
+:   1%| | 49/8103 [14:38<4:Epoch: 1,                                         train for the 50-th batch, train loss: nan
+:   1%| | 50/8103 [14:38<3:⚠️ NaN in src_embeddings at batch 50
+⚠️ NaN in dst_embeddings at batch 50
+⚠️ NaN in time_diff_emb at batch 50
+Epoch: 1,                                         train for the 51-th batch, train loss: nan
+:   1%| | 50/8103 [14:40<3:Epoch: 1,                                         train for the 51-th batch, train loss: nan
+:   1%| | 51/8103 [14:40<3:⚠️ NaN in src_embeddings at batch 51
+⚠️ NaN in dst_embeddings at batch 51
+⚠️ NaN in time_diff_emb at batch 51
+Epoch: 1,                                         train for the 52-th batch, train loss: nan
+:   1%| | 51/8103 [14:42<3:Epoch: 1,                                         train for the 52-th batch, train loss: nan
+:   1%| | 52/8103 [14:42<3:⚠️ NaN in src_embeddings at batch 52
+⚠️ NaN in dst_embeddings at batch 52
+⚠️ NaN in time_diff_emb at batch 52
+Epoch: 1,                                         train for the 53-th batch, train loss: nan
+:   1%| | 52/8103 [14:43<3:Epoch: 1,                                         train for the 53-th batch, train loss: nan
+:   1%| | 53/8103 [14:43<3:⚠️ NaN in src_embeddings at batch 53
+⚠️ NaN in dst_embeddings at batch 53
+⚠️ NaN in time_diff_emb at batch 53
+Epoch: 1,                                         train for the 54-th batch, train loss: nan
+:   1%| | 53/8103 [14:45<3:Epoch: 1,                                         train for the 54-th batch, train loss: nan
+:   1%| | 54/8103 [14:45<3:⚠️ NaN in src_embeddings at batch 54
+⚠️ NaN in dst_embeddings at batch 54
+⚠️ NaN in time_diff_emb at batch 54
+Epoch: 1,                                         train for the 55-th batch, train loss: nan
+:   1%| | 54/8103 [14:46<3:Epoch: 1,                                         train for the 55-th batch, train loss: nan
+:   1%| | 55/8103 [14:46<3:⚠️ NaN in src_embeddings at batch 55
+⚠️ NaN in dst_embeddings at batch 55
+⚠️ NaN in time_diff_emb at batch 55
+Epoch: 1,                                         train for the 56-th batch, train loss: nan
+:   1%| | 55/8103 [14:48<3:Epoch: 1,                                         train for the 56-th batch, train loss: nan
+:   1%| | 56/8103 [14:48<3:⚠️ NaN in src_embeddings at batch 56
+⚠️ NaN in dst_embeddings at batch 56
+⚠️ NaN in time_diff_emb at batch 56
+Epoch: 1,                                         train for the 57-th batch, train loss: nan
+:   1%| | 56/8103 [14:49<3:Epoch: 1,                                         train for the 57-th batch, train loss: nan
+:   1%| | 57/8103 [14:49<3:⚠️ NaN in src_embeddings at batch 57
+⚠️ NaN in dst_embeddings at batch 57
+⚠️ NaN in time_diff_emb at batch 57
+Epoch: 1,                                         train for the 58-th batch, train loss: nan
+:   1%| | 57/8103 [14:51<3:Epoch: 1,                                         train for the 58-th batch, train loss: nan
+:   1%| | 58/8103 [14:51<3:⚠️ NaN in src_embeddings at batch 58
+⚠️ NaN in dst_embeddings at batch 58
+⚠️ NaN in time_diff_emb at batch 58
+Epoch: 1,                                         train for the 59-th batch, train loss: nan
+:   1%| | 58/8103 [14:53<3:Epoch: 1,                                         train for the 59-th batch, train loss: nan
+:   1%| | 59/8103 [14:53<3:⚠️ NaN in src_embeddings at batch 59
+⚠️ NaN in dst_embeddings at batch 59
+⚠️ NaN in time_diff_emb at batch 59
+Epoch: 1,                                         train for the 60-th batch, train loss: nan
+:   1%| | 59/8103 [14:54<3:Epoch: 1,                                         train for the 60-th batch, train loss: nan
+:   1%| | 60/8103 [14:54<3:⚠️ NaN in src_embeddings at batch 60
+⚠️ NaN in dst_embeddings at batch 60
+⚠️ NaN in time_diff_emb at batch 60
+Epoch: 1,                                         train for the 61-th batch, train loss: nan
+:   1%| | 60/8103 [14:56<3:Epoch: 1,                                         train for the 61-th batch, train loss: nan
+:   1%| | 61/8103 [14:56<3:⚠️ NaN in src_embeddings at batch 61
+⚠️ NaN in dst_embeddings at batch 61
+⚠️ NaN in time_diff_emb at batch 61
+Epoch: 1,                                         train for the 62-th batch, train loss: nan
+:   1%| | 61/8103 [14:57<3:Epoch: 1,                                         train for the 62-th batch, train loss: nan
+:   1%| | 62/8103 [14:57<3:⚠️ NaN in src_embeddings at batch 62
+⚠️ NaN in dst_embeddings at batch 62
+⚠️ NaN in time_diff_emb at batch 62
+Epoch: 1,                                         train for the 63-th batch, train loss: nan
+:   1%| | 62/8103 [14:59<3:Epoch: 1,                                         train for the 63-th batch, train loss: nan
+:   1%| | 63/8103 [14:59<3:⚠️ NaN in src_embeddings at batch 63
+⚠️ NaN in dst_embeddings at batch 63
+⚠️ NaN in time_diff_emb at batch 63
+Epoch: 1,                                         train for the 64-th batch, train loss: nan
+:   1%| | 63/8103 [15:01<3:Epoch: 1,                                         train for the 64-th batch, train loss: nan
+:   1%| | 64/8103 [15:01<3:⚠️ NaN in src_embeddings at batch 64
+⚠️ NaN in dst_embeddings at batch 64
+⚠️ NaN in time_diff_emb at batch 64
+Epoch: 1,                                         train for the 65-th batch, train loss: nan
+:   1%| | 64/8103 [15:02<3:Epoch: 1,                                         train for the 65-th batch, train loss: nan
+:   1%| | 65/8103 [15:02<3:⚠️ NaN in src_embeddings at batch 65
+⚠️ NaN in dst_embeddings at batch 65
+⚠️ NaN in time_diff_emb at batch 65
+Epoch: 1,                                         train for the 66-th batch, train loss: nan
+:   1%| | 65/8103 [15:04<3:Epoch: 1,                                         train for the 66-th batch, train loss: nan
+:   1%| | 66/8103 [15:04<3:⚠️ NaN in src_embeddings at batch 66
+⚠️ NaN in dst_embeddings at batch 66
+⚠️ NaN in time_diff_emb at batch 66
+Epoch: 1,                                         train for the 67-th batch, train loss: nan
+:   1%| | 66/8103 [15:05<3:Epoch: 1,                                         train for the 67-th batch, train loss: nan
+:   1%| | 67/8103 [15:05<3:⚠️ NaN in src_embeddings at batch 67
+⚠️ NaN in dst_embeddings at batch 67
+⚠️ NaN in time_diff_emb at batch 67
+Epoch: 1,                                         train for the 68-th batch, train loss: nan
+:   1%| | 67/8103 [15:07<3:Epoch: 1,                                         train for the 68-th batch, train loss: nan
+:   1%| | 68/8103 [15:07<3:⚠️ NaN in src_embeddings at batch 68
+⚠️ NaN in dst_embeddings at batch 68
+⚠️ NaN in time_diff_emb at batch 68
+Epoch: 1,                                         train for the 69-th batch, train loss: nan
+:   1%| | 68/8103 [15:08<3:Epoch: 1,                                         train for the 69-th batch, train loss: nan
+:   1%| | 69/8103 [15:08<3:⚠️ NaN in src_embeddings at batch 69
+⚠️ NaN in dst_embeddings at batch 69
+⚠️ NaN in time_diff_emb at batch 69
+Epoch: 1,                                         train for the 70-th batch, train loss: nan
+:   1%| | 69/8103 [15:10<3:Epoch: 1,                                         train for the 70-th batch, train loss: nan
+:   1%| | 70/8103 [15:10<3:⚠️ NaN in src_embeddings at batch 70
+⚠️ NaN in dst_embeddings at batch 70
+⚠️ NaN in time_diff_emb at batch 70
+Epoch: 1,                                         train for the 71-th batch, train loss: nan
+:   1%| | 70/8103 [15:12<3:Epoch: 1,                                         train for the 71-th batch, train loss: nan
+:   1%| | 71/8103 [15:12<3:⚠️ NaN in src_embeddings at batch 71
+⚠️ NaN in dst_embeddings at batch 71
+⚠️ NaN in time_diff_emb at batch 71
+Epoch: 1,                                         train for the 72-th batch, train loss: nan
+:   1%| | 71/8103 [15:13<3:Epoch: 1,                                         train for the 72-th batch, train loss: nan
+:   1%| | 72/8103 [15:13<3:⚠️ NaN in src_embeddings at batch 72
+⚠️ NaN in dst_embeddings at batch 72
+⚠️ NaN in time_diff_emb at batch 72
+Epoch: 1,                                         train for the 73-th batch, train loss: nan
+:   1%| | 72/8103 [15:15<3:Epoch: 1,                                         train for the 73-th batch, train loss: nan
+:   1%| | 73/8103 [15:15<3:⚠️ NaN in src_embeddings at batch 73
+⚠️ NaN in dst_embeddings at batch 73
+⚠️ NaN in time_diff_emb at batch 73
+Epoch: 1,                                         train for the 74-th batch, train loss: nan
+:   1%| | 73/8103 [15:16<3:Epoch: 1,                                         train for the 74-th batch, train loss: nan
+:   1%| | 74/8103 [15:16<3:⚠️ NaN in src_embeddings at batch 74
+⚠️ NaN in dst_embeddings at batch 74
+⚠️ NaN in time_diff_emb at batch 74
+Epoch: 1,                                         train for the 75-th batch, train loss: nan
+:   1%| | 74/8103 [15:18<3:Epoch: 1,                                         train for the 75-th batch, train loss: nan
+:   1%| | 75/8103 [15:18<3:⚠️ NaN in src_embeddings at batch 75
+⚠️ NaN in dst_embeddings at batch 75
+⚠️ NaN in time_diff_emb at batch 75
+Epoch: 1,                                         train for the 76-th batch, train loss: nan
+:   1%| | 75/8103 [15:20<3:Epoch: 1,                                         train for the 76-th batch, train loss: nan
+:   1%| | 76/8103 [15:20<3:⚠️ NaN in src_embeddings at batch 76
+⚠️ NaN in dst_embeddings at batch 76
+⚠️ NaN in time_diff_emb at batch 76
+Epoch: 1,                                         train for the 77-th batch, train loss: nan
+:   1%| | 76/8103 [15:21<3:Epoch: 1,                                         train for the 77-th batch, train loss: nan
+:   1%| | 77/8103 [15:21<3:⚠️ NaN in src_embeddings at batch 77
+⚠️ NaN in dst_embeddings at batch 77
+⚠️ NaN in time_diff_emb at batch 77
+Epoch: 1,                                         train for the 78-th batch, train loss: nan
+:   1%| | 77/8103 [15:23<3:Epoch: 1,                                         train for the 78-th batch, train loss: nan
+:   1%| | 78/8103 [15:23<3:⚠️ NaN in src_embeddings at batch 78
+⚠️ NaN in dst_embeddings at batch 78
+⚠️ NaN in time_diff_emb at batch 78
+Epoch: 1,                                         train for the 79-th batch, train loss: nan
+:   1%| | 78/8103 [15:24<3:Epoch: 1,                                         train for the 79-th batch, train loss: nan
+:   1%| | 79/8103 [15:24<3:⚠️ NaN in src_embeddings at batch 79
+⚠️ NaN in dst_embeddings at batch 79
+⚠️ NaN in time_diff_emb at batch 79
+Epoch: 1,                                         train for the 80-th batch, train loss: nan
+:   1%| | 79/8103 [15:26<3:Epoch: 1,                                         train for the 80-th batch, train loss: nan
+:   1%| | 80/8103 [15:26<3:⚠️ NaN in src_embeddings at batch 80
+⚠️ NaN in dst_embeddings at batch 80
+⚠️ NaN in time_diff_emb at batch 80
+Epoch: 1,                                         train for the 81-th batch, train loss: nan
+:   1%| | 80/8103 [15:28<3:Epoch: 1,                                         train for the 81-th batch, train loss: nan
+:   1%| | 81/8103 [15:28<3:⚠️ NaN in src_embeddings at batch 81
+⚠️ NaN in dst_embeddings at batch 81
+⚠️ NaN in time_diff_emb at batch 81
+Epoch: 1,                                         train for the 82-th batch, train loss: nan
+:   1%| | 81/8103 [15:29<3:Epoch: 1,                                         train for the 82-th batch, train loss: nan
+:   1%| | 82/8103 [15:29<3:⚠️ NaN in src_embeddings at batch 82
+⚠️ NaN in dst_embeddings at batch 82
+⚠️ NaN in time_diff_emb at batch 82
+Epoch: 1,                                         train for the 83-th batch, train loss: nan
+:   1%| | 82/8103 [15:31<3:Epoch: 1,                                         train for the 83-th batch, train loss: nan
+:   1%| | 83/8103 [15:31<3:⚠️ NaN in src_embeddings at batch 83
+⚠️ NaN in dst_embeddings at batch 83
+⚠️ NaN in time_diff_emb at batch 83
+Epoch: 1,                                         train for the 84-th batch, train loss: nan
+:   1%| | 83/8103 [15:32<3:Epoch: 1,                                         train for the 84-th batch, train loss: nan
+:   1%| | 84/8103 [15:32<3:⚠️ NaN in src_embeddings at batch 84
+⚠️ NaN in dst_embeddings at batch 84
+⚠️ NaN in time_diff_emb at batch 84
+Epoch: 1,                                         train for the 85-th batch, train loss: nan
+:   1%| | 84/8103 [15:34<3:Epoch: 1,                                         train for the 85-th batch, train loss: nan
+:   1%| | 85/8103 [15:34<3:⚠️ NaN in src_embeddings at batch 85
+⚠️ NaN in dst_embeddings at batch 85
+⚠️ NaN in time_diff_emb at batch 85
+Epoch: 1,                                         train for the 86-th batch, train loss: nan
+:   1%| | 85/8103 [15:36<3:Epoch: 1,                                         train for the 86-th batch, train loss: nan
+:   1%| | 86/8103 [15:36<3:⚠️ NaN in src_embeddings at batch 86
+⚠️ NaN in dst_embeddings at batch 86
+⚠️ NaN in time_diff_emb at batch 86
+Epoch: 1,                                         train for the 87-th batch, train loss: nan
+:   1%| | 86/8103 [15:37<3:Epoch: 1,                                         train for the 87-th batch, train loss: nan
+:   1%| | 87/8103 [15:37<3:⚠️ NaN in src_embeddings at batch 87
+⚠️ NaN in dst_embeddings at batch 87
+⚠️ NaN in time_diff_emb at batch 87
+Epoch: 1,                                         train for the 88-th batch, train loss: nan
+:   1%| | 87/8103 [15:39<3:Epoch: 1,                                         train for the 88-th batch, train loss: nan
+:   1%| | 88/8103 [15:39<3:⚠️ NaN in src_embeddings at batch 88
+⚠️ NaN in dst_embeddings at batch 88
+⚠️ NaN in time_diff_emb at batch 88
+Epoch: 1,                                         train for the 89-th batch, train loss: nan
+:   1%| | 88/8103 [15:40<3:Epoch: 1,                                         train for the 89-th batch, train loss: nan
+:   1%| | 89/8103 [15:40<3:⚠️ NaN in src_embeddings at batch 89
+⚠️ NaN in dst_embeddings at batch 89
+⚠️ NaN in time_diff_emb at batch 89
+Epoch: 1,                                         train for the 90-th batch, train loss: nan
+:   1%| | 89/8103 [15:42<3:Epoch: 1,                                         train for the 90-th batch, train loss: nan
+:   1%| | 90/8103 [15:42<3:⚠️ NaN in src_embeddings at batch 90
+⚠️ NaN in dst_embeddings at batch 90
+⚠️ NaN in time_diff_emb at batch 90
+Epoch: 1,                                         train for the 91-th batch, train loss: nan
+:   1%| | 90/8103 [15:44<3:Epoch: 1,                                         train for the 91-th batch, train loss: nan
+:   1%| | 91/8103 [15:44<3:⚠️ NaN in src_embeddings at batch 91
+⚠️ NaN in dst_embeddings at batch 91
+⚠️ NaN in time_diff_emb at batch 91
+Epoch: 1,                                         train for the 92-th batch, train loss: nan
+:   1%| | 91/8103 [15:45<3:Epoch: 1,                                         train for the 92-th batch, train loss: nan
+:   1%| | 92/8103 [15:45<3:⚠️ NaN in src_embeddings at batch 92
+⚠️ NaN in dst_embeddings at batch 92
+⚠️ NaN in time_diff_emb at batch 92
+Epoch: 1,                                         train for the 93-th batch, train loss: nan
+:   1%| | 92/8103 [15:47<3:Epoch: 1,                                         train for the 93-th batch, train loss: nan
+:   1%| | 93/8103 [15:47<3:⚠️ NaN in src_embeddings at batch 93
+⚠️ NaN in dst_embeddings at batch 93
+⚠️ NaN in time_diff_emb at batch 93
+Epoch: 1,                                         train for the 94-th batch, train loss: nan
+:   1%| | 93/8103 [15:48<3:Epoch: 1,                                         train for the 94-th batch, train loss: nan
+:   1%| | 94/8103 [15:48<3:⚠️ NaN in src_embeddings at batch 94
+⚠️ NaN in dst_embeddings at batch 94
+⚠️ NaN in time_diff_emb at batch 94
+Epoch: 1,                                         train for the 95-th batch, train loss: nan
+:   1%| | 94/8103 [15:50<3:Epoch: 1,                                         train for the 95-th batch, train loss: nan
+:   1%| | 95/8103 [15:50<3:⚠️ NaN in src_embeddings at batch 95
+⚠️ NaN in dst_embeddings at batch 95
+⚠️ NaN in time_diff_emb at batch 95
+Epoch: 1,                                         train for the 96-th batch, train loss: nan
+:   1%| | 95/8103 [15:52<3:Epoch: 1,                                         train for the 96-th batch, train loss: nan
+:   1%| | 96/8103 [15:52<3:⚠️ NaN in src_embeddings at batch 96
+⚠️ NaN in dst_embeddings at batch 96
+⚠️ NaN in time_diff_emb at batch 96
+Epoch: 1,                                         train for the 97-th batch, train loss: nan
+:   1%| | 96/8103 [15:53<3:Epoch: 1,                                         train for the 97-th batch, train loss: nan
+:   1%| | 97/8103 [15:53<3:⚠️ NaN in src_embeddings at batch 97
+⚠️ NaN in dst_embeddings at batch 97
+⚠️ NaN in time_diff_emb at batch 97
+Epoch: 1,                                         train for the 98-th batch, train loss: nan
+:   1%| | 97/8103 [15:55<3:Epoch: 1,                                         train for the 98-th batch, train loss: nan
+:   1%| | 98/8103 [15:55<3:⚠️ NaN in src_embeddings at batch 98
+⚠️ NaN in dst_embeddings at batch 98
+⚠️ NaN in time_diff_emb at batch 98
+Epoch: 1,                                         train for the 99-th batch, train loss: nan
+:   1%| | 98/8103 [15:57<3:Epoch: 1,                                         train for the 99-th batch, train loss: nan
+:   1%| | 99/8103 [15:57<4:⚠️ NaN in src_embeddings at batch 99
+⚠️ NaN in dst_embeddings at batch 99
+⚠️ NaN in time_diff_emb at batch 99
+Epoch: 1,                                         train for the 100-th batch, train loss: nan
+:   1%| | 99/8103 [16:16<4Epoch: 1,                                         train for the 100-th batch, train loss: nan
+:   1%| | 100/8103 [16:16<⚠️ NaN in src_embeddings at batch 100
+⚠️ NaN in dst_embeddings at batch 100
+⚠️ NaN in time_diff_emb at batch 100
+Epoch: 1,                                         train for the 101-th batch, train loss: nan
+:   1%| | 100/8103 [17:12<Epoch: 1,                                         train for the 101-th batch, train loss: nan
+:   1%| | 101/8103 [17:12<⚠️ NaN in src_embeddings at batch 101
+⚠️ NaN in dst_embeddings at batch 101
+⚠️ NaN in time_diff_emb at batch 101
+Epoch: 1,                                         train for the 102-th batch, train loss: nan
+:   1%| | 101/8103 [18:18<Epoch: 1,                                         train for the 102-th batch, train loss: nan
+:   1%| | 102/8103 [18:18<slurmstepd: error: *** JOB 198290 ON gnode08 CANCELLED AT 2026-02-12T22:10:16 ***

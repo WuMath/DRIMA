@@ -1,0 +1,1946 @@
+run DygMamba2 job
+********************** start ********************
+[2026-02-12 22:13:42] Start the job
+**********************device********************
+Now use device is cuda:0
+********************** Successfully load data ********************
+The dataset has 6481612 interactions, involving 33516 different nodes
+Edge_feature is successfully converted to tensor without NaN values.
+node_feature is successfully converted to dict without NaN values.
+********************** Successfully process data ********************
+********************* successfully get neighbor **************
+********************* successfully get negative neighbor **************
+********************** Successfully process neighbor data---- positive and negative ********************
+[2026-02-12 22:15:21] Start the job
+INFO:root:********** Run 1 starts. **********
+INFO:root:configuration is Namespace(dataset_name='mooc', batch_size=200, model_name='DyGMamba', gpu=0, num_neighbors=20, sample_neighbor_strategy='uniform', time_scaling_factor=1e-06, num_walk_heads=8, num_heads=2, num_layers=2, walk_length=1, time_gap=2000, time_feat_dim=100, position_feat_dim=172, time_window_mode='fixed_proportion', patch_size=1, channel_embedding_dim=50, max_input_sequence_length=32, learning_rate=0.0001, dropout=0.1, gamma=0.5, num_epochs=1, optimizer='Adam', weight_decay=0.0, patience=20, val_ratio=0.15, test_ratio=0.15, num_runs=1, test_interval_epochs=1, negative_sample_strategy='random', max_interaction_times=10, load_best_configs=False, device='cuda:0', seed=0, save_model_name='DyGMamba_seed0')
+INFO:root:model -> Sequential(
+  (0): DyGMamba(
+    (time_encoder): TimeEncoder(
+      (w): Linear(in_features=1, out_features=100, bias=True)
+    )
+    (neighbor_co_occurrence_encoder): NIFEncoder(
+      (nif_encode_layer): Sequential(
+        (0): Linear(in_features=1, out_features=50, bias=True)
+        (1): ReLU()
+        (2): Linear(in_features=50, out_features=50, bias=True)
+      )
+    )
+    (projection_layer): ModuleDict(
+      (node): Linear(in_features=172, out_features=50, bias=True)
+      (edge): Linear(in_features=172, out_features=50, bias=True)
+      (time): Linear(in_features=100, out_features=50, bias=True)
+      (neighbor_co_occurrence): Linear(in_features=50, out_features=50, bias=True)
+    )
+    (output_layer): Linear(in_features=100, out_features=172, bias=True)
+    (output_layer_t_diff): Linear(in_features=25, out_features=172, bias=True)
+    (mamba): ModuleList(
+      (0-1): 2 x Mamba(
+        (in_proj): Linear(in_features=100, out_features=200, bias=False)
+        (conv1d): Conv1d(100, 100, kernel_size=(4,), stride=(1,), padding=(3,), groups=100)
+        (act): SiLU()
+        (x_proj): Linear(in_features=100, out_features=39, bias=False)
+        (dt_proj): Linear(in_features=7, out_features=100, bias=True)
+        (out_proj): Linear(in_features=100, out_features=100, bias=False)
+      )
+    )
+    (mamba_t_diff): ModuleList(
+      (0-1): 2 x Mamba(
+        (in_proj): Linear(in_features=25, out_features=50, bias=False)
+        (conv1d): Conv1d(25, 25, kernel_size=(4,), stride=(1,), padding=(3,), groups=25)
+        (act): SiLU()
+        (x_proj): Linear(in_features=25, out_features=34, bias=False)
+        (dt_proj): Linear(in_features=2, out_features=25, bias=True)
+        (out_proj): Linear(in_features=25, out_features=25, bias=False)
+      )
+    )
+    (projection_layer_t_diff): Linear(in_features=100, out_features=25, bias=True)
+    (projection_layer_t_diff_up): Linear(in_features=25, out_features=100, bias=True)
+    (weightagg): Linear(in_features=100, out_features=1, bias=True)
+    (reduce_layer): Linear(in_features=200, out_features=100, bias=True)
+    (channel_norm): LayerNorm((100,), eps=1e-05, elementwise_affine=True)
+    (channel_feedforward): FeedForwardNet(
+      (ffn): Sequential(
+        (0): Linear(in_features=100, out_features=400, bias=True)
+        (1): GELU(approximate='none')
+        (2): Dropout(p=0.1, inplace=False)
+        (3): Linear(in_features=400, out_features=100, bias=True)
+        (4): Dropout(p=0.1, inplace=False)
+      )
+    )
+    (neighbor_selection_layer): Linear(in_features=100, out_features=100, bias=True)
+  )
+  (1): MergeLayerTD(
+    (fc1): Linear(in_features=516, out_features=172, bias=True)
+    (fc2): Linear(in_features=172, out_features=1, bias=True)
+    (act): ReLU()
+  )
+)
+INFO:root:model name: DyGMamba, #parameters: 1341268 B, 1309.83203125 KB, 1.2791328430175781 MB.
+混合精度训练已启用
+  0%|                                                                                          | 0/8103 [00:00<?, ?it/s]List 中没有 NaN。
+Tensor 中存在 NaN！建议处理方案：使用 .nan_to_num(0) 填充
+List 中没有 NaN。
+Tensor 中存在 NaN！建议处理方案：使用 .nan_to_num(0) 填充
+⚠️ NaN in src_embeddings at batch 0
+⚠️ NaN in dst_embeddings at batch 0
+⚠️ NaN in time_diff_emb at batch 0
+Epoch: 1,                                         train for the 1-th batch, train loss: nan
+:   0%| | 0/8103 [00:04<?, ?Epoch: 1,                                         train for the 1-th batch, train loss: nan
+:   0%| | 1/8103 [00:04<10:5List 中没有 NaN。
+Tensor 中存在 NaN！建议处理方案：使用 .nan_to_num(0) 填充
+List 中没有 NaN。
+Tensor 中存在 NaN！建议处理方案：使用 .nan_to_num(0) 填充
+⚠️ NaN in src_embeddings at batch 1
+⚠️ NaN in dst_embeddings at batch 1
+⚠️ NaN in time_diff_emb at batch 1
+Epoch: 1,                                         train for the 2-th batch, train loss: nan
+:   0%| | 1/8103 [00:06<10:5Epoch: 1,                                         train for the 2-th batch, train loss: nan
+:   0%| | 2/8103 [00:06<6:20List 中没有 NaN。
+Tensor 中存在 NaN！建议处理方案：使用 .nan_to_num(0) 填充
+List 中没有 NaN。
+Tensor 中存在 NaN！建议处理方案：使用 .nan_to_num(0) 填充
+⚠️ NaN in src_embeddings at batch 2
+⚠️ NaN in dst_embeddings at batch 2
+⚠️ NaN in time_diff_emb at batch 2
+Epoch: 1,                                         train for the 3-th batch, train loss: nan
+:   0%| | 2/8103 [00:07<6:20Epoch: 1,                                         train for the 3-th batch, train loss: nan
+:   0%| | 3/8103 [00:07<4:49List 中没有 NaN。
+Tensor 中存在 NaN！建议处理方案：使用 .nan_to_num(0) 填充
+List 中没有 NaN。
+Tensor 中存在 NaN！建议处理方案：使用 .nan_to_num(0) 填充
+⚠️ NaN in src_embeddings at batch 3
+⚠️ NaN in dst_embeddings at batch 3
+⚠️ NaN in time_diff_emb at batch 3
+Epoch: 1,                                         train for the 4-th batch, train loss: nan
+:   0%| | 3/8103 [00:08<4:49Epoch: 1,                                         train for the 4-th batch, train loss: nan
+:   0%| | 4/8103 [00:08<4:06List 中没有 NaN。
+Tensor 中存在 NaN！建议处理方案：使用 .nan_to_num(0) 填充
+List 中没有 NaN。
+Tensor 中存在 NaN！建议处理方案：使用 .nan_to_num(0) 填充
+⚠️ NaN in src_embeddings at batch 4
+⚠️ NaN in dst_embeddings at batch 4
+⚠️ NaN in time_diff_emb at batch 4
+Epoch: 1,                                         train for the 5-th batch, train loss: nan
+:   0%| | 4/8103 [00:10<4:06Epoch: 1,                                         train for the 5-th batch, train loss: nan
+:   0%| | 5/8103 [00:10<3:42List 中没有 NaN。
+Tensor 中存在 NaN！建议处理方案：使用 .nan_to_num(0) 填充
+List 中没有 NaN。
+Tensor 中存在 NaN！建议处理方案：使用 .nan_to_num(0) 填充
+⚠️ NaN in src_embeddings at batch 5
+⚠️ NaN in dst_embeddings at batch 5
+⚠️ NaN in time_diff_emb at batch 5
+Epoch: 1,                                         train for the 6-th batch, train loss: nan
+:   0%| | 5/8103 [00:11<3:42Epoch: 1,                                         train for the 6-th batch, train loss: nan
+:   0%| | 6/8103 [00:11<3:26List 中没有 NaN。
+Tensor 中存在 NaN！建议处理方案：使用 .nan_to_num(0) 填充
+List 中没有 NaN。
+Tensor 中存在 NaN！建议处理方案：使用 .nan_to_num(0) 填充
+⚠️ NaN in src_embeddings at batch 6
+⚠️ NaN in dst_embeddings at batch 6
+⚠️ NaN in time_diff_emb at batch 6
+Epoch: 1,                                         train for the 7-th batch, train loss: nan
+:   0%| | 6/8103 [00:12<3:26Epoch: 1,                                         train for the 7-th batch, train loss: nan
+:   0%| | 7/8103 [00:12<3:17List 中没有 NaN。
+Tensor 中存在 NaN！建议处理方案：使用 .nan_to_num(0) 填充
+List 中没有 NaN。
+Tensor 中存在 NaN！建议处理方案：使用 .nan_to_num(0) 填充
+⚠️ NaN in src_embeddings at batch 7
+⚠️ NaN in dst_embeddings at batch 7
+⚠️ NaN in time_diff_emb at batch 7
+Epoch: 1,                                         train for the 8-th batch, train loss: nan
+:   0%| | 7/8103 [00:14<3:17Epoch: 1,                                         train for the 8-th batch, train loss: nan
+:   0%| | 8/8103 [00:14<3:10List 中没有 NaN。
+Tensor 中存在 NaN！建议处理方案：使用 .nan_to_num(0) 填充
+List 中没有 NaN。
+Tensor 中存在 NaN！建议处理方案：使用 .nan_to_num(0) 填充
+⚠️ NaN in src_embeddings at batch 8
+⚠️ NaN in dst_embeddings at batch 8
+⚠️ NaN in time_diff_emb at batch 8
+Epoch: 1,                                         train for the 9-th batch, train loss: nan
+:   0%| | 8/8103 [00:15<3:10Epoch: 1,                                         train for the 9-th batch, train loss: nan
+:   0%| | 9/8103 [00:15<3:06List 中没有 NaN。
+Tensor 中存在 NaN！建议处理方案：使用 .nan_to_num(0) 填充
+List 中没有 NaN。
+Tensor 中存在 NaN！建议处理方案：使用 .nan_to_num(0) 填充
+⚠️ NaN in src_embeddings at batch 9
+⚠️ NaN in dst_embeddings at batch 9
+⚠️ NaN in time_diff_emb at batch 9
+Epoch: 1,                                         train for the 10-th batch, train loss: nan
+:   0%| | 9/8103 [00:16<3:0Epoch: 1,                                         train for the 10-th batch, train loss: nan
+:   0%| | 10/8103 [00:16<3:List 中没有 NaN。
+Tensor 中存在 NaN！建议处理方案：使用 .nan_to_num(0) 填充
+List 中没有 NaN。
+Tensor 中存在 NaN！建议处理方案：使用 .nan_to_num(0) 填充
+⚠️ NaN in src_embeddings at batch 10
+⚠️ NaN in dst_embeddings at batch 10
+⚠️ NaN in time_diff_emb at batch 10
+Epoch: 1,                                         train for the 11-th batch, train loss: nan
+:   0%| | 10/8103 [00:18<3:Epoch: 1,                                         train for the 11-th batch, train loss: nan
+:   0%| | 11/8103 [00:18<3:List 中没有 NaN。
+Tensor 中存在 NaN！建议处理方案：使用 .nan_to_num(0) 填充
+List 中没有 NaN。
+Tensor 中存在 NaN！建议处理方案：使用 .nan_to_num(0) 填充
+⚠️ NaN in src_embeddings at batch 11
+⚠️ NaN in dst_embeddings at batch 11
+⚠️ NaN in time_diff_emb at batch 11
+Epoch: 1,                                         train for the 12-th batch, train loss: nan
+:   0%| | 11/8103 [00:19<3:Epoch: 1,                                         train for the 12-th batch, train loss: nan
+:   0%| | 12/8103 [00:19<2:List 中没有 NaN。
+Tensor 中存在 NaN！建议处理方案：使用 .nan_to_num(0) 填充
+List 中没有 NaN。
+Tensor 中存在 NaN！建议处理方案：使用 .nan_to_num(0) 填充
+⚠️ NaN in src_embeddings at batch 12
+⚠️ NaN in dst_embeddings at batch 12
+⚠️ NaN in time_diff_emb at batch 12
+Epoch: 1,                                         train for the 13-th batch, train loss: nan
+:   0%| | 12/8103 [00:20<2:Epoch: 1,                                         train for the 13-th batch, train loss: nan
+:   0%| | 13/8103 [00:20<2:List 中没有 NaN。
+Tensor 中存在 NaN！建议处理方案：使用 .nan_to_num(0) 填充
+List 中没有 NaN。
+Tensor 中存在 NaN！建议处理方案：使用 .nan_to_num(0) 填充
+⚠️ NaN in src_embeddings at batch 13
+⚠️ NaN in dst_embeddings at batch 13
+⚠️ NaN in time_diff_emb at batch 13
+Epoch: 1,                                         train for the 14-th batch, train loss: nan
+:   0%| | 13/8103 [00:21<2:Epoch: 1,                                         train for the 14-th batch, train loss: nan
+:   0%| | 14/8103 [00:21<2:List 中没有 NaN。
+Tensor 中存在 NaN！建议处理方案：使用 .nan_to_num(0) 填充
+List 中没有 NaN。
+Tensor 中存在 NaN！建议处理方案：使用 .nan_to_num(0) 填充
+⚠️ NaN in src_embeddings at batch 14
+⚠️ NaN in dst_embeddings at batch 14
+⚠️ NaN in time_diff_emb at batch 14
+Epoch: 1,                                         train for the 15-th batch, train loss: nan
+:   0%| | 14/8103 [00:23<2:Epoch: 1,                                         train for the 15-th batch, train loss: nan
+:   0%| | 15/8103 [00:23<2:List 中没有 NaN。
+Tensor 中存在 NaN！建议处理方案：使用 .nan_to_num(0) 填充
+List 中没有 NaN。
+Tensor 中存在 NaN！建议处理方案：使用 .nan_to_num(0) 填充
+⚠️ NaN in src_embeddings at batch 15
+⚠️ NaN in dst_embeddings at batch 15
+⚠️ NaN in time_diff_emb at batch 15
+Epoch: 1,                                         train for the 16-th batch, train loss: nan
+:   0%| | 15/8103 [00:24<2:Epoch: 1,                                         train for the 16-th batch, train loss: nan
+:   0%| | 16/8103 [00:24<2:List 中没有 NaN。
+Tensor 中存在 NaN！建议处理方案：使用 .nan_to_num(0) 填充
+List 中没有 NaN。
+Tensor 中存在 NaN！建议处理方案：使用 .nan_to_num(0) 填充
+⚠️ NaN in src_embeddings at batch 16
+⚠️ NaN in dst_embeddings at batch 16
+⚠️ NaN in time_diff_emb at batch 16
+Epoch: 1,                                         train for the 17-th batch, train loss: nan
+:   0%| | 16/8103 [00:25<2:Epoch: 1,                                         train for the 17-th batch, train loss: nan
+:   0%| | 17/8103 [00:25<2:List 中没有 NaN。
+Tensor 中存在 NaN！建议处理方案：使用 .nan_to_num(0) 填充
+List 中没有 NaN。
+Tensor 中存在 NaN！建议处理方案：使用 .nan_to_num(0) 填充
+⚠️ NaN in src_embeddings at batch 17
+⚠️ NaN in dst_embeddings at batch 17
+⚠️ NaN in time_diff_emb at batch 17
+Epoch: 1,                                         train for the 18-th batch, train loss: nan
+:   0%| | 17/8103 [00:27<2:Epoch: 1,                                         train for the 18-th batch, train loss: nan
+:   0%| | 18/8103 [00:27<2:List 中没有 NaN。
+Tensor 中存在 NaN！建议处理方案：使用 .nan_to_num(0) 填充
+List 中没有 NaN。
+Tensor 中存在 NaN！建议处理方案：使用 .nan_to_num(0) 填充
+⚠️ NaN in src_embeddings at batch 18
+⚠️ NaN in dst_embeddings at batch 18
+⚠️ NaN in time_diff_emb at batch 18
+Epoch: 1,                                         train for the 19-th batch, train loss: nan
+:   0%| | 18/8103 [00:28<2:Epoch: 1,                                         train for the 19-th batch, train loss: nan
+:   0%| | 19/8103 [00:28<2:List 中没有 NaN。
+Tensor 中存在 NaN！建议处理方案：使用 .nan_to_num(0) 填充
+List 中没有 NaN。
+Tensor 中存在 NaN！建议处理方案：使用 .nan_to_num(0) 填充
+⚠️ NaN in src_embeddings at batch 19
+⚠️ NaN in dst_embeddings at batch 19
+⚠️ NaN in time_diff_emb at batch 19
+Epoch: 1,                                         train for the 20-th batch, train loss: nan
+:   0%| | 19/8103 [00:29<2:Epoch: 1,                                         train for the 20-th batch, train loss: nan
+:   0%| | 20/8103 [00:29<2:List 中没有 NaN。
+Tensor 中存在 NaN！建议处理方案：使用 .nan_to_num(0) 填充
+List 中没有 NaN。
+Tensor 中存在 NaN！建议处理方案：使用 .nan_to_num(0) 填充
+⚠️ NaN in src_embeddings at batch 20
+⚠️ NaN in dst_embeddings at batch 20
+⚠️ NaN in time_diff_emb at batch 20
+Epoch: 1,                                         train for the 21-th batch, train loss: nan
+:   0%| | 20/8103 [00:30<2:Epoch: 1,                                         train for the 21-th batch, train loss: nan
+:   0%| | 21/8103 [00:30<2:List 中没有 NaN。
+Tensor 中存在 NaN！建议处理方案：使用 .nan_to_num(0) 填充
+List 中没有 NaN。
+Tensor 中存在 NaN！建议处理方案：使用 .nan_to_num(0) 填充
+⚠️ NaN in src_embeddings at batch 21
+⚠️ NaN in dst_embeddings at batch 21
+⚠️ NaN in time_diff_emb at batch 21
+Epoch: 1,                                         train for the 22-th batch, train loss: nan
+:   0%| | 21/8103 [00:32<2:Epoch: 1,                                         train for the 22-th batch, train loss: nan
+:   0%| | 22/8103 [00:32<2:List 中没有 NaN。
+Tensor 中存在 NaN！建议处理方案：使用 .nan_to_num(0) 填充
+List 中没有 NaN。
+Tensor 中存在 NaN！建议处理方案：使用 .nan_to_num(0) 填充
+⚠️ NaN in src_embeddings at batch 22
+⚠️ NaN in dst_embeddings at batch 22
+⚠️ NaN in time_diff_emb at batch 22
+Epoch: 1,                                         train for the 23-th batch, train loss: nan
+:   0%| | 22/8103 [00:33<2:Epoch: 1,                                         train for the 23-th batch, train loss: nan
+:   0%| | 23/8103 [00:33<2:List 中没有 NaN。
+Tensor 中存在 NaN！建议处理方案：使用 .nan_to_num(0) 填充
+List 中没有 NaN。
+Tensor 中存在 NaN！建议处理方案：使用 .nan_to_num(0) 填充
+⚠️ NaN in src_embeddings at batch 23
+⚠️ NaN in dst_embeddings at batch 23
+⚠️ NaN in time_diff_emb at batch 23
+Epoch: 1,                                         train for the 24-th batch, train loss: nan
+:   0%| | 23/8103 [00:34<2:Epoch: 1,                                         train for the 24-th batch, train loss: nan
+:   0%| | 24/8103 [00:34<2:List 中没有 NaN。
+Tensor 中存在 NaN！建议处理方案：使用 .nan_to_num(0) 填充
+List 中没有 NaN。
+Tensor 中存在 NaN！建议处理方案：使用 .nan_to_num(0) 填充
+⚠️ NaN in src_embeddings at batch 24
+⚠️ NaN in dst_embeddings at batch 24
+⚠️ NaN in time_diff_emb at batch 24
+Epoch: 1,                                         train for the 25-th batch, train loss: nan
+:   0%| | 24/8103 [00:36<2:Epoch: 1,                                         train for the 25-th batch, train loss: nan
+:   0%| | 25/8103 [00:36<2:List 中没有 NaN。
+Tensor 中存在 NaN！建议处理方案：使用 .nan_to_num(0) 填充
+List 中没有 NaN。
+Tensor 中存在 NaN！建议处理方案：使用 .nan_to_num(0) 填充
+⚠️ NaN in src_embeddings at batch 25
+⚠️ NaN in dst_embeddings at batch 25
+⚠️ NaN in time_diff_emb at batch 25
+Epoch: 1,                                         train for the 26-th batch, train loss: nan
+:   0%| | 25/8103 [00:37<2:Epoch: 1,                                         train for the 26-th batch, train loss: nan
+:   0%| | 26/8103 [00:37<2:List 中没有 NaN。
+Tensor 中存在 NaN！建议处理方案：使用 .nan_to_num(0) 填充
+List 中没有 NaN。
+Tensor 中存在 NaN！建议处理方案：使用 .nan_to_num(0) 填充
+⚠️ NaN in src_embeddings at batch 26
+⚠️ NaN in dst_embeddings at batch 26
+⚠️ NaN in time_diff_emb at batch 26
+Epoch: 1,                                         train for the 27-th batch, train loss: nan
+:   0%| | 26/8103 [00:38<2:Epoch: 1,                                         train for the 27-th batch, train loss: nan
+:   0%| | 27/8103 [00:38<2:List 中没有 NaN。
+Tensor 中存在 NaN！建议处理方案：使用 .nan_to_num(0) 填充
+List 中没有 NaN。
+Tensor 中存在 NaN！建议处理方案：使用 .nan_to_num(0) 填充
+⚠️ NaN in src_embeddings at batch 27
+⚠️ NaN in dst_embeddings at batch 27
+⚠️ NaN in time_diff_emb at batch 27
+Epoch: 1,                                         train for the 28-th batch, train loss: nan
+:   0%| | 27/8103 [00:39<2:Epoch: 1,                                         train for the 28-th batch, train loss: nan
+:   0%| | 28/8103 [00:39<2:List 中没有 NaN。
+Tensor 中存在 NaN！建议处理方案：使用 .nan_to_num(0) 填充
+List 中没有 NaN。
+Tensor 中存在 NaN！建议处理方案：使用 .nan_to_num(0) 填充
+⚠️ NaN in src_embeddings at batch 28
+⚠️ NaN in dst_embeddings at batch 28
+⚠️ NaN in time_diff_emb at batch 28
+Epoch: 1,                                         train for the 29-th batch, train loss: nan
+:   0%| | 28/8103 [00:41<2:Epoch: 1,                                         train for the 29-th batch, train loss: nan
+:   0%| | 29/8103 [00:41<2:List 中没有 NaN。
+Tensor 中存在 NaN！建议处理方案：使用 .nan_to_num(0) 填充
+List 中没有 NaN。
+Tensor 中存在 NaN！建议处理方案：使用 .nan_to_num(0) 填充
+⚠️ NaN in src_embeddings at batch 29
+⚠️ NaN in dst_embeddings at batch 29
+⚠️ NaN in time_diff_emb at batch 29
+Epoch: 1,                                         train for the 30-th batch, train loss: nan
+:   0%| | 29/8103 [00:42<2:Epoch: 1,                                         train for the 30-th batch, train loss: nan
+:   0%| | 30/8103 [00:42<2:List 中没有 NaN。
+Tensor 中存在 NaN！建议处理方案：使用 .nan_to_num(0) 填充
+List 中没有 NaN。
+Tensor 中存在 NaN！建议处理方案：使用 .nan_to_num(0) 填充
+⚠️ NaN in src_embeddings at batch 30
+⚠️ NaN in dst_embeddings at batch 30
+⚠️ NaN in time_diff_emb at batch 30
+Epoch: 1,                                         train for the 31-th batch, train loss: nan
+:   0%| | 30/8103 [00:43<2:Epoch: 1,                                         train for the 31-th batch, train loss: nan
+:   0%| | 31/8103 [00:43<2:List 中没有 NaN。
+Tensor 中存在 NaN！建议处理方案：使用 .nan_to_num(0) 填充
+List 中没有 NaN。
+Tensor 中存在 NaN！建议处理方案：使用 .nan_to_num(0) 填充
+⚠️ NaN in src_embeddings at batch 31
+⚠️ NaN in dst_embeddings at batch 31
+⚠️ NaN in time_diff_emb at batch 31
+Epoch: 1,                                         train for the 32-th batch, train loss: nan
+:   0%| | 31/8103 [00:45<2:Epoch: 1,                                         train for the 32-th batch, train loss: nan
+:   0%| | 32/8103 [00:45<2:List 中没有 NaN。
+Tensor 中存在 NaN！建议处理方案：使用 .nan_to_num(0) 填充
+List 中没有 NaN。
+Tensor 中存在 NaN！建议处理方案：使用 .nan_to_num(0) 填充
+⚠️ NaN in src_embeddings at batch 32
+⚠️ NaN in dst_embeddings at batch 32
+⚠️ NaN in time_diff_emb at batch 32
+Epoch: 1,                                         train for the 33-th batch, train loss: nan
+:   0%| | 32/8103 [00:46<2:Epoch: 1,                                         train for the 33-th batch, train loss: nan
+:   0%| | 33/8103 [00:46<2:List 中没有 NaN。
+Tensor 中存在 NaN！建议处理方案：使用 .nan_to_num(0) 填充
+List 中没有 NaN。
+Tensor 中存在 NaN！建议处理方案：使用 .nan_to_num(0) 填充
+⚠️ NaN in src_embeddings at batch 33
+⚠️ NaN in dst_embeddings at batch 33
+⚠️ NaN in time_diff_emb at batch 33
+Epoch: 1,                                         train for the 34-th batch, train loss: nan
+:   0%| | 33/8103 [00:47<2:Epoch: 1,                                         train for the 34-th batch, train loss: nan
+:   0%| | 34/8103 [00:47<2:List 中没有 NaN。
+Tensor 中存在 NaN！建议处理方案：使用 .nan_to_num(0) 填充
+List 中没有 NaN。
+Tensor 中存在 NaN！建议处理方案：使用 .nan_to_num(0) 填充
+⚠️ NaN in src_embeddings at batch 34
+⚠️ NaN in dst_embeddings at batch 34
+⚠️ NaN in time_diff_emb at batch 34
+Epoch: 1,                                         train for the 35-th batch, train loss: nan
+:   0%| | 34/8103 [00:48<2:Epoch: 1,                                         train for the 35-th batch, train loss: nan
+:   0%| | 35/8103 [00:48<2:List 中没有 NaN。
+Tensor 中存在 NaN！建议处理方案：使用 .nan_to_num(0) 填充
+List 中没有 NaN。
+Tensor 中存在 NaN！建议处理方案：使用 .nan_to_num(0) 填充
+⚠️ NaN in src_embeddings at batch 35
+⚠️ NaN in dst_embeddings at batch 35
+⚠️ NaN in time_diff_emb at batch 35
+Epoch: 1,                                         train for the 36-th batch, train loss: nan
+:   0%| | 35/8103 [00:50<2:Epoch: 1,                                         train for the 36-th batch, train loss: nan
+:   0%| | 36/8103 [00:50<2:List 中没有 NaN。
+Tensor 中存在 NaN！建议处理方案：使用 .nan_to_num(0) 填充
+List 中没有 NaN。
+Tensor 中存在 NaN！建议处理方案：使用 .nan_to_num(0) 填充
+⚠️ NaN in src_embeddings at batch 36
+⚠️ NaN in dst_embeddings at batch 36
+⚠️ NaN in time_diff_emb at batch 36
+Epoch: 1,                                         train for the 37-th batch, train loss: nan
+:   0%| | 36/8103 [00:51<2:Epoch: 1,                                         train for the 37-th batch, train loss: nan
+:   0%| | 37/8103 [00:51<2:List 中没有 NaN。
+Tensor 中存在 NaN！建议处理方案：使用 .nan_to_num(0) 填充
+List 中没有 NaN。
+Tensor 中存在 NaN！建议处理方案：使用 .nan_to_num(0) 填充
+⚠️ NaN in src_embeddings at batch 37
+⚠️ NaN in dst_embeddings at batch 37
+⚠️ NaN in time_diff_emb at batch 37
+Epoch: 1,                                         train for the 38-th batch, train loss: nan
+:   0%| | 37/8103 [00:52<2:Epoch: 1,                                         train for the 38-th batch, train loss: nan
+:   0%| | 38/8103 [00:52<2:List 中没有 NaN。
+Tensor 中存在 NaN！建议处理方案：使用 .nan_to_num(0) 填充
+List 中没有 NaN。
+Tensor 中存在 NaN！建议处理方案：使用 .nan_to_num(0) 填充
+⚠️ NaN in src_embeddings at batch 38
+⚠️ NaN in dst_embeddings at batch 38
+⚠️ NaN in time_diff_emb at batch 38
+Epoch: 1,                                         train for the 39-th batch, train loss: nan
+:   0%| | 38/8103 [00:54<2:Epoch: 1,                                         train for the 39-th batch, train loss: nan
+:   0%| | 39/8103 [00:54<2:List 中没有 NaN。
+Tensor 中存在 NaN！建议处理方案：使用 .nan_to_num(0) 填充
+List 中没有 NaN。
+Tensor 中存在 NaN！建议处理方案：使用 .nan_to_num(0) 填充
+⚠️ NaN in src_embeddings at batch 39
+⚠️ NaN in dst_embeddings at batch 39
+⚠️ NaN in time_diff_emb at batch 39
+Epoch: 1,                                         train for the 40-th batch, train loss: nan
+:   0%| | 39/8103 [00:55<2:Epoch: 1,                                         train for the 40-th batch, train loss: nan
+:   0%| | 40/8103 [00:55<2:List 中没有 NaN。
+Tensor 中存在 NaN！建议处理方案：使用 .nan_to_num(0) 填充
+List 中没有 NaN。
+Tensor 中存在 NaN！建议处理方案：使用 .nan_to_num(0) 填充
+⚠️ NaN in src_embeddings at batch 40
+⚠️ NaN in dst_embeddings at batch 40
+⚠️ NaN in time_diff_emb at batch 40
+Epoch: 1,                                         train for the 41-th batch, train loss: nan
+:   0%| | 40/8103 [00:56<2:Epoch: 1,                                         train for the 41-th batch, train loss: nan
+:   1%| | 41/8103 [00:56<2:List 中没有 NaN。
+Tensor 中存在 NaN！建议处理方案：使用 .nan_to_num(0) 填充
+List 中没有 NaN。
+Tensor 中存在 NaN！建议处理方案：使用 .nan_to_num(0) 填充
+⚠️ NaN in src_embeddings at batch 41
+⚠️ NaN in dst_embeddings at batch 41
+⚠️ NaN in time_diff_emb at batch 41
+Epoch: 1,                                         train for the 42-th batch, train loss: nan
+:   1%| | 41/8103 [00:57<2:Epoch: 1,                                         train for the 42-th batch, train loss: nan
+:   1%| | 42/8103 [00:57<2:List 中没有 NaN。
+Tensor 中存在 NaN！建议处理方案：使用 .nan_to_num(0) 填充
+List 中没有 NaN。
+Tensor 中存在 NaN！建议处理方案：使用 .nan_to_num(0) 填充
+⚠️ NaN in src_embeddings at batch 42
+⚠️ NaN in dst_embeddings at batch 42
+⚠️ NaN in time_diff_emb at batch 42
+Epoch: 1,                                         train for the 43-th batch, train loss: nan
+:   1%| | 42/8103 [00:59<2:Epoch: 1,                                         train for the 43-th batch, train loss: nan
+:   1%| | 43/8103 [00:59<2:List 中没有 NaN。
+Tensor 中存在 NaN！建议处理方案：使用 .nan_to_num(0) 填充
+List 中没有 NaN。
+Tensor 中存在 NaN！建议处理方案：使用 .nan_to_num(0) 填充
+⚠️ NaN in src_embeddings at batch 43
+⚠️ NaN in dst_embeddings at batch 43
+⚠️ NaN in time_diff_emb at batch 43
+Epoch: 1,                                         train for the 44-th batch, train loss: nan
+:   1%| | 43/8103 [01:00<2:Epoch: 1,                                         train for the 44-th batch, train loss: nan
+:   1%| | 44/8103 [01:00<2:List 中没有 NaN。
+Tensor 中存在 NaN！建议处理方案：使用 .nan_to_num(0) 填充
+List 中没有 NaN。
+Tensor 中存在 NaN！建议处理方案：使用 .nan_to_num(0) 填充
+⚠️ NaN in src_embeddings at batch 44
+⚠️ NaN in dst_embeddings at batch 44
+⚠️ NaN in time_diff_emb at batch 44
+Epoch: 1,                                         train for the 45-th batch, train loss: nan
+:   1%| | 44/8103 [01:01<2:Epoch: 1,                                         train for the 45-th batch, train loss: nan
+:   1%| | 45/8103 [01:01<2:List 中没有 NaN。
+Tensor 中存在 NaN！建议处理方案：使用 .nan_to_num(0) 填充
+List 中没有 NaN。
+Tensor 中存在 NaN！建议处理方案：使用 .nan_to_num(0) 填充
+⚠️ NaN in src_embeddings at batch 45
+⚠️ NaN in dst_embeddings at batch 45
+⚠️ NaN in time_diff_emb at batch 45
+Epoch: 1,                                         train for the 46-th batch, train loss: nan
+:   1%| | 45/8103 [01:02<2:Epoch: 1,                                         train for the 46-th batch, train loss: nan
+:   1%| | 46/8103 [01:02<2:List 中没有 NaN。
+Tensor 中存在 NaN！建议处理方案：使用 .nan_to_num(0) 填充
+List 中没有 NaN。
+Tensor 中存在 NaN！建议处理方案：使用 .nan_to_num(0) 填充
+⚠️ NaN in src_embeddings at batch 46
+⚠️ NaN in dst_embeddings at batch 46
+⚠️ NaN in time_diff_emb at batch 46
+Epoch: 1,                                         train for the 47-th batch, train loss: nan
+:   1%| | 46/8103 [01:04<2:Epoch: 1,                                         train for the 47-th batch, train loss: nan
+:   1%| | 47/8103 [01:04<2:List 中没有 NaN。
+Tensor 中存在 NaN！建议处理方案：使用 .nan_to_num(0) 填充
+List 中没有 NaN。
+Tensor 中存在 NaN！建议处理方案：使用 .nan_to_num(0) 填充
+⚠️ NaN in src_embeddings at batch 47
+⚠️ NaN in dst_embeddings at batch 47
+⚠️ NaN in time_diff_emb at batch 47
+Epoch: 1,                                         train for the 48-th batch, train loss: nan
+:   1%| | 47/8103 [01:05<2:Epoch: 1,                                         train for the 48-th batch, train loss: nan
+:   1%| | 48/8103 [01:05<3:List 中没有 NaN。
+Tensor 中存在 NaN！建议处理方案：使用 .nan_to_num(0) 填充
+List 中没有 NaN。
+Tensor 中存在 NaN！建议处理方案：使用 .nan_to_num(0) 填充
+⚠️ NaN in src_embeddings at batch 48
+⚠️ NaN in dst_embeddings at batch 48
+⚠️ NaN in time_diff_emb at batch 48
+Epoch: 1,                                         train for the 49-th batch, train loss: nan
+:   1%| | 48/8103 [01:07<3:Epoch: 1,                                         train for the 49-th batch, train loss: nan
+:   1%| | 49/8103 [01:07<3:List 中没有 NaN。
+Tensor 中存在 NaN！建议处理方案：使用 .nan_to_num(0) 填充
+List 中没有 NaN。
+Tensor 中存在 NaN！建议处理方案：使用 .nan_to_num(0) 填充
+⚠️ NaN in src_embeddings at batch 49
+⚠️ NaN in dst_embeddings at batch 49
+⚠️ NaN in time_diff_emb at batch 49
+Epoch: 1,                                         train for the 50-th batch, train loss: nan
+:   1%| | 49/8103 [01:08<3:Epoch: 1,                                         train for the 50-th batch, train loss: nan
+:   1%| | 50/8103 [01:08<2:List 中没有 NaN。
+Tensor 中存在 NaN！建议处理方案：使用 .nan_to_num(0) 填充
+List 中没有 NaN。
+Tensor 中存在 NaN！建议处理方案：使用 .nan_to_num(0) 填充
+⚠️ NaN in src_embeddings at batch 50
+⚠️ NaN in dst_embeddings at batch 50
+⚠️ NaN in time_diff_emb at batch 50
+Epoch: 1,                                         train for the 51-th batch, train loss: nan
+:   1%| | 50/8103 [01:09<2:Epoch: 1,                                         train for the 51-th batch, train loss: nan
+:   1%| | 51/8103 [01:09<2:List 中没有 NaN。
+Tensor 中存在 NaN！建议处理方案：使用 .nan_to_num(0) 填充
+List 中没有 NaN。
+Tensor 中存在 NaN！建议处理方案：使用 .nan_to_num(0) 填充
+⚠️ NaN in src_embeddings at batch 51
+⚠️ NaN in dst_embeddings at batch 51
+⚠️ NaN in time_diff_emb at batch 51
+Epoch: 1,                                         train for the 52-th batch, train loss: nan
+:   1%| | 51/8103 [01:10<2:Epoch: 1,                                         train for the 52-th batch, train loss: nan
+:   1%| | 52/8103 [01:10<2:List 中没有 NaN。
+Tensor 中存在 NaN！建议处理方案：使用 .nan_to_num(0) 填充
+List 中没有 NaN。
+Tensor 中存在 NaN！建议处理方案：使用 .nan_to_num(0) 填充
+⚠️ NaN in src_embeddings at batch 52
+⚠️ NaN in dst_embeddings at batch 52
+⚠️ NaN in time_diff_emb at batch 52
+Epoch: 1,                                         train for the 53-th batch, train loss: nan
+:   1%| | 52/8103 [01:12<2:Epoch: 1,                                         train for the 53-th batch, train loss: nan
+:   1%| | 53/8103 [01:12<2:List 中没有 NaN。
+Tensor 中存在 NaN！建议处理方案：使用 .nan_to_num(0) 填充
+List 中没有 NaN。
+Tensor 中存在 NaN！建议处理方案：使用 .nan_to_num(0) 填充
+⚠️ NaN in src_embeddings at batch 53
+⚠️ NaN in dst_embeddings at batch 53
+⚠️ NaN in time_diff_emb at batch 53
+Epoch: 1,                                         train for the 54-th batch, train loss: nan
+:   1%| | 53/8103 [01:13<2:Epoch: 1,                                         train for the 54-th batch, train loss: nan
+:   1%| | 54/8103 [01:13<2:List 中没有 NaN。
+Tensor 中存在 NaN！建议处理方案：使用 .nan_to_num(0) 填充
+List 中没有 NaN。
+Tensor 中存在 NaN！建议处理方案：使用 .nan_to_num(0) 填充
+⚠️ NaN in src_embeddings at batch 54
+⚠️ NaN in dst_embeddings at batch 54
+⚠️ NaN in time_diff_emb at batch 54
+Epoch: 1,                                         train for the 55-th batch, train loss: nan
+:   1%| | 54/8103 [01:14<2:Epoch: 1,                                         train for the 55-th batch, train loss: nan
+:   1%| | 55/8103 [01:14<2:List 中没有 NaN。
+Tensor 中存在 NaN！建议处理方案：使用 .nan_to_num(0) 填充
+List 中没有 NaN。
+Tensor 中存在 NaN！建议处理方案：使用 .nan_to_num(0) 填充
+⚠️ NaN in src_embeddings at batch 55
+⚠️ NaN in dst_embeddings at batch 55
+⚠️ NaN in time_diff_emb at batch 55
+Epoch: 1,                                         train for the 56-th batch, train loss: nan
+:   1%| | 55/8103 [01:16<2:Epoch: 1,                                         train for the 56-th batch, train loss: nan
+:   1%| | 56/8103 [01:16<2:List 中没有 NaN。
+Tensor 中存在 NaN！建议处理方案：使用 .nan_to_num(0) 填充
+List 中没有 NaN。
+Tensor 中存在 NaN！建议处理方案：使用 .nan_to_num(0) 填充
+⚠️ NaN in src_embeddings at batch 56
+⚠️ NaN in dst_embeddings at batch 56
+⚠️ NaN in time_diff_emb at batch 56
+Epoch: 1,                                         train for the 57-th batch, train loss: nan
+:   1%| | 56/8103 [01:17<2:Epoch: 1,                                         train for the 57-th batch, train loss: nan
+:   1%| | 57/8103 [01:17<2:List 中没有 NaN。
+Tensor 中存在 NaN！建议处理方案：使用 .nan_to_num(0) 填充
+List 中没有 NaN。
+Tensor 中存在 NaN！建议处理方案：使用 .nan_to_num(0) 填充
+⚠️ NaN in src_embeddings at batch 57
+⚠️ NaN in dst_embeddings at batch 57
+⚠️ NaN in time_diff_emb at batch 57
+Epoch: 1,                                         train for the 58-th batch, train loss: nan
+:   1%| | 57/8103 [01:18<2:Epoch: 1,                                         train for the 58-th batch, train loss: nan
+:   1%| | 58/8103 [01:18<2:List 中没有 NaN。
+Tensor 中存在 NaN！建议处理方案：使用 .nan_to_num(0) 填充
+List 中没有 NaN。
+Tensor 中存在 NaN！建议处理方案：使用 .nan_to_num(0) 填充
+⚠️ NaN in src_embeddings at batch 58
+⚠️ NaN in dst_embeddings at batch 58
+⚠️ NaN in time_diff_emb at batch 58
+Epoch: 1,                                         train for the 59-th batch, train loss: nan
+:   1%| | 58/8103 [01:19<2:Epoch: 1,                                         train for the 59-th batch, train loss: nan
+:   1%| | 59/8103 [01:19<2:List 中没有 NaN。
+Tensor 中存在 NaN！建议处理方案：使用 .nan_to_num(0) 填充
+List 中没有 NaN。
+Tensor 中存在 NaN！建议处理方案：使用 .nan_to_num(0) 填充
+⚠️ NaN in src_embeddings at batch 59
+⚠️ NaN in dst_embeddings at batch 59
+⚠️ NaN in time_diff_emb at batch 59
+Epoch: 1,                                         train for the 60-th batch, train loss: nan
+:   1%| | 59/8103 [01:21<2:Epoch: 1,                                         train for the 60-th batch, train loss: nan
+:   1%| | 60/8103 [01:21<2:List 中没有 NaN。
+Tensor 中存在 NaN！建议处理方案：使用 .nan_to_num(0) 填充
+List 中没有 NaN。
+Tensor 中存在 NaN！建议处理方案：使用 .nan_to_num(0) 填充
+⚠️ NaN in src_embeddings at batch 60
+⚠️ NaN in dst_embeddings at batch 60
+⚠️ NaN in time_diff_emb at batch 60
+Epoch: 1,                                         train for the 61-th batch, train loss: nan
+:   1%| | 60/8103 [01:22<2:Epoch: 1,                                         train for the 61-th batch, train loss: nan
+:   1%| | 61/8103 [01:22<2:List 中没有 NaN。
+Tensor 中存在 NaN！建议处理方案：使用 .nan_to_num(0) 填充
+List 中没有 NaN。
+Tensor 中存在 NaN！建议处理方案：使用 .nan_to_num(0) 填充
+⚠️ NaN in src_embeddings at batch 61
+⚠️ NaN in dst_embeddings at batch 61
+⚠️ NaN in time_diff_emb at batch 61
+Epoch: 1,                                         train for the 62-th batch, train loss: nan
+:   1%| | 61/8103 [01:23<2:Epoch: 1,                                         train for the 62-th batch, train loss: nan
+:   1%| | 62/8103 [01:23<2:List 中没有 NaN。
+Tensor 中存在 NaN！建议处理方案：使用 .nan_to_num(0) 填充
+List 中没有 NaN。
+Tensor 中存在 NaN！建议处理方案：使用 .nan_to_num(0) 填充
+⚠️ NaN in src_embeddings at batch 62
+⚠️ NaN in dst_embeddings at batch 62
+⚠️ NaN in time_diff_emb at batch 62
+Epoch: 1,                                         train for the 63-th batch, train loss: nan
+:   1%| | 62/8103 [01:25<2:Epoch: 1,                                         train for the 63-th batch, train loss: nan
+:   1%| | 63/8103 [01:25<2:List 中没有 NaN。
+Tensor 中存在 NaN！建议处理方案：使用 .nan_to_num(0) 填充
+List 中没有 NaN。
+Tensor 中存在 NaN！建议处理方案：使用 .nan_to_num(0) 填充
+⚠️ NaN in src_embeddings at batch 63
+⚠️ NaN in dst_embeddings at batch 63
+⚠️ NaN in time_diff_emb at batch 63
+Epoch: 1,                                         train for the 64-th batch, train loss: nan
+:   1%| | 63/8103 [01:26<2:Epoch: 1,                                         train for the 64-th batch, train loss: nan
+:   1%| | 64/8103 [01:26<2:List 中没有 NaN。
+Tensor 中存在 NaN！建议处理方案：使用 .nan_to_num(0) 填充
+List 中没有 NaN。
+Tensor 中存在 NaN！建议处理方案：使用 .nan_to_num(0) 填充
+⚠️ NaN in src_embeddings at batch 64
+⚠️ NaN in dst_embeddings at batch 64
+⚠️ NaN in time_diff_emb at batch 64
+Epoch: 1,                                         train for the 65-th batch, train loss: nan
+:   1%| | 64/8103 [01:27<2:Epoch: 1,                                         train for the 65-th batch, train loss: nan
+:   1%| | 65/8103 [01:27<2:List 中没有 NaN。
+Tensor 中存在 NaN！建议处理方案：使用 .nan_to_num(0) 填充
+List 中没有 NaN。
+Tensor 中存在 NaN！建议处理方案：使用 .nan_to_num(0) 填充
+⚠️ NaN in src_embeddings at batch 65
+⚠️ NaN in dst_embeddings at batch 65
+⚠️ NaN in time_diff_emb at batch 65
+Epoch: 1,                                         train for the 66-th batch, train loss: nan
+:   1%| | 65/8103 [01:28<2:Epoch: 1,                                         train for the 66-th batch, train loss: nan
+:   1%| | 66/8103 [01:28<2:List 中没有 NaN。
+Tensor 中存在 NaN！建议处理方案：使用 .nan_to_num(0) 填充
+List 中没有 NaN。
+Tensor 中存在 NaN！建议处理方案：使用 .nan_to_num(0) 填充
+⚠️ NaN in src_embeddings at batch 66
+⚠️ NaN in dst_embeddings at batch 66
+⚠️ NaN in time_diff_emb at batch 66
+Epoch: 1,                                         train for the 67-th batch, train loss: nan
+:   1%| | 66/8103 [01:30<2:Epoch: 1,                                         train for the 67-th batch, train loss: nan
+:   1%| | 67/8103 [01:30<2:List 中没有 NaN。
+Tensor 中存在 NaN！建议处理方案：使用 .nan_to_num(0) 填充
+List 中没有 NaN。
+Tensor 中存在 NaN！建议处理方案：使用 .nan_to_num(0) 填充
+⚠️ NaN in src_embeddings at batch 67
+⚠️ NaN in dst_embeddings at batch 67
+⚠️ NaN in time_diff_emb at batch 67
+Epoch: 1,                                         train for the 68-th batch, train loss: nan
+:   1%| | 67/8103 [01:31<2:Epoch: 1,                                         train for the 68-th batch, train loss: nan
+:   1%| | 68/8103 [01:31<2:List 中没有 NaN。
+Tensor 中存在 NaN！建议处理方案：使用 .nan_to_num(0) 填充
+List 中没有 NaN。
+Tensor 中存在 NaN！建议处理方案：使用 .nan_to_num(0) 填充
+⚠️ NaN in src_embeddings at batch 68
+⚠️ NaN in dst_embeddings at batch 68
+⚠️ NaN in time_diff_emb at batch 68
+Epoch: 1,                                         train for the 69-th batch, train loss: nan
+:   1%| | 68/8103 [01:32<2:Epoch: 1,                                         train for the 69-th batch, train loss: nan
+:   1%| | 69/8103 [01:32<2:List 中没有 NaN。
+Tensor 中存在 NaN！建议处理方案：使用 .nan_to_num(0) 填充
+List 中没有 NaN。
+Tensor 中存在 NaN！建议处理方案：使用 .nan_to_num(0) 填充
+⚠️ NaN in src_embeddings at batch 69
+⚠️ NaN in dst_embeddings at batch 69
+⚠️ NaN in time_diff_emb at batch 69
+Epoch: 1,                                         train for the 70-th batch, train loss: nan
+:   1%| | 69/8103 [01:33<2:Epoch: 1,                                         train for the 70-th batch, train loss: nan
+:   1%| | 70/8103 [01:33<2:List 中没有 NaN。
+Tensor 中存在 NaN！建议处理方案：使用 .nan_to_num(0) 填充
+List 中没有 NaN。
+Tensor 中存在 NaN！建议处理方案：使用 .nan_to_num(0) 填充
+⚠️ NaN in src_embeddings at batch 70
+⚠️ NaN in dst_embeddings at batch 70
+⚠️ NaN in time_diff_emb at batch 70
+Epoch: 1,                                         train for the 71-th batch, train loss: nan
+:   1%| | 70/8103 [01:35<2:Epoch: 1,                                         train for the 71-th batch, train loss: nan
+:   1%| | 71/8103 [01:35<2:List 中没有 NaN。
+Tensor 中存在 NaN！建议处理方案：使用 .nan_to_num(0) 填充
+List 中没有 NaN。
+Tensor 中存在 NaN！建议处理方案：使用 .nan_to_num(0) 填充
+⚠️ NaN in src_embeddings at batch 71
+⚠️ NaN in dst_embeddings at batch 71
+⚠️ NaN in time_diff_emb at batch 71
+Epoch: 1,                                         train for the 72-th batch, train loss: nan
+:   1%| | 71/8103 [01:36<2:Epoch: 1,                                         train for the 72-th batch, train loss: nan
+:   1%| | 72/8103 [01:36<2:List 中没有 NaN。
+Tensor 中存在 NaN！建议处理方案：使用 .nan_to_num(0) 填充
+List 中没有 NaN。
+Tensor 中存在 NaN！建议处理方案：使用 .nan_to_num(0) 填充
+⚠️ NaN in src_embeddings at batch 72
+⚠️ NaN in dst_embeddings at batch 72
+⚠️ NaN in time_diff_emb at batch 72
+Epoch: 1,                                         train for the 73-th batch, train loss: nan
+:   1%| | 72/8103 [01:37<2:Epoch: 1,                                         train for the 73-th batch, train loss: nan
+:   1%| | 73/8103 [01:37<2:List 中没有 NaN。
+Tensor 中存在 NaN！建议处理方案：使用 .nan_to_num(0) 填充
+List 中没有 NaN。
+Tensor 中存在 NaN！建议处理方案：使用 .nan_to_num(0) 填充
+⚠️ NaN in src_embeddings at batch 73
+⚠️ NaN in dst_embeddings at batch 73
+⚠️ NaN in time_diff_emb at batch 73
+Epoch: 1,                                         train for the 74-th batch, train loss: nan
+:   1%| | 73/8103 [01:39<2:Epoch: 1,                                         train for the 74-th batch, train loss: nan
+:   1%| | 74/8103 [01:39<2:List 中没有 NaN。
+Tensor 中存在 NaN！建议处理方案：使用 .nan_to_num(0) 填充
+List 中没有 NaN。
+Tensor 中存在 NaN！建议处理方案：使用 .nan_to_num(0) 填充
+⚠️ NaN in src_embeddings at batch 74
+⚠️ NaN in dst_embeddings at batch 74
+⚠️ NaN in time_diff_emb at batch 74
+Epoch: 1,                                         train for the 75-th batch, train loss: nan
+:   1%| | 74/8103 [01:40<2:Epoch: 1,                                         train for the 75-th batch, train loss: nan
+:   1%| | 75/8103 [01:40<2:List 中没有 NaN。
+Tensor 中存在 NaN！建议处理方案：使用 .nan_to_num(0) 填充
+List 中没有 NaN。
+Tensor 中存在 NaN！建议处理方案：使用 .nan_to_num(0) 填充
+⚠️ NaN in src_embeddings at batch 75
+⚠️ NaN in dst_embeddings at batch 75
+⚠️ NaN in time_diff_emb at batch 75
+Epoch: 1,                                         train for the 76-th batch, train loss: nan
+:   1%| | 75/8103 [01:41<2:Epoch: 1,                                         train for the 76-th batch, train loss: nan
+:   1%| | 76/8103 [01:41<2:List 中没有 NaN。
+Tensor 中存在 NaN！建议处理方案：使用 .nan_to_num(0) 填充
+List 中没有 NaN。
+Tensor 中存在 NaN！建议处理方案：使用 .nan_to_num(0) 填充
+⚠️ NaN in src_embeddings at batch 76
+⚠️ NaN in dst_embeddings at batch 76
+⚠️ NaN in time_diff_emb at batch 76
+Epoch: 1,                                         train for the 77-th batch, train loss: nan
+:   1%| | 76/8103 [01:42<2:Epoch: 1,                                         train for the 77-th batch, train loss: nan
+:   1%| | 77/8103 [01:42<2:List 中没有 NaN。
+Tensor 中存在 NaN！建议处理方案：使用 .nan_to_num(0) 填充
+List 中没有 NaN。
+Tensor 中存在 NaN！建议处理方案：使用 .nan_to_num(0) 填充
+⚠️ NaN in src_embeddings at batch 77
+⚠️ NaN in dst_embeddings at batch 77
+⚠️ NaN in time_diff_emb at batch 77
+Epoch: 1,                                         train for the 78-th batch, train loss: nan
+:   1%| | 77/8103 [01:44<2:Epoch: 1,                                         train for the 78-th batch, train loss: nan
+:   1%| | 78/8103 [01:44<2:List 中没有 NaN。
+Tensor 中存在 NaN！建议处理方案：使用 .nan_to_num(0) 填充
+List 中没有 NaN。
+Tensor 中存在 NaN！建议处理方案：使用 .nan_to_num(0) 填充
+⚠️ NaN in src_embeddings at batch 78
+⚠️ NaN in dst_embeddings at batch 78
+⚠️ NaN in time_diff_emb at batch 78
+Epoch: 1,                                         train for the 79-th batch, train loss: nan
+:   1%| | 78/8103 [01:45<2:Epoch: 1,                                         train for the 79-th batch, train loss: nan
+:   1%| | 79/8103 [01:45<2:List 中没有 NaN。
+Tensor 中存在 NaN！建议处理方案：使用 .nan_to_num(0) 填充
+List 中没有 NaN。
+Tensor 中存在 NaN！建议处理方案：使用 .nan_to_num(0) 填充
+⚠️ NaN in src_embeddings at batch 79
+⚠️ NaN in dst_embeddings at batch 79
+⚠️ NaN in time_diff_emb at batch 79
+Epoch: 1,                                         train for the 80-th batch, train loss: nan
+:   1%| | 79/8103 [01:46<2:Epoch: 1,                                         train for the 80-th batch, train loss: nan
+:   1%| | 80/8103 [01:46<2:List 中没有 NaN。
+Tensor 中存在 NaN！建议处理方案：使用 .nan_to_num(0) 填充
+List 中没有 NaN。
+Tensor 中存在 NaN！建议处理方案：使用 .nan_to_num(0) 填充
+⚠️ NaN in src_embeddings at batch 80
+⚠️ NaN in dst_embeddings at batch 80
+⚠️ NaN in time_diff_emb at batch 80
+Epoch: 1,                                         train for the 81-th batch, train loss: nan
+:   1%| | 80/8103 [01:48<2:Epoch: 1,                                         train for the 81-th batch, train loss: nan
+:   1%| | 81/8103 [01:48<2:List 中没有 NaN。
+Tensor 中存在 NaN！建议处理方案：使用 .nan_to_num(0) 填充
+List 中没有 NaN。
+Tensor 中存在 NaN！建议处理方案：使用 .nan_to_num(0) 填充
+⚠️ NaN in src_embeddings at batch 81
+⚠️ NaN in dst_embeddings at batch 81
+⚠️ NaN in time_diff_emb at batch 81
+Epoch: 1,                                         train for the 82-th batch, train loss: nan
+:   1%| | 81/8103 [01:49<2:Epoch: 1,                                         train for the 82-th batch, train loss: nan
+:   1%| | 82/8103 [01:49<2:List 中没有 NaN。
+Tensor 中存在 NaN！建议处理方案：使用 .nan_to_num(0) 填充
+List 中没有 NaN。
+Tensor 中存在 NaN！建议处理方案：使用 .nan_to_num(0) 填充
+⚠️ NaN in src_embeddings at batch 82
+⚠️ NaN in dst_embeddings at batch 82
+⚠️ NaN in time_diff_emb at batch 82
+Epoch: 1,                                         train for the 83-th batch, train loss: nan
+:   1%| | 82/8103 [01:50<2:Epoch: 1,                                         train for the 83-th batch, train loss: nan
+:   1%| | 83/8103 [01:50<2:List 中没有 NaN。
+Tensor 中存在 NaN！建议处理方案：使用 .nan_to_num(0) 填充
+List 中没有 NaN。
+Tensor 中存在 NaN！建议处理方案：使用 .nan_to_num(0) 填充
+⚠️ NaN in src_embeddings at batch 83
+⚠️ NaN in dst_embeddings at batch 83
+⚠️ NaN in time_diff_emb at batch 83
+Epoch: 1,                                         train for the 84-th batch, train loss: nan
+:   1%| | 83/8103 [01:51<2:Epoch: 1,                                         train for the 84-th batch, train loss: nan
+:   1%| | 84/8103 [01:51<2:List 中没有 NaN。
+Tensor 中存在 NaN！建议处理方案：使用 .nan_to_num(0) 填充
+List 中没有 NaN。
+Tensor 中存在 NaN！建议处理方案：使用 .nan_to_num(0) 填充
+⚠️ NaN in src_embeddings at batch 84
+⚠️ NaN in dst_embeddings at batch 84
+⚠️ NaN in time_diff_emb at batch 84
+Epoch: 1,                                         train for the 85-th batch, train loss: nan
+:   1%| | 84/8103 [01:53<2:Epoch: 1,                                         train for the 85-th batch, train loss: nan
+:   1%| | 85/8103 [01:53<2:List 中没有 NaN。
+Tensor 中存在 NaN！建议处理方案：使用 .nan_to_num(0) 填充
+List 中没有 NaN。
+Tensor 中存在 NaN！建议处理方案：使用 .nan_to_num(0) 填充
+⚠️ NaN in src_embeddings at batch 85
+⚠️ NaN in dst_embeddings at batch 85
+⚠️ NaN in time_diff_emb at batch 85
+Epoch: 1,                                         train for the 86-th batch, train loss: nan
+:   1%| | 85/8103 [01:54<2:Epoch: 1,                                         train for the 86-th batch, train loss: nan
+:   1%| | 86/8103 [01:54<2:List 中没有 NaN。
+Tensor 中存在 NaN！建议处理方案：使用 .nan_to_num(0) 填充
+List 中没有 NaN。
+Tensor 中存在 NaN！建议处理方案：使用 .nan_to_num(0) 填充
+⚠️ NaN in src_embeddings at batch 86
+⚠️ NaN in dst_embeddings at batch 86
+⚠️ NaN in time_diff_emb at batch 86
+Epoch: 1,                                         train for the 87-th batch, train loss: nan
+:   1%| | 86/8103 [01:55<2:Epoch: 1,                                         train for the 87-th batch, train loss: nan
+:   1%| | 87/8103 [01:55<2:List 中没有 NaN。
+Tensor 中存在 NaN！建议处理方案：使用 .nan_to_num(0) 填充
+List 中没有 NaN。
+Tensor 中存在 NaN！建议处理方案：使用 .nan_to_num(0) 填充
+⚠️ NaN in src_embeddings at batch 87
+⚠️ NaN in dst_embeddings at batch 87
+⚠️ NaN in time_diff_emb at batch 87
+Epoch: 1,                                         train for the 88-th batch, train loss: nan
+:   1%| | 87/8103 [01:56<2:Epoch: 1,                                         train for the 88-th batch, train loss: nan
+:   1%| | 88/8103 [01:56<2:List 中没有 NaN。
+Tensor 中存在 NaN！建议处理方案：使用 .nan_to_num(0) 填充
+List 中没有 NaN。
+Tensor 中存在 NaN！建议处理方案：使用 .nan_to_num(0) 填充
+⚠️ NaN in src_embeddings at batch 88
+⚠️ NaN in dst_embeddings at batch 88
+⚠️ NaN in time_diff_emb at batch 88
+Epoch: 1,                                         train for the 89-th batch, train loss: nan
+:   1%| | 88/8103 [01:58<2:Epoch: 1,                                         train for the 89-th batch, train loss: nan
+:   1%| | 89/8103 [01:58<2:List 中没有 NaN。
+Tensor 中存在 NaN！建议处理方案：使用 .nan_to_num(0) 填充
+List 中没有 NaN。
+Tensor 中存在 NaN！建议处理方案：使用 .nan_to_num(0) 填充
+⚠️ NaN in src_embeddings at batch 89
+⚠️ NaN in dst_embeddings at batch 89
+⚠️ NaN in time_diff_emb at batch 89
+Epoch: 1,                                         train for the 90-th batch, train loss: nan
+:   1%| | 89/8103 [01:59<2:Epoch: 1,                                         train for the 90-th batch, train loss: nan
+:   1%| | 90/8103 [01:59<2:List 中没有 NaN。
+Tensor 中存在 NaN！建议处理方案：使用 .nan_to_num(0) 填充
+List 中没有 NaN。
+Tensor 中存在 NaN！建议处理方案：使用 .nan_to_num(0) 填充
+⚠️ NaN in src_embeddings at batch 90
+⚠️ NaN in dst_embeddings at batch 90
+⚠️ NaN in time_diff_emb at batch 90
+Epoch: 1,                                         train for the 91-th batch, train loss: nan
+:   1%| | 90/8103 [02:00<2:Epoch: 1,                                         train for the 91-th batch, train loss: nan
+:   1%| | 91/8103 [02:00<2:List 中没有 NaN。
+Tensor 中存在 NaN！建议处理方案：使用 .nan_to_num(0) 填充
+List 中没有 NaN。
+Tensor 中存在 NaN！建议处理方案：使用 .nan_to_num(0) 填充
+⚠️ NaN in src_embeddings at batch 91
+⚠️ NaN in dst_embeddings at batch 91
+⚠️ NaN in time_diff_emb at batch 91
+Epoch: 1,                                         train for the 92-th batch, train loss: nan
+:   1%| | 91/8103 [02:02<2:Epoch: 1,                                         train for the 92-th batch, train loss: nan
+:   1%| | 92/8103 [02:02<2:List 中没有 NaN。
+Tensor 中存在 NaN！建议处理方案：使用 .nan_to_num(0) 填充
+List 中没有 NaN。
+Tensor 中存在 NaN！建议处理方案：使用 .nan_to_num(0) 填充
+⚠️ NaN in src_embeddings at batch 92
+⚠️ NaN in dst_embeddings at batch 92
+⚠️ NaN in time_diff_emb at batch 92
+Epoch: 1,                                         train for the 93-th batch, train loss: nan
+:   1%| | 92/8103 [02:03<2:Epoch: 1,                                         train for the 93-th batch, train loss: nan
+:   1%| | 93/8103 [02:03<2:List 中没有 NaN。
+Tensor 中存在 NaN！建议处理方案：使用 .nan_to_num(0) 填充
+List 中没有 NaN。
+Tensor 中存在 NaN！建议处理方案：使用 .nan_to_num(0) 填充
+⚠️ NaN in src_embeddings at batch 93
+⚠️ NaN in dst_embeddings at batch 93
+⚠️ NaN in time_diff_emb at batch 93
+Epoch: 1,                                         train for the 94-th batch, train loss: nan
+:   1%| | 93/8103 [02:04<2:Epoch: 1,                                         train for the 94-th batch, train loss: nan
+:   1%| | 94/8103 [02:04<2:List 中没有 NaN。
+Tensor 中存在 NaN！建议处理方案：使用 .nan_to_num(0) 填充
+List 中没有 NaN。
+Tensor 中存在 NaN！建议处理方案：使用 .nan_to_num(0) 填充
+⚠️ NaN in src_embeddings at batch 94
+⚠️ NaN in dst_embeddings at batch 94
+⚠️ NaN in time_diff_emb at batch 94
+Epoch: 1,                                         train for the 95-th batch, train loss: nan
+:   1%| | 94/8103 [02:05<2:Epoch: 1,                                         train for the 95-th batch, train loss: nan
+:   1%| | 95/8103 [02:05<2:List 中没有 NaN。
+Tensor 中存在 NaN！建议处理方案：使用 .nan_to_num(0) 填充
+List 中没有 NaN。
+Tensor 中存在 NaN！建议处理方案：使用 .nan_to_num(0) 填充
+⚠️ NaN in src_embeddings at batch 95
+⚠️ NaN in dst_embeddings at batch 95
+⚠️ NaN in time_diff_emb at batch 95
+Epoch: 1,                                         train for the 96-th batch, train loss: nan
+:   1%| | 95/8103 [02:07<2:Epoch: 1,                                         train for the 96-th batch, train loss: nan
+:   1%| | 96/8103 [02:07<2:List 中没有 NaN。
+Tensor 中存在 NaN！建议处理方案：使用 .nan_to_num(0) 填充
+List 中没有 NaN。
+Tensor 中存在 NaN！建议处理方案：使用 .nan_to_num(0) 填充
+⚠️ NaN in src_embeddings at batch 96
+⚠️ NaN in dst_embeddings at batch 96
+⚠️ NaN in time_diff_emb at batch 96
+Epoch: 1,                                         train for the 97-th batch, train loss: nan
+:   1%| | 96/8103 [02:08<2:Epoch: 1,                                         train for the 97-th batch, train loss: nan
+:   1%| | 97/8103 [02:08<2:List 中没有 NaN。
+Tensor 中存在 NaN！建议处理方案：使用 .nan_to_num(0) 填充
+List 中没有 NaN。
+Tensor 中存在 NaN！建议处理方案：使用 .nan_to_num(0) 填充
+⚠️ NaN in src_embeddings at batch 97
+⚠️ NaN in dst_embeddings at batch 97
+⚠️ NaN in time_diff_emb at batch 97
+Epoch: 1,                                         train for the 98-th batch, train loss: nan
+:   1%| | 97/8103 [02:09<2:Epoch: 1,                                         train for the 98-th batch, train loss: nan
+:   1%| | 98/8103 [02:09<2:List 中没有 NaN。
+Tensor 中存在 NaN！建议处理方案：使用 .nan_to_num(0) 填充
+List 中没有 NaN。
+Tensor 中存在 NaN！建议处理方案：使用 .nan_to_num(0) 填充
+⚠️ NaN in src_embeddings at batch 98
+⚠️ NaN in dst_embeddings at batch 98
+⚠️ NaN in time_diff_emb at batch 98
+Epoch: 1,                                         train for the 99-th batch, train loss: nan
+:   1%| | 98/8103 [02:11<2:Epoch: 1,                                         train for the 99-th batch, train loss: nan
+:   1%| | 99/8103 [02:11<2:List 中没有 NaN。
+Tensor 中存在 NaN！建议处理方案：使用 .nan_to_num(0) 填充
+List 中没有 NaN。
+Tensor 中存在 NaN！建议处理方案：使用 .nan_to_num(0) 填充
+⚠️ NaN in src_embeddings at batch 99
+⚠️ NaN in dst_embeddings at batch 99
+⚠️ NaN in time_diff_emb at batch 99
+Epoch: 1,                                         train for the 100-th batch, train loss: nan
+:   1%| | 99/8103 [02:12<2Epoch: 1,                                         train for the 100-th batch, train loss: nan
+:   1%| | 100/8103 [02:12<List 中没有 NaN。
+Tensor 中存在 NaN！建议处理方案：使用 .nan_to_num(0) 填充
+List 中没有 NaN。
+Tensor 中存在 NaN！建议处理方案：使用 .nan_to_num(0) 填充
+⚠️ NaN in src_embeddings at batch 100
+⚠️ NaN in dst_embeddings at batch 100
+⚠️ NaN in time_diff_emb at batch 100
+Epoch: 1,                                         train for the 101-th batch, train loss: nan
+:   1%| | 100/8103 [02:13<Epoch: 1,                                         train for the 101-th batch, train loss: nan
+:   1%| | 101/8103 [02:13<List 中没有 NaN。
+Tensor 中存在 NaN！建议处理方案：使用 .nan_to_num(0) 填充
+List 中没有 NaN。
+Tensor 中存在 NaN！建议处理方案：使用 .nan_to_num(0) 填充
+⚠️ NaN in src_embeddings at batch 101
+⚠️ NaN in dst_embeddings at batch 101
+⚠️ NaN in time_diff_emb at batch 101
+Epoch: 1,                                         train for the 102-th batch, train loss: nan
+:   1%| | 101/8103 [02:14<Epoch: 1,                                         train for the 102-th batch, train loss: nan
+:   1%| | 102/8103 [02:14<List 中没有 NaN。
+Tensor 中存在 NaN！建议处理方案：使用 .nan_to_num(0) 填充
+List 中没有 NaN。
+Tensor 中存在 NaN！建议处理方案：使用 .nan_to_num(0) 填充
+⚠️ NaN in src_embeddings at batch 102
+⚠️ NaN in dst_embeddings at batch 102
+⚠️ NaN in time_diff_emb at batch 102
+Epoch: 1,                                         train for the 103-th batch, train loss: nan
+:   1%| | 102/8103 [02:16<Epoch: 1,                                         train for the 103-th batch, train loss: nan
+:   1%| | 103/8103 [02:16<List 中没有 NaN。
+Tensor 中存在 NaN！建议处理方案：使用 .nan_to_num(0) 填充
+List 中没有 NaN。
+Tensor 中存在 NaN！建议处理方案：使用 .nan_to_num(0) 填充
+⚠️ NaN in src_embeddings at batch 103
+⚠️ NaN in dst_embeddings at batch 103
+⚠️ NaN in time_diff_emb at batch 103
+Epoch: 1,                                         train for the 104-th batch, train loss: nan
+:   1%| | 103/8103 [02:17<Epoch: 1,                                         train for the 104-th batch, train loss: nan
+:   1%| | 104/8103 [02:17<List 中没有 NaN。
+Tensor 中存在 NaN！建议处理方案：使用 .nan_to_num(0) 填充
+List 中没有 NaN。
+Tensor 中存在 NaN！建议处理方案：使用 .nan_to_num(0) 填充
+⚠️ NaN in src_embeddings at batch 104
+⚠️ NaN in dst_embeddings at batch 104
+⚠️ NaN in time_diff_emb at batch 104
+Epoch: 1,                                         train for the 105-th batch, train loss: nan
+:   1%| | 104/8103 [02:18<Epoch: 1,                                         train for the 105-th batch, train loss: nan
+:   1%| | 105/8103 [02:18<List 中没有 NaN。
+Tensor 中存在 NaN！建议处理方案：使用 .nan_to_num(0) 填充
+List 中没有 NaN。
+Tensor 中存在 NaN！建议处理方案：使用 .nan_to_num(0) 填充
+⚠️ NaN in src_embeddings at batch 105
+⚠️ NaN in dst_embeddings at batch 105
+⚠️ NaN in time_diff_emb at batch 105
+Epoch: 1,                                         train for the 106-th batch, train loss: nan
+:   1%| | 105/8103 [02:20<Epoch: 1,                                         train for the 106-th batch, train loss: nan
+:   1%| | 106/8103 [02:20<List 中没有 NaN。
+Tensor 中存在 NaN！建议处理方案：使用 .nan_to_num(0) 填充
+List 中没有 NaN。
+Tensor 中存在 NaN！建议处理方案：使用 .nan_to_num(0) 填充
+⚠️ NaN in src_embeddings at batch 106
+⚠️ NaN in dst_embeddings at batch 106
+⚠️ NaN in time_diff_emb at batch 106
+Epoch: 1,                                         train for the 107-th batch, train loss: nan
+:   1%| | 106/8103 [02:21<Epoch: 1,                                         train for the 107-th batch, train loss: nan
+:   1%| | 107/8103 [02:21<List 中没有 NaN。
+Tensor 中存在 NaN！建议处理方案：使用 .nan_to_num(0) 填充
+List 中没有 NaN。
+Tensor 中存在 NaN！建议处理方案：使用 .nan_to_num(0) 填充
+⚠️ NaN in src_embeddings at batch 107
+⚠️ NaN in dst_embeddings at batch 107
+⚠️ NaN in time_diff_emb at batch 107
+Epoch: 1,                                         train for the 108-th batch, train loss: nan
+:   1%| | 107/8103 [02:22<Epoch: 1,                                         train for the 108-th batch, train loss: nan
+:   1%| | 108/8103 [02:22<List 中没有 NaN。
+Tensor 中存在 NaN！建议处理方案：使用 .nan_to_num(0) 填充
+List 中没有 NaN。
+Tensor 中存在 NaN！建议处理方案：使用 .nan_to_num(0) 填充
+⚠️ NaN in src_embeddings at batch 108
+⚠️ NaN in dst_embeddings at batch 108
+⚠️ NaN in time_diff_emb at batch 108
+Epoch: 1,                                         train for the 109-th batch, train loss: nan
+:   1%| | 108/8103 [02:23<Epoch: 1,                                         train for the 109-th batch, train loss: nan
+:   1%| | 109/8103 [02:23<List 中没有 NaN。
+Tensor 中存在 NaN！建议处理方案：使用 .nan_to_num(0) 填充
+List 中没有 NaN。
+Tensor 中存在 NaN！建议处理方案：使用 .nan_to_num(0) 填充
+⚠️ NaN in src_embeddings at batch 109
+⚠️ NaN in dst_embeddings at batch 109
+⚠️ NaN in time_diff_emb at batch 109
+Epoch: 1,                                         train for the 110-th batch, train loss: nan
+:   1%| | 109/8103 [02:25<Epoch: 1,                                         train for the 110-th batch, train loss: nan
+:   1%| | 110/8103 [02:25<List 中没有 NaN。
+Tensor 中存在 NaN！建议处理方案：使用 .nan_to_num(0) 填充
+List 中没有 NaN。
+Tensor 中存在 NaN！建议处理方案：使用 .nan_to_num(0) 填充
+⚠️ NaN in src_embeddings at batch 110
+⚠️ NaN in dst_embeddings at batch 110
+⚠️ NaN in time_diff_emb at batch 110
+Epoch: 1,                                         train for the 111-th batch, train loss: nan
+:   1%| | 110/8103 [02:26<Epoch: 1,                                         train for the 111-th batch, train loss: nan
+:   1%| | 111/8103 [02:26<List 中没有 NaN。
+Tensor 中存在 NaN！建议处理方案：使用 .nan_to_num(0) 填充
+List 中没有 NaN。
+Tensor 中存在 NaN！建议处理方案：使用 .nan_to_num(0) 填充
+⚠️ NaN in src_embeddings at batch 111
+⚠️ NaN in dst_embeddings at batch 111
+⚠️ NaN in time_diff_emb at batch 111
+Epoch: 1,                                         train for the 112-th batch, train loss: nan
+:   1%| | 111/8103 [02:27<Epoch: 1,                                         train for the 112-th batch, train loss: nan
+:   1%| | 112/8103 [02:27<List 中没有 NaN。
+Tensor 中存在 NaN！建议处理方案：使用 .nan_to_num(0) 填充
+List 中没有 NaN。
+Tensor 中存在 NaN！建议处理方案：使用 .nan_to_num(0) 填充
+⚠️ NaN in src_embeddings at batch 112
+⚠️ NaN in dst_embeddings at batch 112
+⚠️ NaN in time_diff_emb at batch 112
+Epoch: 1,                                         train for the 113-th batch, train loss: nan
+:   1%| | 112/8103 [02:28<Epoch: 1,                                         train for the 113-th batch, train loss: nan
+:   1%| | 113/8103 [02:28<List 中没有 NaN。
+Tensor 中存在 NaN！建议处理方案：使用 .nan_to_num(0) 填充
+List 中没有 NaN。
+Tensor 中存在 NaN！建议处理方案：使用 .nan_to_num(0) 填充
+⚠️ NaN in src_embeddings at batch 113
+⚠️ NaN in dst_embeddings at batch 113
+⚠️ NaN in time_diff_emb at batch 113
+Epoch: 1,                                         train for the 114-th batch, train loss: nan
+:   1%| | 113/8103 [02:30<Epoch: 1,                                         train for the 114-th batch, train loss: nan
+:   1%| | 114/8103 [02:30<List 中没有 NaN。
+Tensor 中存在 NaN！建议处理方案：使用 .nan_to_num(0) 填充
+List 中没有 NaN。
+Tensor 中存在 NaN！建议处理方案：使用 .nan_to_num(0) 填充
+⚠️ NaN in src_embeddings at batch 114
+⚠️ NaN in dst_embeddings at batch 114
+⚠️ NaN in time_diff_emb at batch 114
+Epoch: 1,                                         train for the 115-th batch, train loss: nan
+:   1%| | 114/8103 [02:31<Epoch: 1,                                         train for the 115-th batch, train loss: nan
+:   1%| | 115/8103 [02:31<List 中没有 NaN。
+Tensor 中存在 NaN！建议处理方案：使用 .nan_to_num(0) 填充
+List 中没有 NaN。
+Tensor 中存在 NaN！建议处理方案：使用 .nan_to_num(0) 填充
+⚠️ NaN in src_embeddings at batch 115
+⚠️ NaN in dst_embeddings at batch 115
+⚠️ NaN in time_diff_emb at batch 115
+Epoch: 1,                                         train for the 116-th batch, train loss: nan
+:   1%| | 115/8103 [02:32<Epoch: 1,                                         train for the 116-th batch, train loss: nan
+:   1%| | 116/8103 [02:32<List 中没有 NaN。
+Tensor 中存在 NaN！建议处理方案：使用 .nan_to_num(0) 填充
+List 中没有 NaN。
+Tensor 中存在 NaN！建议处理方案：使用 .nan_to_num(0) 填充
+⚠️ NaN in src_embeddings at batch 116
+⚠️ NaN in dst_embeddings at batch 116
+⚠️ NaN in time_diff_emb at batch 116
+Epoch: 1,                                         train for the 117-th batch, train loss: nan
+:   1%| | 116/8103 [02:34<Epoch: 1,                                         train for the 117-th batch, train loss: nan
+:   1%| | 117/8103 [02:34<List 中没有 NaN。
+Tensor 中存在 NaN！建议处理方案：使用 .nan_to_num(0) 填充
+List 中没有 NaN。
+Tensor 中存在 NaN！建议处理方案：使用 .nan_to_num(0) 填充
+⚠️ NaN in src_embeddings at batch 117
+⚠️ NaN in dst_embeddings at batch 117
+⚠️ NaN in time_diff_emb at batch 117
+Epoch: 1,                                         train for the 118-th batch, train loss: nan
+:   1%| | 117/8103 [02:35<Epoch: 1,                                         train for the 118-th batch, train loss: nan
+:   1%| | 118/8103 [02:35<List 中没有 NaN。
+Tensor 中存在 NaN！建议处理方案：使用 .nan_to_num(0) 填充
+List 中没有 NaN。
+Tensor 中存在 NaN！建议处理方案：使用 .nan_to_num(0) 填充
+⚠️ NaN in src_embeddings at batch 118
+⚠️ NaN in dst_embeddings at batch 118
+⚠️ NaN in time_diff_emb at batch 118
+Epoch: 1,                                         train for the 119-th batch, train loss: nan
+:   1%| | 118/8103 [02:36<Epoch: 1,                                         train for the 119-th batch, train loss: nan
+:   1%| | 119/8103 [02:36<List 中没有 NaN。
+Tensor 中存在 NaN！建议处理方案：使用 .nan_to_num(0) 填充
+List 中没有 NaN。
+Tensor 中存在 NaN！建议处理方案：使用 .nan_to_num(0) 填充
+⚠️ NaN in src_embeddings at batch 119
+⚠️ NaN in dst_embeddings at batch 119
+⚠️ NaN in time_diff_emb at batch 119
+Epoch: 1,                                         train for the 120-th batch, train loss: nan
+:   1%| | 119/8103 [02:37<Epoch: 1,                                         train for the 120-th batch, train loss: nan
+:   1%| | 120/8103 [02:37<List 中没有 NaN。
+Tensor 中存在 NaN！建议处理方案：使用 .nan_to_num(0) 填充
+List 中没有 NaN。
+Tensor 中存在 NaN！建议处理方案：使用 .nan_to_num(0) 填充
+⚠️ NaN in src_embeddings at batch 120
+⚠️ NaN in dst_embeddings at batch 120
+⚠️ NaN in time_diff_emb at batch 120
+Epoch: 1,                                         train for the 121-th batch, train loss: nan
+:   1%| | 120/8103 [02:39<Epoch: 1,                                         train for the 121-th batch, train loss: nan
+:   1%| | 121/8103 [02:39<List 中没有 NaN。
+Tensor 中存在 NaN！建议处理方案：使用 .nan_to_num(0) 填充
+List 中没有 NaN。
+Tensor 中存在 NaN！建议处理方案：使用 .nan_to_num(0) 填充
+⚠️ NaN in src_embeddings at batch 121
+⚠️ NaN in dst_embeddings at batch 121
+⚠️ NaN in time_diff_emb at batch 121
+Epoch: 1,                                         train for the 122-th batch, train loss: nan
+:   1%| | 121/8103 [02:40<Epoch: 1,                                         train for the 122-th batch, train loss: nan
+:   2%| | 122/8103 [02:40<List 中没有 NaN。
+Tensor 中存在 NaN！建议处理方案：使用 .nan_to_num(0) 填充
+List 中没有 NaN。
+Tensor 中存在 NaN！建议处理方案：使用 .nan_to_num(0) 填充
+⚠️ NaN in src_embeddings at batch 122
+⚠️ NaN in dst_embeddings at batch 122
+⚠️ NaN in time_diff_emb at batch 122
+Epoch: 1,                                         train for the 123-th batch, train loss: nan
+:   2%| | 122/8103 [02:41<Epoch: 1,                                         train for the 123-th batch, train loss: nan
+:   2%| | 123/8103 [02:41<List 中没有 NaN。
+Tensor 中存在 NaN！建议处理方案：使用 .nan_to_num(0) 填充
+List 中没有 NaN。
+Tensor 中存在 NaN！建议处理方案：使用 .nan_to_num(0) 填充
+⚠️ NaN in src_embeddings at batch 123
+⚠️ NaN in dst_embeddings at batch 123
+⚠️ NaN in time_diff_emb at batch 123
+Epoch: 1,                                         train for the 124-th batch, train loss: nan
+:   2%| | 123/8103 [02:42<Epoch: 1,                                         train for the 124-th batch, train loss: nan
+:   2%| | 124/8103 [02:42<List 中没有 NaN。
+Tensor 中存在 NaN！建议处理方案：使用 .nan_to_num(0) 填充
+List 中没有 NaN。
+Tensor 中存在 NaN！建议处理方案：使用 .nan_to_num(0) 填充
+⚠️ NaN in src_embeddings at batch 124
+⚠️ NaN in dst_embeddings at batch 124
+⚠️ NaN in time_diff_emb at batch 124
+Epoch: 1,                                         train for the 125-th batch, train loss: nan
+:   2%| | 124/8103 [02:44<Epoch: 1,                                         train for the 125-th batch, train loss: nan
+:   2%| | 125/8103 [02:44<List 中没有 NaN。
+Tensor 中存在 NaN！建议处理方案：使用 .nan_to_num(0) 填充
+List 中没有 NaN。
+Tensor 中存在 NaN！建议处理方案：使用 .nan_to_num(0) 填充
+⚠️ NaN in src_embeddings at batch 125
+⚠️ NaN in dst_embeddings at batch 125
+⚠️ NaN in time_diff_emb at batch 125
+Epoch: 1,                                         train for the 126-th batch, train loss: nan
+:   2%| | 125/8103 [02:45<Epoch: 1,                                         train for the 126-th batch, train loss: nan
+:   2%| | 126/8103 [02:45<List 中没有 NaN。
+Tensor 中存在 NaN！建议处理方案：使用 .nan_to_num(0) 填充
+List 中没有 NaN。
+Tensor 中存在 NaN！建议处理方案：使用 .nan_to_num(0) 填充
+⚠️ NaN in src_embeddings at batch 126
+⚠️ NaN in dst_embeddings at batch 126
+⚠️ NaN in time_diff_emb at batch 126
+Epoch: 1,                                         train for the 127-th batch, train loss: nan
+:   2%| | 126/8103 [02:46<Epoch: 1,                                         train for the 127-th batch, train loss: nan
+:   2%| | 127/8103 [02:46<List 中没有 NaN。
+Tensor 中存在 NaN！建议处理方案：使用 .nan_to_num(0) 填充
+List 中没有 NaN。
+Tensor 中存在 NaN！建议处理方案：使用 .nan_to_num(0) 填充
+⚠️ NaN in src_embeddings at batch 127
+⚠️ NaN in dst_embeddings at batch 127
+⚠️ NaN in time_diff_emb at batch 127
+Epoch: 1,                                         train for the 128-th batch, train loss: nan
+:   2%| | 127/8103 [02:48<Epoch: 1,                                         train for the 128-th batch, train loss: nan
+:   2%| | 128/8103 [02:48<List 中没有 NaN。
+Tensor 中存在 NaN！建议处理方案：使用 .nan_to_num(0) 填充
+List 中没有 NaN。
+Tensor 中存在 NaN！建议处理方案：使用 .nan_to_num(0) 填充
+⚠️ NaN in src_embeddings at batch 128
+⚠️ NaN in dst_embeddings at batch 128
+⚠️ NaN in time_diff_emb at batch 128
+Epoch: 1,                                         train for the 129-th batch, train loss: nan
+:   2%| | 128/8103 [02:49<Epoch: 1,                                         train for the 129-th batch, train loss: nan
+:   2%| | 129/8103 [02:49<List 中没有 NaN。
+Tensor 中存在 NaN！建议处理方案：使用 .nan_to_num(0) 填充
+List 中没有 NaN。
+Tensor 中存在 NaN！建议处理方案：使用 .nan_to_num(0) 填充
+⚠️ NaN in src_embeddings at batch 129
+⚠️ NaN in dst_embeddings at batch 129
+⚠️ NaN in time_diff_emb at batch 129
+Epoch: 1,                                         train for the 130-th batch, train loss: nan
+:   2%| | 129/8103 [02:50<Epoch: 1,                                         train for the 130-th batch, train loss: nan
+:   2%| | 130/8103 [02:50<List 中没有 NaN。
+Tensor 中存在 NaN！建议处理方案：使用 .nan_to_num(0) 填充
+List 中没有 NaN。
+Tensor 中存在 NaN！建议处理方案：使用 .nan_to_num(0) 填充
+⚠️ NaN in src_embeddings at batch 130
+⚠️ NaN in dst_embeddings at batch 130
+⚠️ NaN in time_diff_emb at batch 130
+Epoch: 1,                                         train for the 131-th batch, train loss: nan
+:   2%| | 130/8103 [02:51<Epoch: 1,                                         train for the 131-th batch, train loss: nan
+:   2%| | 131/8103 [02:51<List 中没有 NaN。
+Tensor 中存在 NaN！建议处理方案：使用 .nan_to_num(0) 填充
+List 中没有 NaN。
+Tensor 中存在 NaN！建议处理方案：使用 .nan_to_num(0) 填充
+⚠️ NaN in src_embeddings at batch 131
+⚠️ NaN in dst_embeddings at batch 131
+⚠️ NaN in time_diff_emb at batch 131
+Epoch: 1,                                         train for the 132-th batch, train loss: nan
+:   2%| | 131/8103 [02:53<Epoch: 1,                                         train for the 132-th batch, train loss: nan
+:   2%| | 132/8103 [02:53<List 中没有 NaN。
+Tensor 中存在 NaN！建议处理方案：使用 .nan_to_num(0) 填充
+List 中没有 NaN。
+Tensor 中存在 NaN！建议处理方案：使用 .nan_to_num(0) 填充
+⚠️ NaN in src_embeddings at batch 132
+⚠️ NaN in dst_embeddings at batch 132
+⚠️ NaN in time_diff_emb at batch 132
+Epoch: 1,                                         train for the 133-th batch, train loss: nan
+:   2%| | 132/8103 [02:54<Epoch: 1,                                         train for the 133-th batch, train loss: nan
+:   2%| | 133/8103 [02:54<List 中没有 NaN。
+Tensor 中存在 NaN！建议处理方案：使用 .nan_to_num(0) 填充
+List 中没有 NaN。
+Tensor 中存在 NaN！建议处理方案：使用 .nan_to_num(0) 填充
+⚠️ NaN in src_embeddings at batch 133
+⚠️ NaN in dst_embeddings at batch 133
+⚠️ NaN in time_diff_emb at batch 133
+Epoch: 1,                                         train for the 134-th batch, train loss: nan
+:   2%| | 133/8103 [02:55<Epoch: 1,                                         train for the 134-th batch, train loss: nan
+:   2%| | 134/8103 [02:55<List 中没有 NaN。
+Tensor 中存在 NaN！建议处理方案：使用 .nan_to_num(0) 填充
+List 中没有 NaN。
+Tensor 中存在 NaN！建议处理方案：使用 .nan_to_num(0) 填充
+⚠️ NaN in src_embeddings at batch 134
+⚠️ NaN in dst_embeddings at batch 134
+⚠️ NaN in time_diff_emb at batch 134
+Epoch: 1,                                         train for the 135-th batch, train loss: nan
+:   2%| | 134/8103 [02:57<Epoch: 1,                                         train for the 135-th batch, train loss: nan
+:   2%| | 135/8103 [02:57<List 中没有 NaN。
+Tensor 中存在 NaN！建议处理方案：使用 .nan_to_num(0) 填充
+List 中没有 NaN。
+Tensor 中存在 NaN！建议处理方案：使用 .nan_to_num(0) 填充
+⚠️ NaN in src_embeddings at batch 135
+⚠️ NaN in dst_embeddings at batch 135
+⚠️ NaN in time_diff_emb at batch 135
+Epoch: 1,                                         train for the 136-th batch, train loss: nan
+:   2%| | 135/8103 [02:58<Epoch: 1,                                         train for the 136-th batch, train loss: nan
+:   2%| | 136/8103 [02:58<List 中没有 NaN。
+Tensor 中存在 NaN！建议处理方案：使用 .nan_to_num(0) 填充
+List 中没有 NaN。
+Tensor 中存在 NaN！建议处理方案：使用 .nan_to_num(0) 填充
+⚠️ NaN in src_embeddings at batch 136
+⚠️ NaN in dst_embeddings at batch 136
+⚠️ NaN in time_diff_emb at batch 136
+Epoch: 1,                                         train for the 137-th batch, train loss: nan
+:   2%| | 136/8103 [02:59<Epoch: 1,                                         train for the 137-th batch, train loss: nan
+:   2%| | 137/8103 [02:59<List 中没有 NaN。
+Tensor 中存在 NaN！建议处理方案：使用 .nan_to_num(0) 填充
+List 中没有 NaN。
+Tensor 中存在 NaN！建议处理方案：使用 .nan_to_num(0) 填充
+⚠️ NaN in src_embeddings at batch 137
+⚠️ NaN in dst_embeddings at batch 137
+⚠️ NaN in time_diff_emb at batch 137
+Epoch: 1,                                         train for the 138-th batch, train loss: nan
+:   2%| | 137/8103 [03:00<Epoch: 1,                                         train for the 138-th batch, train loss: nan
+:   2%| | 138/8103 [03:00<List 中没有 NaN。
+Tensor 中存在 NaN！建议处理方案：使用 .nan_to_num(0) 填充
+List 中没有 NaN。
+Tensor 中存在 NaN！建议处理方案：使用 .nan_to_num(0) 填充
+⚠️ NaN in src_embeddings at batch 138
+⚠️ NaN in dst_embeddings at batch 138
+⚠️ NaN in time_diff_emb at batch 138
+Epoch: 1,                                         train for the 139-th batch, train loss: nan
+:   2%| | 138/8103 [03:02<Epoch: 1,                                         train for the 139-th batch, train loss: nan
+:   2%| | 139/8103 [03:02<List 中没有 NaN。
+Tensor 中存在 NaN！建议处理方案：使用 .nan_to_num(0) 填充
+List 中没有 NaN。
+Tensor 中存在 NaN！建议处理方案：使用 .nan_to_num(0) 填充
+⚠️ NaN in src_embeddings at batch 139
+⚠️ NaN in dst_embeddings at batch 139
+⚠️ NaN in time_diff_emb at batch 139
+Epoch: 1,                                         train for the 140-th batch, train loss: nan
+:   2%| | 139/8103 [03:03<Epoch: 1,                                         train for the 140-th batch, train loss: nan
+:   2%| | 140/8103 [03:03<List 中没有 NaN。
+Tensor 中存在 NaN！建议处理方案：使用 .nan_to_num(0) 填充
+List 中没有 NaN。
+Tensor 中存在 NaN！建议处理方案：使用 .nan_to_num(0) 填充
+⚠️ NaN in src_embeddings at batch 140
+⚠️ NaN in dst_embeddings at batch 140
+⚠️ NaN in time_diff_emb at batch 140
+Epoch: 1,                                         train for the 141-th batch, train loss: nan
+:   2%| | 140/8103 [03:04<Epoch: 1,                                         train for the 141-th batch, train loss: nan
+:   2%| | 141/8103 [03:04<List 中没有 NaN。
+Tensor 中存在 NaN！建议处理方案：使用 .nan_to_num(0) 填充
+List 中没有 NaN。
+Tensor 中存在 NaN！建议处理方案：使用 .nan_to_num(0) 填充
+⚠️ NaN in src_embeddings at batch 141
+⚠️ NaN in dst_embeddings at batch 141
+⚠️ NaN in time_diff_emb at batch 141
+Epoch: 1,                                         train for the 142-th batch, train loss: nan
+:   2%| | 141/8103 [03:06<Epoch: 1,                                         train for the 142-th batch, train loss: nan
+:   2%| | 142/8103 [03:06<List 中没有 NaN。
+Tensor 中存在 NaN！建议处理方案：使用 .nan_to_num(0) 填充
+List 中没有 NaN。
+Tensor 中存在 NaN！建议处理方案：使用 .nan_to_num(0) 填充
+⚠️ NaN in src_embeddings at batch 142
+⚠️ NaN in dst_embeddings at batch 142
+⚠️ NaN in time_diff_emb at batch 142
+Epoch: 1,                                         train for the 143-th batch, train loss: nan
+:   2%| | 142/8103 [03:07<Epoch: 1,                                         train for the 143-th batch, train loss: nan
+:   2%| | 143/8103 [03:07<List 中没有 NaN。
+Tensor 中存在 NaN！建议处理方案：使用 .nan_to_num(0) 填充
+List 中没有 NaN。
+Tensor 中存在 NaN！建议处理方案：使用 .nan_to_num(0) 填充
+⚠️ NaN in src_embeddings at batch 143
+⚠️ NaN in dst_embeddings at batch 143
+⚠️ NaN in time_diff_emb at batch 143
+Epoch: 1,                                         train for the 144-th batch, train loss: nan
+:   2%| | 143/8103 [03:08<Epoch: 1,                                         train for the 144-th batch, train loss: nan
+:   2%| | 144/8103 [03:08<List 中没有 NaN。
+Tensor 中存在 NaN！建议处理方案：使用 .nan_to_num(0) 填充
+List 中没有 NaN。
+Tensor 中存在 NaN！建议处理方案：使用 .nan_to_num(0) 填充
+⚠️ NaN in src_embeddings at batch 144
+⚠️ NaN in dst_embeddings at batch 144
+⚠️ NaN in time_diff_emb at batch 144
+Epoch: 1,                                         train for the 145-th batch, train loss: nan
+:   2%| | 144/8103 [03:09<Epoch: 1,                                         train for the 145-th batch, train loss: nan
+:   2%| | 145/8103 [03:09<List 中没有 NaN。
+Tensor 中存在 NaN！建议处理方案：使用 .nan_to_num(0) 填充
+List 中没有 NaN。
+Tensor 中存在 NaN！建议处理方案：使用 .nan_to_num(0) 填充
+⚠️ NaN in src_embeddings at batch 145
+⚠️ NaN in dst_embeddings at batch 145
+⚠️ NaN in time_diff_emb at batch 145
+Epoch: 1,                                         train for the 146-th batch, train loss: nan
+:   2%| | 145/8103 [03:11<Epoch: 1,                                         train for the 146-th batch, train loss: nan
+:   2%| | 146/8103 [03:11<List 中没有 NaN。
+Tensor 中存在 NaN！建议处理方案：使用 .nan_to_num(0) 填充
+List 中没有 NaN。
+Tensor 中存在 NaN！建议处理方案：使用 .nan_to_num(0) 填充
+⚠️ NaN in src_embeddings at batch 146
+⚠️ NaN in dst_embeddings at batch 146
+⚠️ NaN in time_diff_emb at batch 146
+Epoch: 1,                                         train for the 147-th batch, train loss: nan
+:   2%| | 146/8103 [03:12<Epoch: 1,                                         train for the 147-th batch, train loss: nan
+:   2%| | 147/8103 [03:12<List 中没有 NaN。
+Tensor 中存在 NaN！建议处理方案：使用 .nan_to_num(0) 填充
+List 中没有 NaN。
+Tensor 中存在 NaN！建议处理方案：使用 .nan_to_num(0) 填充
+⚠️ NaN in src_embeddings at batch 147
+⚠️ NaN in dst_embeddings at batch 147
+⚠️ NaN in time_diff_emb at batch 147
+Epoch: 1,                                         train for the 148-th batch, train loss: nan
+:   2%| | 147/8103 [03:13<Epoch: 1,                                         train for the 148-th batch, train loss: nan
+:   2%| | 148/8103 [03:13<List 中没有 NaN。
+Tensor 中存在 NaN！建议处理方案：使用 .nan_to_num(0) 填充
+List 中没有 NaN。
+Tensor 中存在 NaN！建议处理方案：使用 .nan_to_num(0) 填充
+⚠️ NaN in src_embeddings at batch 148
+⚠️ NaN in dst_embeddings at batch 148
+⚠️ NaN in time_diff_emb at batch 148
+Epoch: 1,                                         train for the 149-th batch, train loss: nan
+:   2%| | 148/8103 [03:14<Epoch: 1,                                         train for the 149-th batch, train loss: nan
+:   2%| | 149/8103 [03:14<List 中没有 NaN。
+Tensor 中存在 NaN！建议处理方案：使用 .nan_to_num(0) 填充
+List 中没有 NaN。
+Tensor 中存在 NaN！建议处理方案：使用 .nan_to_num(0) 填充
+⚠️ NaN in src_embeddings at batch 149
+⚠️ NaN in dst_embeddings at batch 149
+⚠️ NaN in time_diff_emb at batch 149
+Epoch: 1,                                         train for the 150-th batch, train loss: nan
+:   2%| | 149/8103 [03:16<Epoch: 1,                                         train for the 150-th batch, train loss: nan
+:   2%| | 150/8103 [03:16<List 中没有 NaN。
+Tensor 中存在 NaN！建议处理方案：使用 .nan_to_num(0) 填充
+List 中没有 NaN。
+Tensor 中存在 NaN！建议处理方案：使用 .nan_to_num(0) 填充
+⚠️ NaN in src_embeddings at batch 150
+⚠️ NaN in dst_embeddings at batch 150
+⚠️ NaN in time_diff_emb at batch 150
+Epoch: 1,                                         train for the 151-th batch, train loss: nan
+:   2%| | 150/8103 [03:17<Epoch: 1,                                         train for the 151-th batch, train loss: nan
+:   2%| | 151/8103 [03:17<List 中没有 NaN。
+Tensor 中存在 NaN！建议处理方案：使用 .nan_to_num(0) 填充
+List 中没有 NaN。
+Tensor 中存在 NaN！建议处理方案：使用 .nan_to_num(0) 填充
+⚠️ NaN in src_embeddings at batch 151
+⚠️ NaN in dst_embeddings at batch 151
+⚠️ NaN in time_diff_emb at batch 151
+Epoch: 1,                                         train for the 152-th batch, train loss: nan
+:   2%| | 151/8103 [03:18<Epoch: 1,                                         train for the 152-th batch, train loss: nan
+:   2%| | 152/8103 [03:18<List 中没有 NaN。
+Tensor 中存在 NaN！建议处理方案：使用 .nan_to_num(0) 填充
+List 中没有 NaN。
+Tensor 中存在 NaN！建议处理方案：使用 .nan_to_num(0) 填充
+⚠️ NaN in src_embeddings at batch 152
+⚠️ NaN in dst_embeddings at batch 152
+⚠️ NaN in time_diff_emb at batch 152
+Epoch: 1,                                         train for the 153-th batch, train loss: nan
+:   2%| | 152/8103 [03:20<Epoch: 1,                                         train for the 153-th batch, train loss: nan
+:   2%| | 153/8103 [03:20<List 中没有 NaN。
+Tensor 中存在 NaN！建议处理方案：使用 .nan_to_num(0) 填充
+List 中没有 NaN。
+Tensor 中存在 NaN！建议处理方案：使用 .nan_to_num(0) 填充
+⚠️ NaN in src_embeddings at batch 153
+⚠️ NaN in dst_embeddings at batch 153
+⚠️ NaN in time_diff_emb at batch 153
+Epoch: 1,                                         train for the 154-th batch, train loss: nan
+:   2%| | 153/8103 [03:21<Epoch: 1,                                         train for the 154-th batch, train loss: nan
+:   2%| | 154/8103 [03:21<List 中没有 NaN。
+Tensor 中存在 NaN！建议处理方案：使用 .nan_to_num(0) 填充
+List 中没有 NaN。
+Tensor 中存在 NaN！建议处理方案：使用 .nan_to_num(0) 填充
+⚠️ NaN in src_embeddings at batch 154
+⚠️ NaN in dst_embeddings at batch 154
+⚠️ NaN in time_diff_emb at batch 154
+Epoch: 1,                                         train for the 155-th batch, train loss: nan
+:   2%| | 154/8103 [03:22<Epoch: 1,                                         train for the 155-th batch, train loss: nan
+:   2%| | 155/8103 [03:22<List 中没有 NaN。
+Tensor 中存在 NaN！建议处理方案：使用 .nan_to_num(0) 填充
+List 中没有 NaN。
+Tensor 中存在 NaN！建议处理方案：使用 .nan_to_num(0) 填充
+⚠️ NaN in src_embeddings at batch 155
+⚠️ NaN in dst_embeddings at batch 155
+⚠️ NaN in time_diff_emb at batch 155
+Epoch: 1,                                         train for the 156-th batch, train loss: nan
+:   2%| | 155/8103 [03:23<Epoch: 1,                                         train for the 156-th batch, train loss: nan
+:   2%| | 156/8103 [03:23<List 中没有 NaN。
+Tensor 中存在 NaN！建议处理方案：使用 .nan_to_num(0) 填充
+List 中没有 NaN。
+Tensor 中存在 NaN！建议处理方案：使用 .nan_to_num(0) 填充
+⚠️ NaN in src_embeddings at batch 156
+⚠️ NaN in dst_embeddings at batch 156
+⚠️ NaN in time_diff_emb at batch 156
+Epoch: 1,                                         train for the 157-th batch, train loss: nan
+:   2%| | 156/8103 [03:25<Epoch: 1,                                         train for the 157-th batch, train loss: nan
+:   2%| | 157/8103 [03:25<List 中没有 NaN。
+Tensor 中存在 NaN！建议处理方案：使用 .nan_to_num(0) 填充
+List 中没有 NaN。
+Tensor 中存在 NaN！建议处理方案：使用 .nan_to_num(0) 填充
+⚠️ NaN in src_embeddings at batch 157
+⚠️ NaN in dst_embeddings at batch 157
+⚠️ NaN in time_diff_emb at batch 157
+Epoch: 1,                                         train for the 158-th batch, train loss: nan
+:   2%| | 157/8103 [03:26<Epoch: 1,                                         train for the 158-th batch, train loss: nan
+:   2%| | 158/8103 [03:26<List 中没有 NaN。
+Tensor 中存在 NaN！建议处理方案：使用 .nan_to_num(0) 填充
+List 中没有 NaN。
+Tensor 中存在 NaN！建议处理方案：使用 .nan_to_num(0) 填充
+⚠️ NaN in src_embeddings at batch 158
+⚠️ NaN in dst_embeddings at batch 158
+⚠️ NaN in time_diff_emb at batch 158
+Epoch: 1,                                         train for the 159-th batch, train loss: nan
+:   2%| | 158/8103 [03:27<Epoch: 1,                                         train for the 159-th batch, train loss: nan
+:   2%| | 159/8103 [03:27<List 中没有 NaN。
+Tensor 中存在 NaN！建议处理方案：使用 .nan_to_num(0) 填充
+List 中没有 NaN。
+Tensor 中存在 NaN！建议处理方案：使用 .nan_to_num(0) 填充
+⚠️ NaN in src_embeddings at batch 159
+⚠️ NaN in dst_embeddings at batch 159
+⚠️ NaN in time_diff_emb at batch 159
+Epoch: 1,                                         train for the 160-th batch, train loss: nan
+:   2%| | 159/8103 [03:28<Epoch: 1,                                         train for the 160-th batch, train loss: nan
+:   2%| | 160/8103 [03:28<List 中没有 NaN。
+Tensor 中存在 NaN！建议处理方案：使用 .nan_to_num(0) 填充
+List 中没有 NaN。
+Tensor 中存在 NaN！建议处理方案：使用 .nan_to_num(0) 填充
+⚠️ NaN in src_embeddings at batch 160
+⚠️ NaN in dst_embeddings at batch 160
+⚠️ NaN in time_diff_emb at batch 160
+Epoch: 1,                                         train for the 161-th batch, train loss: nan
+:   2%| | 160/8103 [03:30<Epoch: 1,                                         train for the 161-th batch, train loss: nan
+:   2%| | 161/8103 [03:30<List 中没有 NaN。
+Tensor 中存在 NaN！建议处理方案：使用 .nan_to_num(0) 填充
+List 中没有 NaN。
+Tensor 中存在 NaN！建议处理方案：使用 .nan_to_num(0) 填充
+⚠️ NaN in src_embeddings at batch 161
+⚠️ NaN in dst_embeddings at batch 161
+⚠️ NaN in time_diff_emb at batch 161
+Epoch: 1,                                         train for the 162-th batch, train loss: nan
+:   2%| | 161/8103 [03:31<Epoch: 1,                                         train for the 162-th batch, train loss: nan
+:   2%| | 162/8103 [03:31<List 中没有 NaN。
+Tensor 中存在 NaN！建议处理方案：使用 .nan_to_num(0) 填充
+List 中没有 NaN。
+Tensor 中存在 NaN！建议处理方案：使用 .nan_to_num(0) 填充
+⚠️ NaN in src_embeddings at batch 162
+⚠️ NaN in dst_embeddings at batch 162
+⚠️ NaN in time_diff_emb at batch 162
+Epoch: 1,                                         train for the 163-th batch, train loss: nan
+:   2%| | 162/8103 [03:32<Epoch: 1,                                         train for the 163-th batch, train loss: nan
+:   2%| | 163/8103 [03:32<List 中没有 NaN。
+Tensor 中存在 NaN！建议处理方案：使用 .nan_to_num(0) 填充
+List 中没有 NaN。
+Tensor 中存在 NaN！建议处理方案：使用 .nan_to_num(0) 填充
+⚠️ NaN in src_embeddings at batch 163
+⚠️ NaN in dst_embeddings at batch 163
+⚠️ NaN in time_diff_emb at batch 163
+Epoch: 1,                                         train for the 164-th batch, train loss: nan
+:   2%| | 163/8103 [03:34<Epoch: 1,                                         train for the 164-th batch, train loss: nan
+:   2%| | 164/8103 [03:34<List 中没有 NaN。
+Tensor 中存在 NaN！建议处理方案：使用 .nan_to_num(0) 填充
+List 中没有 NaN。
+Tensor 中存在 NaN！建议处理方案：使用 .nan_to_num(0) 填充
+⚠️ NaN in src_embeddings at batch 164
+⚠️ NaN in dst_embeddings at batch 164
+⚠️ NaN in time_diff_emb at batch 164
+Epoch: 1,                                         train for the 165-th batch, train loss: nan
+:   2%| | 164/8103 [03:35<Epoch: 1,                                         train for the 165-th batch, train loss: nan
+:   2%| | 165/8103 [03:35<List 中没有 NaN。
+Tensor 中存在 NaN！建议处理方案：使用 .nan_to_num(0) 填充
+List 中没有 NaN。
+Tensor 中存在 NaN！建议处理方案：使用 .nan_to_num(0) 填充
+⚠️ NaN in src_embeddings at batch 165
+⚠️ NaN in dst_embeddings at batch 165
+⚠️ NaN in time_diff_emb at batch 165
+Epoch: 1,                                         train for the 166-th batch, train loss: nan
+:   2%| | 165/8103 [03:36<Epoch: 1,                                         train for the 166-th batch, train loss: nan
+:   2%| | 166/8103 [03:36<List 中没有 NaN。
+Tensor 中存在 NaN！建议处理方案：使用 .nan_to_num(0) 填充
+List 中没有 NaN。
+Tensor 中存在 NaN！建议处理方案：使用 .nan_to_num(0) 填充
+⚠️ NaN in src_embeddings at batch 166
+⚠️ NaN in dst_embeddings at batch 166
+⚠️ NaN in time_diff_emb at batch 166
+Epoch: 1,                                         train for the 167-th batch, train loss: nan
+:   2%| | 166/8103 [03:37<Epoch: 1,                                         train for the 167-th batch, train loss: nan
+:   2%| | 167/8103 [03:37<List 中没有 NaN。
+Tensor 中存在 NaN！建议处理方案：使用 .nan_to_num(0) 填充
+List 中没有 NaN。
+Tensor 中存在 NaN！建议处理方案：使用 .nan_to_num(0) 填充
+⚠️ NaN in src_embeddings at batch 167
+⚠️ NaN in dst_embeddings at batch 167
+⚠️ NaN in time_diff_emb at batch 167
+Epoch: 1,                                         train for the 168-th batch, train loss: nan
+:   2%| | 167/8103 [03:39<Epoch: 1,                                         train for the 168-th batch, train loss: nan
+:   2%| | 168/8103 [03:39<List 中没有 NaN。
+Tensor 中存在 NaN！建议处理方案：使用 .nan_to_num(0) 填充
+List 中没有 NaN。
+Tensor 中存在 NaN！建议处理方案：使用 .nan_to_num(0) 填充
+⚠️ NaN in src_embeddings at batch 168
+⚠️ NaN in dst_embeddings at batch 168
+⚠️ NaN in time_diff_emb at batch 168
+Epoch: 1,                                         train for the 169-th batch, train loss: nan
+:   2%| | 168/8103 [03:40<Epoch: 1,                                         train for the 169-th batch, train loss: nan
+:   2%| | 169/8103 [03:40<List 中没有 NaN。
+Tensor 中存在 NaN！建议处理方案：使用 .nan_to_num(0) 填充
+List 中没有 NaN。
+Tensor 中存在 NaN！建议处理方案：使用 .nan_to_num(0) 填充
+⚠️ NaN in src_embeddings at batch 169
+⚠️ NaN in dst_embeddings at batch 169
+⚠️ NaN in time_diff_emb at batch 169
+Epoch: 1,                                         train for the 170-th batch, train loss: nan
+:   2%| | 169/8103 [03:41<Epoch: 1,                                         train for the 170-th batch, train loss: nan
+:   2%| | 170/8103 [03:41<List 中没有 NaN。
+Tensor 中存在 NaN！建议处理方案：使用 .nan_to_num(0) 填充
+List 中没有 NaN。
+Tensor 中存在 NaN！建议处理方案：使用 .nan_to_num(0) 填充
+⚠️ NaN in src_embeddings at batch 170
+⚠️ NaN in dst_embeddings at batch 170
+⚠️ NaN in time_diff_emb at batch 170
+Epoch: 1,                                         train for the 171-th batch, train loss: nan
+:   2%| | 170/8103 [03:42<Epoch: 1,                                         train for the 171-th batch, train loss: nan
+:   2%| | 171/8103 [03:42<List 中没有 NaN。
+Tensor 中存在 NaN！建议处理方案：使用 .nan_to_num(0) 填充
+List 中没有 NaN。
+Tensor 中存在 NaN！建议处理方案：使用 .nan_to_num(0) 填充
+⚠️ NaN in src_embeddings at batch 171
+⚠️ NaN in dst_embeddings at batch 171
+⚠️ NaN in time_diff_emb at batch 171
+Epoch: 1,                                         train for the 172-th batch, train loss: nan
+:   2%| | 171/8103 [03:44<Epoch: 1,                                         train for the 172-th batch, train loss: nan
+:   2%| | 172/8103 [03:44<List 中没有 NaN。
+Tensor 中存在 NaN！建议处理方案：使用 .nan_to_num(0) 填充
+List 中没有 NaN。
+Tensor 中存在 NaN！建议处理方案：使用 .nan_to_num(0) 填充
+⚠️ NaN in src_embeddings at batch 172
+⚠️ NaN in dst_embeddings at batch 172
+⚠️ NaN in time_diff_emb at batch 172
+Epoch: 1,                                         train for the 173-th batch, train loss: nan
+:   2%| | 172/8103 [03:45<Epoch: 1,                                         train for the 173-th batch, train loss: nan
+:   2%| | 173/8103 [03:45<List 中没有 NaN。
+Tensor 中存在 NaN！建议处理方案：使用 .nan_to_num(0) 填充
+List 中没有 NaN。
+Tensor 中存在 NaN！建议处理方案：使用 .nan_to_num(0) 填充
+⚠️ NaN in src_embeddings at batch 173
+⚠️ NaN in dst_embeddings at batch 173
+⚠️ NaN in time_diff_emb at batch 173
+Epoch: 1,                                         train for the 174-th batch, train loss: nan
+:   2%| | 173/8103 [03:46<Epoch: 1,                                         train for the 174-th batch, train loss: nan
+:   2%| | 174/8103 [03:46<List 中没有 NaN。
+Tensor 中存在 NaN！建议处理方案：使用 .nan_to_num(0) 填充
+List 中没有 NaN。
+Tensor 中存在 NaN！建议处理方案：使用 .nan_to_num(0) 填充
+⚠️ NaN in src_embeddings at batch 174
+⚠️ NaN in dst_embeddings at batch 174
+⚠️ NaN in time_diff_emb at batch 174
+Epoch: 1,                                         train for the 175-th batch, train loss: nan
+:   2%| | 174/8103 [03:47<Epoch: 1,                                         train for the 175-th batch, train loss: nan
+:   2%| | 175/8103 [03:47<List 中没有 NaN。
+Tensor 中存在 NaN！建议处理方案：使用 .nan_to_num(0) 填充
+List 中没有 NaN。
+Tensor 中存在 NaN！建议处理方案：使用 .nan_to_num(0) 填充
+⚠️ NaN in src_embeddings at batch 175
+⚠️ NaN in dst_embeddings at batch 175
+⚠️ NaN in time_diff_emb at batch 175
+Epoch: 1,                                         train for the 176-th batch, train loss: nan
+:   2%| | 175/8103 [03:49<Epoch: 1,                                         train for the 176-th batch, train loss: nan
+:   2%| | 176/8103 [03:49<List 中没有 NaN。
+Tensor 中存在 NaN！建议处理方案：使用 .nan_to_num(0) 填充
+List 中没有 NaN。
+Tensor 中存在 NaN！建议处理方案：使用 .nan_to_num(0) 填充
+⚠️ NaN in src_embeddings at batch 176
+⚠️ NaN in dst_embeddings at batch 176
+⚠️ NaN in time_diff_emb at batch 176
+Epoch: 1,                                         train for the 177-th batch, train loss: nan
+:   2%| | 176/8103 [03:50<Epoch: 1,                                         train for the 177-th batch, train loss: nan
+:   2%| | 177/8103 [03:50<List 中没有 NaN。
+Tensor 中存在 NaN！建议处理方案：使用 .nan_to_num(0) 填充
+List 中没有 NaN。
+Tensor 中存在 NaN！建议处理方案：使用 .nan_to_num(0) 填充
+⚠️ NaN in src_embeddings at batch 177
+⚠️ NaN in dst_embeddings at batch 177
+⚠️ NaN in time_diff_emb at batch 177
+Epoch: 1,                                         train for the 178-th batch, train loss: nan
+:   2%| | 177/8103 [03:51<Epoch: 1,                                         train for the 178-th batch, train loss: nan
+:   2%| | 178/8103 [03:51<List 中没有 NaN。
+Tensor 中存在 NaN！建议处理方案：使用 .nan_to_num(0) 填充
+List 中没有 NaN。
+Tensor 中存在 NaN！建议处理方案：使用 .nan_to_num(0) 填充
+⚠️ NaN in src_embeddings at batch 178
+⚠️ NaN in dst_embeddings at batch 178
+⚠️ NaN in time_diff_emb at batch 178
+Epoch: 1,                                         train for the 179-th batch, train loss: nan
+:   2%| | 178/8103 [03:53<Epoch: 1,                                         train for the 179-th batch, train loss: nan
+:   2%| | 179/8103 [03:53<List 中没有 NaN。
+Tensor 中存在 NaN！建议处理方案：使用 .nan_to_num(0) 填充
+List 中没有 NaN。
+Tensor 中存在 NaN！建议处理方案：使用 .nan_to_num(0) 填充
+⚠️ NaN in src_embeddings at batch 179
+⚠️ NaN in dst_embeddings at batch 179
+⚠️ NaN in time_diff_emb at batch 179
+Epoch: 1,                                         train for the 180-th batch, train loss: nan
+:   2%| | 179/8103 [03:54<Epoch: 1,                                         train for the 180-th batch, train loss: nan
+:   2%| | 180/8103 [03:54<List 中没有 NaN。
+Tensor 中存在 NaN！建议处理方案：使用 .nan_to_num(0) 填充
+List 中没有 NaN。
+Tensor 中存在 NaN！建议处理方案：使用 .nan_to_num(0) 填充
+⚠️ NaN in src_embeddings at batch 180
+⚠️ NaN in dst_embeddings at batch 180
+⚠️ NaN in time_diff_emb at batch 180
+Epoch: 1,                                         train for the 181-th batch, train loss: nan
+:   2%| | 180/8103 [03:55<Epoch: 1,                                         train for the 181-th batch, train loss: nan
+:   2%| | 181/8103 [03:55<List 中没有 NaN。
+Tensor 中存在 NaN！建议处理方案：使用 .nan_to_num(0) 填充
+List 中没有 NaN。
+Tensor 中存在 NaN！建议处理方案：使用 .nan_to_num(0) 填充
+⚠️ NaN in src_embeddings at batch 181
+⚠️ NaN in dst_embeddings at batch 181
+⚠️ NaN in time_diff_emb at batch 181
+Epoch: 1,                                         train for the 182-th batch, train loss: nan
+:   2%| | 181/8103 [03:56<Epoch: 1,                                         train for the 182-th batch, train loss: nan
+:   2%| | 182/8103 [03:56<List 中没有 NaN。
+Tensor 中存在 NaN！建议处理方案：使用 .nan_to_num(0) 填充
+List 中没有 NaN。
+Tensor 中存在 NaN！建议处理方案：使用 .nan_to_num(0) 填充
+⚠️ NaN in src_embeddings at batch 182
+⚠️ NaN in dst_embeddings at batch 182
+⚠️ NaN in time_diff_emb at batch 182
+Epoch: 1,                                         train for the 183-th batch, train loss: nan
+:   2%| | 182/8103 [03:58<Epoch: 1,                                         train for the 183-th batch, train loss: nan
+:   2%| | 183/8103 [03:58<List 中没有 NaN。
+Tensor 中存在 NaN！建议处理方案：使用 .nan_to_num(0) 填充
+List 中没有 NaN。
+Tensor 中存在 NaN！建议处理方案：使用 .nan_to_num(0) 填充
+⚠️ NaN in src_embeddings at batch 183
+⚠️ NaN in dst_embeddings at batch 183
+⚠️ NaN in time_diff_emb at batch 183
+Epoch: 1,                                         train for the 184-th batch, train loss: nan
+:   2%| | 183/8103 [03:59<Epoch: 1,                                         train for the 184-th batch, train loss: nan
+:   2%| | 184/8103 [03:59<List 中没有 NaN。
+Tensor 中存在 NaN！建议处理方案：使用 .nan_to_num(0) 填充
+List 中没有 NaN。
+Tensor 中存在 NaN！建议处理方案：使用 .nan_to_num(0) 填充
+⚠️ NaN in src_embeddings at batch 184
+⚠️ NaN in dst_embeddings at batch 184
+⚠️ NaN in time_diff_emb at batch 184
+Epoch: 1,                                         train for the 185-th batch, train loss: nan
+:   2%| | 184/8103 [04:00<Epoch: 1,                                         train for the 185-th batch, train loss: nan
+:   2%| | 185/8103 [04:00<List 中没有 NaN。
+Tensor 中存在 NaN！建议处理方案：使用 .nan_to_num(0) 填充
+List 中没有 NaN。
+Tensor 中存在 NaN！建议处理方案：使用 .nan_to_num(0) 填充
+⚠️ NaN in src_embeddings at batch 185
+⚠️ NaN in dst_embeddings at batch 185
+⚠️ NaN in time_diff_emb at batch 185
+Epoch: 1,                                         train for the 186-th batch, train loss: nan
+:   2%| | 185/8103 [04:01<Epoch: 1,                                         train for the 186-th batch, train loss: nan
+:   2%| | 186/8103 [04:01<List 中没有 NaN。
+Tensor 中存在 NaN！建议处理方案：使用 .nan_to_num(0) 填充
+List 中没有 NaN。
+Tensor 中存在 NaN！建议处理方案：使用 .nan_to_num(0) 填充
+⚠️ NaN in src_embeddings at batch 186
+⚠️ NaN in dst_embeddings at batch 186
+⚠️ NaN in time_diff_emb at batch 186
+Epoch: 1,                                         train for the 187-th batch, train loss: nan
+:   2%| | 186/8103 [04:03<Epoch: 1,                                         train for the 187-th batch, train loss: nan
+:   2%| | 187/8103 [04:03<List 中没有 NaN。
+Tensor 中存在 NaN！建议处理方案：使用 .nan_to_num(0) 填充
+List 中没有 NaN。
+Tensor 中存在 NaN！建议处理方案：使用 .nan_to_num(0) 填充
+⚠️ NaN in src_embeddings at batch 187
+⚠️ NaN in dst_embeddings at batch 187
+⚠️ NaN in time_diff_emb at batch 187
+Epoch: 1,                                         train for the 188-th batch, train loss: nan
+:   2%| | 187/8103 [04:04<Epoch: 1,                                         train for the 188-th batch, train loss: nan
+:   2%| | 188/8103 [04:04<List 中没有 NaN。
+Tensor 中存在 NaN！建议处理方案：使用 .nan_to_num(0) 填充
+List 中没有 NaN。
+Tensor 中存在 NaN！建议处理方案：使用 .nan_to_num(0) 填充
+⚠️ NaN in src_embeddings at batch 188
+⚠️ NaN in dst_embeddings at batch 188
+⚠️ NaN in time_diff_emb at batch 188
+Epoch: 1,                                         train for the 189-th batch, train loss: nan
+:   2%| | 188/8103 [04:05<Epoch: 1,                                         train for the 189-th batch, train loss: nan
+:   2%| | 189/8103 [04:05<List 中没有 NaN。
+Tensor 中存在 NaN！建议处理方案：使用 .nan_to_num(0) 填充
+List 中没有 NaN。
+Tensor 中存在 NaN！建议处理方案：使用 .nan_to_num(0) 填充
+⚠️ NaN in src_embeddings at batch 189
+⚠️ NaN in dst_embeddings at batch 189
+⚠️ NaN in time_diff_emb at batch 189
+Epoch: 1,                                         train for the 190-th batch, train loss: nan
+:   2%| | 189/8103 [04:07<Epoch: 1,                                         train for the 190-th batch, train loss: nan
+:   2%| | 190/8103 [04:07<List 中没有 NaN。
+Tensor 中存在 NaN！建议处理方案：使用 .nan_to_num(0) 填充
+List 中没有 NaN。
+Tensor 中存在 NaN！建议处理方案：使用 .nan_to_num(0) 填充
+⚠️ NaN in src_embeddings at batch 190
+⚠️ NaN in dst_embeddings at batch 190
+⚠️ NaN in time_diff_emb at batch 190
+Epoch: 1,                                         train for the 191-th batch, train loss: nan
+:   2%| | 190/8103 [04:08<Epoch: 1,                                         train for the 191-th batch, train loss: nan
+:   2%| | 191/8103 [04:08<List 中没有 NaN。
+Tensor 中存在 NaN！建议处理方案：使用 .nan_to_num(0) 填充
+List 中没有 NaN。
+Tensor 中存在 NaN！建议处理方案：使用 .nan_to_num(0) 填充
+⚠️ NaN in src_embeddings at batch 191
+⚠️ NaN in dst_embeddings at batch 191
+⚠️ NaN in time_diff_emb at batch 191
+Epoch: 1,                                         train for the 192-th batch, train loss: nan
+:   2%| | 191/8103 [04:09<Epoch: 1,                                         train for the 192-th batch, train loss: nan
+:   2%| | 192/8103 [04:09<List 中没有 NaN。
+Tensor 中存在 NaN！建议处理方案：使用 .nan_to_num(0) 填充
+List 中没有 NaN。
+Tensor 中存在 NaN！建议处理方案：使用 .nan_to_num(0) 填充
+⚠️ NaN in src_embeddings at batch 192
+⚠️ NaN in dst_embeddings at batch 192
+⚠️ NaN in time_diff_emb at batch 192
+Epoch: 1,                                         train for the 193-th batch, train loss: nan
+:   2%| | 192/8103 [04:10<Epoch: 1,                                         train for the 193-th batch, train loss: nan
+:   2%| | 193/8103 [04:10<List 中没有 NaN。
+Tensor 中存在 NaN！建议处理方案：使用 .nan_to_num(0) 填充
+List 中没有 NaN。
+Tensor 中存在 NaN！建议处理方案：使用 .nan_to_num(0) 填充
+⚠️ NaN in src_embeddings at batch 193
+⚠️ NaN in dst_embeddings at batch 193
+⚠️ NaN in time_diff_emb at batch 193
+Epoch: 1,                                         train for the 194-th batch, train loss: nan
+:   2%| | 193/8103 [04:12<Epoch: 1,                                         train for the 194-th batch, train loss: nan
+:   2%| | 194/8103 [04:12<List 中没有 NaN。
+Tensor 中存在 NaN！建议处理方案：使用 .nan_to_num(0) 填充
+List 中没有 NaN。
+Tensor 中存在 NaN！建议处理方案：使用 .nan_to_num(0) 填充
+⚠️ NaN in src_embeddings at batch 194
+⚠️ NaN in dst_embeddings at batch 194
+⚠️ NaN in time_diff_emb at batch 194
+Epoch: 1,                                         train for the 195-th batch, train loss: nan
+:   2%| | 194/8103 [04:13<Epoch: 1,                                         train for the 195-th batch, train loss: nan
+:   2%| | 195/8103 [04:13<List 中没有 NaN。
+Tensor 中存在 NaN！建议处理方案：使用 .nan_to_num(0) 填充
+List 中没有 NaN。
+Tensor 中存在 NaN！建议处理方案：使用 .nan_to_num(0) 填充
+⚠️ NaN in src_embeddings at batch 195
+⚠️ NaN in dst_embeddings at batch 195
+⚠️ NaN in time_diff_emb at batch 195
+Epoch: 1,                                         train for the 196-th batch, train loss: nan
+:   2%| | 195/8103 [04:14<Epoch: 1,                                         train for the 196-th batch, train loss: nan
+:   2%| | 196/8103 [04:14<List 中没有 NaN。
+Tensor 中存在 NaN！建议处理方案：使用 .nan_to_num(0) 填充
+List 中没有 NaN。
+Tensor 中存在 NaN！建议处理方案：使用 .nan_to_num(0) 填充
+⚠️ NaN in src_embeddings at batch 196
+⚠️ NaN in dst_embeddings at batch 196
+⚠️ NaN in time_diff_emb at batch 196
+Epoch: 1,                                         train for the 197-th batch, train loss: nan
+:   2%| | 196/8103 [04:16<Epoch: 1,                                         train for the 197-th batch, train loss: nan
+:   2%| | 197/8103 [04:16<List 中没有 NaN。
+Tensor 中存在 NaN！建议处理方案：使用 .nan_to_num(0) 填充
+List 中没有 NaN。
+Tensor 中存在 NaN！建议处理方案：使用 .nan_to_num(0) 填充
+⚠️ NaN in src_embeddings at batch 197
+⚠️ NaN in dst_embeddings at batch 197
+⚠️ NaN in time_diff_emb at batch 197
+Epoch: 1,                                         train for the 198-th batch, train loss: nan
+:   2%| | 197/8103 [04:17<Epoch: 1,                                         train for the 198-th batch, train loss: nan
+:   2%| | 198/8103 [04:17<List 中没有 NaN。
+Tensor 中存在 NaN！建议处理方案：使用 .nan_to_num(0) 填充
+List 中没有 NaN。
+Tensor 中存在 NaN！建议处理方案：使用 .nan_to_num(0) 填充
+⚠️ NaN in src_embeddings at batch 198
+⚠️ NaN in dst_embeddings at batch 198
+⚠️ NaN in time_diff_emb at batch 198
+Epoch: 1,                                         train for the 199-th batch, train loss: nan
+:   2%| | 198/8103 [04:18<Epoch: 1,                                         train for the 199-th batch, train loss: nan
+:   2%| | 199/8103 [04:18<List 中没有 NaN。
+Tensor 中存在 NaN！建议处理方案：使用 .nan_to_num(0) 填充
+List 中没有 NaN。
+Tensor 中存在 NaN！建议处理方案：使用 .nan_to_num(0) 填充
+⚠️ NaN in src_embeddings at batch 199
+⚠️ NaN in dst_embeddings at batch 199
+⚠️ NaN in time_diff_emb at batch 199
+Epoch: 1,                                         train for the 200-th batch, train loss: nan
+:   2%| | 199/8103 [04:19<Epoch: 1,                                         train for the 200-th batch, train loss: nan
+:   2%| | 200/8103 [04:19<List 中没有 NaN。
+Tensor 中存在 NaN！建议处理方案：使用 .nan_to_num(0) 填充
+List 中没有 NaN。
+Tensor 中存在 NaN！建议处理方案：使用 .nan_to_num(0) 填充
+⚠️ NaN in src_embeddings at batch 200
+⚠️ NaN in dst_embeddings at batch 200
+⚠️ NaN in time_diff_emb at batch 200
+Epoch: 1,                                         train for the 201-th batch, train loss: nan
+:   2%| | 200/8103 [04:21<Epoch: 1,                                         train for the 201-th batch, train loss: nan
+:   2%| | 201/8103 [04:21<List 中没有 NaN。
+Tensor 中存在 NaN！建议处理方案：使用 .nan_to_num(0) 填充
+List 中没有 NaN。
+Tensor 中存在 NaN！建议处理方案：使用 .nan_to_num(0) 填充
+⚠️ NaN in src_embeddings at batch 201
+⚠️ NaN in dst_embeddings at batch 201
+⚠️ NaN in time_diff_emb at batch 201
+Epoch: 1,                                         train for the 202-th batch, train loss: nan
+:   2%| | 201/8103 [04:22<Epoch: 1,                                         train for the 202-th batch, train loss: nan
+:   2%| | 202/8103 [04:22<List 中没有 NaN。
+Tensor 中存在 NaN！建议处理方案：使用 .nan_to_num(0) 填充
+List 中没有 NaN。
+Tensor 中存在 NaN！建议处理方案：使用 .nan_to_num(0) 填充
+⚠️ NaN in src_embeddings at batch 202
+⚠️ NaN in dst_embeddings at batch 202
+⚠️ NaN in time_diff_emb at batch 202
+Epoch: 1,                                         train for the 203-th batch, train loss: nan
+:   2%| | 202/8103 [04:23<Epoch: 1,                                         train for the 203-th batch, train loss: nan
+:   3%| | 203/8103 [04:23<List 中没有 NaN。
+Tensor 中存在 NaN！建议处理方案：使用 .nan_to_num(0) 填充
+List 中没有 NaN。
+Tensor 中存在 NaN！建议处理方案：使用 .nan_to_num(0) 填充
+⚠️ NaN in src_embeddings at batch 203
+⚠️ NaN in dst_embeddings at batch 203
+⚠️ NaN in time_diff_emb at batch 203
+Epoch: 1,                                         train for the 204-th batch, train loss: nan
+:   3%| | 203/8103 [04:24<Epoch: 1,                                         train for the 204-th batch, train loss: nan
+:   3%| | 204/8103 [04:24<List 中没有 NaN。
+Tensor 中存在 NaN！建议处理方案：使用 .nan_to_num(0) 填充
+List 中没有 NaN。
+Tensor 中存在 NaN！建议处理方案：使用 .nan_to_num(0) 填充
+⚠️ NaN in src_embeddings at batch 204
+⚠️ NaN in dst_embeddings at batch 204
+⚠️ NaN in time_diff_emb at batch 204
+Epoch: 1,                                         train for the 205-th batch, train loss: nan
+:   3%| | 204/8103 [04:26<Epoch: 1,                                         train for the 205-th batch, train loss: nan
+:   3%| | 205/8103 [04:26<List 中没有 NaN。
+Tensor 中存在 NaN！建议处理方案：使用 .nan_to_num(0) 填充
+List 中没有 NaN。
+Tensor 中存在 NaN！建议处理方案：使用 .nan_to_num(0) 填充
+⚠️ NaN in src_embeddings at batch 205
+⚠️ NaN in dst_embeddings at batch 205
+⚠️ NaN in time_diff_emb at batch 205
+Epoch: 1,                                         train for the 206-th batch, train loss: nan
+:   3%| | 205/8103 [04:27<Epoch: 1,                                         train for the 206-th batch, train loss: nan
+:   3%| | 206/8103 [04:27<List 中没有 NaN。
+Tensor 中存在 NaN！建议处理方案：使用 .nan_to_num(0) 填充
+List 中没有 NaN。
+Tensor 中存在 NaN！建议处理方案：使用 .nan_to_num(0) 填充
+⚠️ NaN in src_embeddings at batch 206
+⚠️ NaN in dst_embeddings at batch 206
+⚠️ NaN in time_diff_emb at batch 206
+Epoch: 1,                                         train for the 207-th batch, train loss: nan
+:   3%| | 206/8103 [04:28<Epoch: 1,                                         train for the 207-th batch, train loss: nan
+:   3%| | 207/8103 [04:28<List 中没有 NaN。
+Tensor 中存在 NaN！建议处理方案：使用 .nan_to_num(0) 填充
+slurmstepd: error: *** JOB 198307 ON gnode07 CANCELLED AT 2026-02-12T22:19:56 ***

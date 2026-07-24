@@ -1,0 +1,115 @@
+run DygMamba2 job
+********************** start ********************
+[2026-02-12 13:33:26] Start the job
+**********************device********************
+Now use device is cuda:0
+********************** Successfully load data ********************
+The dataset has 6481612 interactions, involving 33516 different nodes
+********************** Successfully process data ********************
+********************* successfully get neighbor **************
+********************* successfully get negative neighbor **************
+********************** Successfully process neighbor data---- positive and negative ********************
+[2026-02-12 13:36:58] Start the job
+INFO:root:********** Run 1 starts. **********
+INFO:root:configuration is Namespace(dataset_name='mooc', batch_size=200, model_name='DyGMamba', gpu=0, num_neighbors=20, sample_neighbor_strategy='uniform', time_scaling_factor=1e-06, num_walk_heads=8, num_heads=2, num_layers=2, walk_length=1, time_gap=2000, time_feat_dim=100, position_feat_dim=172, time_window_mode='fixed_proportion', patch_size=1, channel_embedding_dim=50, max_input_sequence_length=32, learning_rate=0.0001, dropout=0.1, gamma=0.5, num_epochs=1, optimizer='Adam', weight_decay=0.0, patience=20, val_ratio=0.15, test_ratio=0.15, num_runs=1, test_interval_epochs=1, negative_sample_strategy='random', max_interaction_times=10, load_best_configs=False, device='cuda:0', seed=0, save_model_name='DyGMamba_seed0')
+INFO:root:model -> Sequential(
+  (0): DyGMamba(
+    (time_encoder): TimeEncoder(
+      (w): Linear(in_features=1, out_features=100, bias=True)
+    )
+    (neighbor_co_occurrence_encoder): NIFEncoder(
+      (nif_encode_layer): Sequential(
+        (0): Linear(in_features=1, out_features=50, bias=True)
+        (1): ReLU()
+        (2): Linear(in_features=50, out_features=50, bias=True)
+      )
+    )
+    (projection_layer): ModuleDict(
+      (node): Linear(in_features=172, out_features=50, bias=True)
+      (edge): Linear(in_features=172, out_features=50, bias=True)
+      (time): Linear(in_features=100, out_features=50, bias=True)
+      (neighbor_co_occurrence): Linear(in_features=50, out_features=50, bias=True)
+    )
+    (output_layer): Linear(in_features=100, out_features=172, bias=True)
+    (output_layer_t_diff): Linear(in_features=25, out_features=172, bias=True)
+    (mamba): ModuleList(
+      (0-1): 2 x Mamba(
+        (in_proj): Linear(in_features=100, out_features=200, bias=False)
+        (conv1d): Conv1d(100, 100, kernel_size=(4,), stride=(1,), padding=(3,), groups=100)
+        (act): SiLU()
+        (x_proj): Linear(in_features=100, out_features=39, bias=False)
+        (dt_proj): Linear(in_features=7, out_features=100, bias=True)
+        (out_proj): Linear(in_features=100, out_features=100, bias=False)
+      )
+    )
+    (mamba_t_diff): ModuleList(
+      (0-1): 2 x Mamba(
+        (in_proj): Linear(in_features=25, out_features=50, bias=False)
+        (conv1d): Conv1d(25, 25, kernel_size=(4,), stride=(1,), padding=(3,), groups=25)
+        (act): SiLU()
+        (x_proj): Linear(in_features=25, out_features=34, bias=False)
+        (dt_proj): Linear(in_features=2, out_features=25, bias=True)
+        (out_proj): Linear(in_features=25, out_features=25, bias=False)
+      )
+    )
+    (projection_layer_t_diff): Linear(in_features=100, out_features=25, bias=True)
+    (projection_layer_t_diff_up): Linear(in_features=25, out_features=100, bias=True)
+    (weightagg): Linear(in_features=100, out_features=1, bias=True)
+    (reduce_layer): Linear(in_features=200, out_features=100, bias=True)
+    (channel_norm): LayerNorm((100,), eps=1e-05, elementwise_affine=True)
+    (channel_feedforward): FeedForwardNet(
+      (ffn): Sequential(
+        (0): Linear(in_features=100, out_features=400, bias=True)
+        (1): GELU(approximate='none')
+        (2): Dropout(p=0.1, inplace=False)
+        (3): Linear(in_features=400, out_features=100, bias=True)
+        (4): Dropout(p=0.1, inplace=False)
+      )
+    )
+    (neighbor_selection_layer): Linear(in_features=100, out_features=100, bias=True)
+  )
+  (1): MergeLayerTD(
+    (fc1): Linear(in_features=516, out_features=172, bias=True)
+    (fc2): Linear(in_features=172, out_features=1, bias=True)
+    (act): ReLU()
+  )
+)
+INFO:root:model name: DyGMamba, #parameters: 1341268 B, 1309.83203125 KB, 1.2791328430175781 MB.
+混合精度训练已启用
+  0%|                                                                                          | 0/8103 [00:00<?, ?it/s]Epoch: 1,                                         train for the 1-th batch, train loss: nan
+:   0%| | 0/8103 [01:20<?, ?Epoch: 1,                                         train for the 1-th batch, train loss: nan
+:   0%| | 1/8103 [01:20<181:Epoch: 1,                                         train for the 2-th batch, train loss: nan
+:   0%| | 1/8103 [02:23<181:Epoch: 1,                                         train for the 2-th batch, train loss: nan
+:   0%| | 2/8103 [02:23<158:Epoch: 1,                                         train for the 3-th batch, train loss: nan
+:   0%| | 2/8103 [05:56<158:Epoch: 1,                                         train for the 3-th batch, train loss: nan
+:   0%| | 3/8103 [05:56<304:Epoch: 1,                                         train for the 4-th batch, train loss: nan
+:   0%| | 3/8103 [07:12<304:Epoch: 1,                                         train for the 4-th batch, train loss: nan
+:   0%| | 4/8103 [07:12<252:Epoch: 1,                                         train for the 5-th batch, train loss: nan
+:   0%| | 4/8103 [12:35<252:Epoch: 1,                                         train for the 5-th batch, train loss: nan
+:   0%| | 5/8103 [12:35<423:Epoch: 1,                                         train for the 6-th batch, train loss: nan
+:   0%| | 5/8103 [20:13<423:Epoch: 1,                                         train for the 6-th batch, train loss: nan
+:   0%| | 6/8103 [20:13<629:Epoch: 1,                                         train for the 7-th batch, train loss: nan
+:   0%| | 6/8103 [21:35<629:Epoch: 1,                                         train for the 7-th batch, train loss: nan
+:   0%| | 7/8103 [21:35<484:Epoch: 1,                                         train for the 8-th batch, train loss: nan
+:   0%| | 7/8103 [23:41<484:Epoch: 1,                                         train for the 8-th batch, train loss: nan
+:   0%| | 8/8103 [23:41<420:Epoch: 1,                                         train for the 9-th batch, train loss: nan
+:   0%| | 8/8103 [25:04<420:Epoch: 1,                                         train for the 9-th batch, train loss: nan
+:   0%| | 9/8103 [25:04<346:Epoch: 1,                                         train for the 10-th batch, train loss: nan
+:   0%| | 9/8103 [25:55<346Epoch: 1,                                         train for the 10-th batch, train loss: nan
+:   0%| | 10/8103 [25:55<27Epoch: 1,                                         train for the 11-th batch, train loss: nan
+:   0%| | 10/8103 [26:22<27Epoch: 1,                                         train for the 11-th batch, train loss: nan
+:   0%| | 11/8103 [26:22<20Epoch: 1,                                         train for the 12-th batch, train loss: nan
+:   0%| | 11/8103 [27:21<20Epoch: 1,                                         train for the 12-th batch, train loss: nan
+:   0%| | 12/8103 [27:21<18Epoch: 1,                                         train for the 13-th batch, train loss: nan
+:   0%| | 12/8103 [28:38<18Epoch: 1,                                         train for the 13-th batch, train loss: nan
+:   0%| | 13/8103 [28:38<18Epoch: 1,                                         train for the 14-th batch, train loss: nan
+:   0%| | 13/8103 [29:23<18Epoch: 1,                                         train for the 14-th batch, train loss: nan
+:   0%| | 14/8103 [29:23<15Epoch: 1,                                         train for the 15-th batch, train loss: nan
+:   0%| | 14/8103 [31:23<15Epoch: 1,                                         train for the 15-th batch, train loss: nan
+:   0%| | 15/8103 [31:23<19Epoch: 1,                                         train for the 16-th batch, train loss: nan
+:   0%| | 15/8103 [32:39<19Epoch: 1,                                         train for the 16-th batch, train loss: nan
+:   0%| | 16/8103 [32:39<18Epoch: 1,                                         train for the 17-th batch, train loss: nan
+:   0%| | 16/8103 [34:00<18Epoch: 1,                                         train for the 17-th batch, train loss: nan
+:   0%| | 17/8103 [34:00<18Epoch: 1,                                         train for the 18-th batch, train loss: nan
+:   0%| | 17/8103 [35:13<18Epoch: 1,                                         train for the 18-th batch, train loss: nan
+:   0%| | 18/8103 [35:13<17slurmstepd: error: *** JOB 198215 ON gnode08 CANCELLED AT 2026-02-12T14:20:56 ***

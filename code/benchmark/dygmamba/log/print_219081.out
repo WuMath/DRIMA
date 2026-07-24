@@ -1,0 +1,99 @@
+**************************************************
+run DYGMAMBA MCF7 job
+**************************************************
+**************************************************
+Data process
+
+ ********************---process rna data---***************************** 
+
+/home/liyang/BioWuYan/conda_env/singlecellpreprocess/lib/python3.9/site-packages/scanpy/preprocessing/_simple.py:283: ImplicitModificationWarning: Trying to modify attribute `.var` of view, initializing view as actual.
+  adata.var["n_cells"] = number
+
+ ********************---process atac data---***************************** 
+
+初始 Peak 数量: 89810
+
+ ********************---process prior network---***************************** 
+
+
+--- 开始计算 RP Score (Decay=50000, Range=250000) ---
+--- 1. 清洗 Gene Info ---
+Chromosomes:   0%|          | 0/23 [00:00<?, ?it/s]Chromosomes:   9%|▊         | 2/23 [00:00<00:01, 17.54it/s]Chromosomes:  26%|██▌       | 6/23 [00:00<00:00, 18.86it/s]Chromosomes:  43%|████▎     | 10/23 [00:00<00:00, 25.25it/s]Chromosomes:  70%|██████▉   | 16/23 [00:00<00:00, 34.28it/s]Chromosomes:  91%|█████████▏| 21/23 [00:00<00:00, 37.72it/s]Chromosomes: 100%|██████████| 23/23 [00:00<00:00, 34.07it/s]
+--- 3. 构建 AnnData 对象 ---
+Gene-Region regulation 完成! 矩阵维度: (2000, 89332)
+非零连接数: 57857, Sparsity: 0.0324%
+
+--- 计算 Peak-Peak RP (Range=250.0kb, Decay=50.0kb) ---
+Chromosomes:   0%|          | 0/24 [00:00<?, ?it/s]Chromosomes:  17%|█▋        | 4/24 [00:00<00:00, 37.28it/s]Chromosomes:  38%|███▊      | 9/24 [00:00<00:00, 44.51it/s]Chromosomes:  62%|██████▎   | 15/24 [00:00<00:00, 50.00it/s]Chromosomes:  88%|████████▊ | 21/24 [00:00<00:00, 47.89it/s]Chromosomes: 100%|██████████| 24/24 [00:00<00:00, 49.36it/s]
+--- 构建全局稀疏矩阵 ---
+--- 封装为 AnnData ---
+Region-Region regulation 完成! 矩阵维度: (89332, 89332)
+非零连接数: 2314226, Sparsity: 0.0290%
+
+=== Data Score Distribution Statistics ===
+  > Count (Non-zero links): 57857
+  > Mean:   0.2299
+  > Std:    0.2376
+------------------------------
+  > Min:    0.0007
+  > 25%    : 0.0533
+  > Median : 0.1319
+  > 75%    : 0.3367
+  > 90%    : 0.6119
+  > 95%    : 0.7618
+  > Max:    2.0619
+
+=== Data Score Distribution Statistics ===
+  > Count (Non-zero links): 2314226
+  > Mean:   0.3154
+  > Std:    0.2873
+------------------------------
+  > Min:    0.0312
+  > 25%    : 0.0803
+  > Median : 0.2017
+  > 75%    : 0.4870
+  > 90%    : 0.8031
+  > 95%    : 0.9395
+  > Max:    1.0000
+Removing 53284 zero-sum peaks from adata_rp
+
+ ********************---process jaspar---***************************** 
+
+正在转换数据格式...
+转换完成！AnnData shape: (89332, 850)
+Obs (Regions): 89332, Var (TFs): 850
+
+步骤 1: 过滤 Peaks (行)
+  > 找到 89332 / 89332 个 peaks 至少有 1 个 TF 结合。
+
+步骤 2: 过滤 TFs (列)
+  > 找到 850 / 850 个 TFs 至少结合 1 个 peak。
+  > 最终形状: (89332, 850)
+Jaspar TF data saved in: /home/liyang/BioWuYan/dygmamba_project/data/cell_line/MCF7/process/jaspar_data_processed.h5ad
+
+ ********************---process chip-seq---***************************** 
+
+--- 1. 准备 ATAC Peak 数据 ---
+未提供过滤列表，将使用 atac_adata 中所有的 Peaks。
+ATAC Peaks 数量: 36048
+--- 2. 准备 TF ChIP 数据 ---
+TF ChIP Peaks 数量: 4577342
+--- 3. 计算重叠 (构建 Network) ---
+构建了包含 379982 条边的 TF-Peak 网络。
+--- 4. 转换为矩阵 (Matrix Construction) ---
+--- 5. 封装为 AnnData ---
+✅ 完成！生成的 AnnData 维度: (36048, 33) (Peaks x TFs)
+TF-peak network saved in: /home/liyang/BioWuYan/dygmamba_project/data/cell_line/MCF7/process/tf_peak_network.h5ad
+
+ ********************---process hi-c---***************************** 
+
+Traceback (most recent call last):
+  File "/home/liyang/BioWuYan/dygmamba_project/model/cell_line/MCF7/dygmamba/src/main_data_process.py", line 465, in <module>
+    main_process()
+  File "/home/liyang/BioWuYan/dygmamba_project/model/cell_line/MCF7/dygmamba/src/main_data_process.py", line 412, in main_process
+    hic_data_df = pd.read_pickle(output_path + 'hic_data_new.pkl')
+  File "/home/liyang/BioWuYan/conda_env/singlecellpreprocess/lib/python3.9/site-packages/pandas/io/pickle.py", line 185, in read_pickle
+    with get_handle(
+  File "/home/liyang/BioWuYan/conda_env/singlecellpreprocess/lib/python3.9/site-packages/pandas/io/common.py", line 882, in get_handle
+    handle = open(handle, ioargs.mode)
+FileNotFoundError: [Errno 2] No such file or directory: '/home/liyang/BioWuYan/dygmamba_project/data/cell_line/MCF7/process/hic_data_new.pkl'

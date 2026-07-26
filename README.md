@@ -312,8 +312,3 @@ Rscript code/dygmamba/src/trajectory_inference.R
 Any trajectory-inference method can be substituted for Slingshot if it
 produces a CSV with `cell_barcode` and numeric `pseudotime` columns.
 
-## References
-
-- [ZifengDing/DyGMamba](https://github.com/ZifengDing/DyGMamba) -
-  *DyGMamba: Efficiently Modeling Long-Term Temporal Dependency on
-  Continuous-Time Dynamic Graphs with State Space Models*.

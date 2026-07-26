@@ -1,6 +1,6 @@
 # DRIMA
 
-Dynamic regulatory inference from jointly profiled single-cell multi-omics data.
+DRIMA is a tool for dynamic regulatory inference from jointly profiled single-cell multi-omics data.
 
 DRIMA takes cell-matched scRNA-seq, scATAC-seq, and pseudotime as its primary
 inputs. It converts regulatory events into a continuous-time dynamic graph

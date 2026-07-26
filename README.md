@@ -1,78 +1,319 @@
 # DRIMA
 
-DRIMA 是一个基于单细胞 RNA/ATAC 多组学数据推断动态基因调控网络的研究项目。项目沿伪时间构建时序异质图，并使用代码中名为 **DyGMamba** 的模型学习动态调控关系，最终用于分析 TF–Region、Region–Gene 和 TF–Gene 网络。
+Dynamic regulatory inference from jointly profiled single-cell multi-omics data.
 
-## 项目内容
+DRIMA takes cell-matched scRNA-seq, scATAC-seq, and pseudotime as its primary
+inputs. It converts regulatory events into a continuous-time dynamic graph
+(CTDG) and uses a DyGMamba-based model to predict dynamic TF-region,
+region-gene, and TF-gene relationships.
+
+![DRIMA model architecture](DRIMA/DRIMA.svg)
+
+## Directory structure
 
 ```text
-code/
-├── benchmark/   # 核心模型、基准数据处理、对比方法与结果评估
-├── case1/       # BMMC 分化轨迹：B cell、erythroid、myeloid
-├── case2/       # 阿尔茨海默病：CRND8/WT 的 Microglia、Astrocyte
-└── case3/       # 不同组织：brain、lung、skin
+.
+|-- code/
+|   |-- dygmamba/       # Core CTDG construction and DRIMA model
+|   |-- benchmark/      # Benchmark methods and evaluation
+|   |-- case1/          # BMMC differentiation analyses
+|   |-- case2/          # Alzheimer's disease analyses
+|   `-- case3/          # Cross-tissue analyses
+`-- README.md
 ```
 
-每个案例通常包含：
+Core implementation:
 
-- `src/`：数据预处理、伪时间推断、图构建和模型训练；
-- `bash/`：适用于 Slurm 集群的运行脚本；
-- `*.ipynb`：结果分析与绘图。
+```text
+code/dygmamba/src/
+|-- models/             # DRIMA model, training, and inference
+|-- pdata/              # Single-cell and prior-network processing
+|-- self_utils/         # CTDG construction utilities
+|-- utils/              # Data loaders, samplers, and configuration
+|-- dygmamba_preprocess.py
+|-- main_data_process.py
+`-- trajectory_inference.R
+```
 
-核心实现位于 `code/benchmark/dygmamba/src/`，其中 `models/` 为 DyGMamba 模型，`pdata/` 和 `self_utils/` 为数据与先验网络处理工具。
+## Installation
 
-## 环境要求
+> Installation in a dedicated conda environment is recommended.
 
-推荐使用 Linux、Python 3.9 和 CUDA GPU。主要依赖包括：
+DRIMA follows the core environment of
+[ZifengDing/DyGMamba](https://github.com/ZifengDing/DyGMamba) and adds
+single-cell, genomic, and plotting packages used by this repository.
 
 ```bash
-conda create -n drima python=3.9 -y
+conda create -n drima python=3.9 pip -y
 conda activate drima
 
-pip install torch mamba-ssm numpy pandas scipy scikit-learn \
-  scanpy anndata muon networkx h5py tqdm matplotlib seaborn \
-  gtfparse pyranges pybedtools pyfaidx psutil dill
+python -m pip install --upgrade pip setuptools wheel packaging ninja
 
-export PYTHONPATH="$PWD/code/benchmark/dygmamba/src:$PYTHONPATH"
+python -m pip install \
+  numpy==1.25.2 \
+  pandas==1.5.3 \
+  torch==2.2.0 \
+  tqdm==4.66.2 \
+  tabulate
+
+python -m pip install mamba-ssm==1.2.0 --no-build-isolation
+
+python -m pip install \
+  "scipy<1.12" \
+  "scikit-learn<1.4" \
+  "scanpy<1.10" \
+  "anndata<0.10" \
+  "muon<0.2" \
+  "networkx<3.3" \
+  "h5py<3.11" \
+  "matplotlib<3.9" \
+  "seaborn<0.14" \
+  gtfparse pyranges pybedtools pyfaidx hic-straw \
+  dill openpyxl jupyterlab ipykernel
 ```
 
-伪时间推断还需要 R 及 `slingshot`、`SingleCellExperiment`、`Matrix`、`dplyr` 等包。JASPAR motif 扫描需要额外安装 **BEDTools** 和 **MEME Suite（FIMO）**。
+Install a PyTorch build that matches the CUDA driver on the target machine.
+The compilation of `mamba-ssm` requires a compatible CUDA toolkit and compiler.
 
-## 运行方法
+Expose the local package from the repository root:
 
-仓库不包含原始数据，且脚本中的 `data_root`、`output_path`、`gtf_file_path` 和 `sys.path.append(...)` 使用了作者环境的绝对路径。运行前请先将所选案例 `src/` 与 `bash/` 中的这些路径改为本机路径。输入目录至少应包含配对的：
+```bash
+export PROJECT_ROOT="$(pwd)"
+export PYTHONPATH="$PROJECT_ROOT/code/dygmamba/src:$PYTHONPATH"
+```
+
+BEDTools is required when genomic intervals are generated or processed:
+
+```bash
+sudo apt-get install bedtools
+```
+
+## Usage
+
+### Input data
+
+The user-provided biological inputs are:
+
+1. a cell-by-gene scRNA-seq AnnData object;
+2. a cell-by-region scATAC-seq AnnData object;
+3. a pseudotime table for the same cells.
+
+Use the following dataset layout:
+
+```text
+my_dataset/
+|-- input/
+|   |-- rna_processed.h5ad
+|   |-- atac_processed.h5ad
+|   |-- pseudotime.csv
+|   |-- binary_peak_gene_rp_network.h5ad
+|   `-- binary_peak_peak_rp_network.h5ad
+`-- ctdg/
+```
+
+`pseudotime.csv` must contain:
+
+```text
+cell_barcode,pseudotime
+AAAC...,0.0000
+AAAG...,0.0132
+```
+
+RNA, ATAC, and pseudotime must share cell barcodes. RNA variable names should
+be gene identifiers, while ATAC variable names should be genomic regions.
+
+The two regulatory-potential files are structural intermediates derived from
+RNA, ATAC, and genome annotation. They are not additional single-cell
+measurements. See the appendix if these files or pseudotime are unavailable.
+
+### 1. Construct the CTDG
+
+Open `code/dygmamba/src/dygmamba_preprocess.py` and set:
+
+```python
+data_path = "/absolute/path/to/my_dataset/input/"
+output_path = "/absolute/path/to/my_dataset/ctdg/"
+sub_set = False
+```
+
+Use the standard pseudotime file:
+
+```python
+pseudotime = pd.read_csv(data_path + "pseudotime.csv")
+```
+
+Then run:
+
+```bash
+python code/dygmamba/src/dygmamba_preprocess.py
+```
+
+The script aligns cells across modalities, assigns pseudotime, constructs the
+CTDG, and writes:
+
+```text
+my_dataset/ctdg/
+|-- Graph_df.pkl
+|-- node_id.pkl
+|-- node_feature_data.pkl
+|-- edge_features.npy
+|-- edge_labels.npy
+`-- edge_records_data.pkl
+```
+
+### 2. Train DRIMA
+
+Open `code/dygmamba/src/models/main_train_hpc.py` and set `data_path` to the
+same CTDG directory:
+
+```python
+data_path = "/absolute/path/to/my_dataset/ctdg/"
+```
+
+Run training on GPU 0:
+
+```bash
+python code/dygmamba/src/models/main_train_hpc.py \
+  --model_name DyGMamba \
+  --dataset_name mooc \
+  --gpu 0
+```
+
+The current argument parser inherits hyperparameter presets from upstream
+DyGMamba. `--dataset_name` selects a supported preset and output label; the
+biological data are always loaded from `data_path`. Use `mooc` as the default
+preset, or add a dataset-specific preset in
+`code/dygmamba/src/utils/load_configs.py`.
+
+Training writes logs, checkpoints, link predictions, and inferred dynamic
+regulatory networks under the configured CTDG directory.
+
+## Reproducing project analyses
+
+The main figure notebooks are:
+
+```text
+Benchmark: code/benchmark/All_V3_2.ipynb
+Case 1:    code/case1/Final.ipynb
+Case 2:    code/case2/AD_ana.ipynb
+Case 3:    code/case3/Ana_V8.ipynb
+```
+
+These analyses use large datasets and are not intended as the introductory
+usage example. Run them only after preparing the corresponding project data
+and updating their absolute paths.
+
+Figure source data can be exported with
+`code/plot_data_excel_export.py`. The available entry points are
+`export_benchmark`, `export_case1`, `export_case2`, and `export_case3`.
+
+## Appendix: Preparing missing inputs
+
+This section is only needed when processed AnnData objects,
+regulatory-potential matrices, or pseudotime are not already available.
+
+### A. Prepare paired AnnData objects
+
+Convert the user's count matrices to:
 
 ```text
 rna_origin.h5ad
 atac_origin.h5ad
 ```
 
-以 `case1/myeloid` 为例，依次执行：
+Both objects must store cells in observations. RNA variables must represent
+genes, ATAC variables must represent genomic regions, and cell barcodes must be
+compatible between modalities. Sparse matrices are recommended.
+
+### B. Generate genome annotation
+
+Set a GTF annotation matching the reference genome:
 
 ```bash
-cd code/case1/myeloid/src
+export DATASET_DIR="/absolute/path/to/my_dataset"
+export GTF_FILE="/absolute/path/to/annotation.gtf"
 
-python preprocess_data.py
-Rscript trajectory_inference.R
-python downsample.py
-Rscript trajectory_inference.R
-python dygmamba_preprocess.py
-python main_train_hpc.py
+python - <<'PY'
+import os
+from pdata.data_read import read_genenotation
+
+root = os.environ["DATASET_DIR"]
+gtf = read_genenotation(os.environ["GTF_FILE"])
+gtf.to_pickle(os.path.join(root, "input", "gene_info_data.pkl"))
+PY
 ```
 
-如需构建 JASPAR 先验并进行评估，再执行：
+### C. Preprocess RNA/ATAC and build structural priors
+
+Use `code/dygmamba/src/main_data_process.py` as the preprocessing entry point.
+Set its input/output path to `/absolute/path/to/my_dataset/input/`, then run:
 
 ```bash
-python peak.py
-bedtools getfasta -fi /path/to/hg38.fa -bed /path/to/peaks.bed -fo /path/to/peaks.fa
-fimo --thresh 1e-4 --oc /path/to/fimo_out /path/to/JASPAR.meme /path/to/peaks.fa
-python benchmark_data_read.py
+python code/dygmamba/src/main_data_process.py
 ```
 
-在 Slurm 集群上，可修改对应 `bash/*.sh` 中的分区、环境和路径后，通过 `sbatch` 提交：
+For the core DRIMA workflow, retain the RNA, ATAC, regulatory-potential, and
+R-export blocks. JASPAR, ChIP-seq, Hi-C, and benchmark-only blocks can be
+disabled when those optional reference datasets are unavailable.
+
+The required outputs are:
+
+```text
+rna_processed.h5ad
+atac_processed.h5ad
+binary_peak_gene_rp_network.h5ad
+binary_peak_peak_rp_network.h5ad
+R/rna/sparse.mtx
+R/rna/cellinfo.csv
+R/rna/rnainfo.csv
+R/atac/sparse.mtx
+R/atac/cellinfo.csv
+R/atac/atacinfo.csv
+```
+
+### D. Infer pseudotime
+
+Trajectory inference is optional if the user already has pseudotime. The
+included implementation uses
+[Seurat](https://satijalab.org/seurat/),
+[Slingshot](https://bioconductor.org/packages/slingshot/), and
+`SingleCellExperiment`.
+
+Install the R dependencies:
+
+```r
+install.packages(c(
+  "Seurat", "Matrix", "data.table", "tidyverse",
+  "cowplot", "patchwork", "RColorBrewer", "arrow"
+))
+
+if (!requireNamespace("BiocManager", quietly = TRUE)) {
+  install.packages("BiocManager")
+}
+
+BiocManager::install(c(
+  "slingshot", "SingleCellExperiment", "S4Vectors"
+))
+```
+
+In `code/dygmamba/src/trajectory_inference.R`, set:
+
+- `data_path` to the dataset input directory;
+- `clusterLabels` to the appropriate cluster or cell-type annotation;
+- `start.clus` to a biologically justified root cluster;
+- `output_filename` to `pseudotime.csv`.
+
+Run:
 
 ```bash
-sbatch code/case1/myeloid/bash/data_process.sh
-sbatch code/case1/myeloid/bash/dyg_bash.sh
+Rscript code/dygmamba/src/trajectory_inference.R
 ```
 
-模型输出、检查点和中间图数据会写入各脚本配置的 `process/` 目录；最终统计与绘图可运行 `code/benchmark/` 及各案例目录中的 Notebook。
+Any trajectory-inference method can be substituted for Slingshot if it
+produces a CSV with `cell_barcode` and numeric `pseudotime` columns.
+
+## References
+
+- [ZifengDing/DyGMamba](https://github.com/ZifengDing/DyGMamba) -
+  *DyGMamba: Efficiently Modeling Long-Term Temporal Dependency on
+  Continuous-Time Dynamic Graphs with State Space Models*.

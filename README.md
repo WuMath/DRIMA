@@ -7,7 +7,7 @@ inputs. It converts regulatory events into a continuous-time dynamic graph
 (CTDG) and uses a DyGMamba-based model to predict dynamic TF-region,
 region-gene, and TF-gene relationships.
 
-![DRIMA model architecture](DRIMA.svg)
+![DRIMA model architecture](DRIMA.jpg)
 
 ## Directory structure
 
